@@ -18,7 +18,7 @@ import javafx.scene.control.TableView;
 /**
  * FXML Controller class
  *
- * @author Luis Gerardo
+ * @author Luis Gerardo Rendon
  */
 public class FXMLmenuConsultarAvanceController implements Initializable {
 
