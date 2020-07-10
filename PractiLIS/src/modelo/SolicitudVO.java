@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /**
  *
- * @author ALDO///
+ * @author ALDO
  */
 public class SolicitudVO {
    private String periodo;
