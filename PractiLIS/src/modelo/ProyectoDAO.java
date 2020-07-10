@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 
 /**
  *
- * @author Daniel Pale Parra
+ * @author Daniel Pale
  */
 public interface ProyectoDAO {
    public ObservableList<ProyectoVO> recuperarProyecto()throws Exception;;
