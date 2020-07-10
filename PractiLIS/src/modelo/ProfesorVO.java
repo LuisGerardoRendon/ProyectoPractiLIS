@@ -13,21 +13,21 @@ import java.util.Objects;
  */
 public class ProfesorVO {
 
-   private String idProfesor;
+   private String matricula;
    private String constrasenia;
    private String usuario;
 
    public ProfesorVO() {
    }
    
-   public ProfesorVO(String idProfesor, String constrasenia, String usuario) {
-      this.idProfesor = idProfesor;
+   public ProfesorVO(String matricula, String constrasenia, String usuario) {
+      this.matricula = matricula;
       this.constrasenia = constrasenia;
       this.usuario = usuario;
    }
 
-   public String getIdProfesor() {
-      return idProfesor;
+   public String getMatricula() {
+      return matricula;
    }
 
    public String getConstrasenia() {
@@ -38,8 +38,8 @@ public class ProfesorVO {
       return usuario;
    }
 
-   public void setIdProfesor(String idProfesor) {
-      this.idProfesor = idProfesor;
+   public void setIdProfesor(String matricula) {
+      this.matricula = matricula;
    }
 
    public void setConstrasenia(String constrasenia) {
@@ -49,15 +49,21 @@ public class ProfesorVO {
    public void setUsuario(String usuario) {
       this.usuario = usuario;
    }
-   
+
    @Override
    public int hashCode() {
-      int hash = 5;
+      int hash = 7;
+      hash = 79 * hash + Objects.hashCode(this.matricula);
+      hash = 79 * hash + Objects.hashCode(this.constrasenia);
+      hash = 79 * hash + Objects.hashCode(this.usuario);
       return hash;
    }
 
    @Override
    public boolean equals(Object obj) {
+      if (this == obj) {
+         return true;
+      }
       if (obj == null) {
          return false;
       }
@@ -65,7 +71,7 @@ public class ProfesorVO {
          return false;
       }
       final ProfesorVO other = (ProfesorVO) obj;
-      if (!Objects.equals(this.idProfesor, other.idProfesor)) {
+      if (!Objects.equals(this.matricula, other.matricula)) {
          return false;
       }
       if (!Objects.equals(this.constrasenia, other.constrasenia)) {
@@ -79,7 +85,12 @@ public class ProfesorVO {
 
    @Override
    public String toString() {
-      return "ProfesorVO{" + "idProfesor=" + idProfesor + ", constrasenia=" + constrasenia + 
-              ", usuario=" + usuario + '}';
+      return "ProfesorVO{" + "matricula=" + matricula + ", constrasenia=" + constrasenia + ", usuario=" + usuario + '}';
    }
+   
+  
+
+  
+
+   
 }
