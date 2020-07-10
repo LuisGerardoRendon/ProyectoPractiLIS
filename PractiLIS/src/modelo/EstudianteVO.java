@@ -37,6 +37,11 @@ public class EstudianteVO {
       this.correo = correoElectronico;
       this.status = status;
    }
+   public EstudianteVO(String nombre, String matricula){
+      this.nombre = nombre;
+      this.matricula = matricula;
+      
+   }
 
    public String getMatricula() {
       return matricula;
