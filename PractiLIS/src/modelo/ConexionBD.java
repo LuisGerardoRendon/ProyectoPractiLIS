@@ -30,7 +30,7 @@ public class ConexionBD {
     public String username = "root";
 
     // Clave de usuario
-    public String password = "123456";
+    public String password = "Mysqlpale08";
 
     public Connection conectarMySQL() throws Exception{
         Connection conn = null;
