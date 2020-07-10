@@ -12,5 +12,10 @@ import javafx.collections.ObservableList;
  * @author Daniel Pale Parra
  */
 public interface ProyectoDAO {
-   public ObservableList<ProyectoVO> recuperarProyecto()throws Exception;;
+
+   public ObservableList<ProyectoVO> recuperarProyecto() throws Exception;
+
+   public ProyectoVO recuperarProyectoEstudiante(String periodo, String matricula) throws Exception;
+
+   public String crearSQLRecuperarProyectoEstudiante(String periodo, String matricula);
 }

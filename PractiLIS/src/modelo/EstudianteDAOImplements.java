@@ -43,8 +43,24 @@ public class EstudianteDAOImplements implements EstudianteDAO {
          rs.close();
          con.close();
       } catch (SQLException e) {
-         System.out.println("ERROR. Clase Producto_DAO_Imp, metodo ReadAll");
-         e.printStackTrace();
+         throw new Exception("Error en create SQLException " + e.getMessage());
+      } catch (NullPointerException e) {
+         throw new Exception("Error en create NullPointerException " + e.getMessage());
+      } catch (Exception e) {
+         throw new Exception("Error en create Exception " + e.getMessage());
+      } finally {
+         try {
+            if (stm != null) {
+               stm.close();
+            }
+         } catch (Exception e) {
+         };
+         try {
+            if (con != null) {
+               con.close();
+            }
+         } catch (Exception e) {
+         };
       }
       return estudiantesRecuperadosList;
    }
@@ -71,9 +87,24 @@ public class EstudianteDAOImplements implements EstudianteDAO {
          stm.close();
          rs.close();
       } catch (SQLException e) {
-         System.out.println("ERROR EN EJECUTAR CONSULTA:  ");
-         e.printStackTrace();
-
+         throw new Exception("Error en create SQLException " + e.getMessage());
+      } catch (NullPointerException e) {
+         throw new Exception("Error en create NullPointerException " + e.getMessage());
+      } catch (Exception e) {
+         throw new Exception("Error en create Exception " + e.getMessage());
+      } finally {
+         try {
+            if (stm != null) {
+               stm.close();
+            }
+         } catch (Exception e) {
+         };
+         try {
+            if (con != null) {
+               con.close();
+            }
+         } catch (Exception e) {
+         };
       }
 
       return estudianteRecuperado;

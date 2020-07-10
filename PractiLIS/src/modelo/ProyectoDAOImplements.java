@@ -71,4 +71,73 @@ public class ProyectoDAOImplements implements ProyectoDAO{
       }
       return obs;
    }
+
+   @Override
+   public ProyectoVO recuperarProyectoEstudiante(String periodo, String matricula) throws Exception {
+       String sql = crearSQLRecuperarProyectoEstudiante(periodo, matricula);
+        ProyectoVO proyectoRecuperado = new ProyectoVO();
+        Connection con = null;
+        Statement stm = null;
+        ConexionBD cc = new ConexionBD();
+        ResultSet rs = null;
+        try {
+            con = cc.conectarMySQL();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            if (rs.next()) {
+                String nombre = rs.getString("nombre");
+                String descripcion = rs.getString("descripcion");
+                int capacidadEstudiantes = rs.getInt("capacidadEstudiantes");
+                int numEstudiantesAsignados = rs.getInt("numEstudiantesAsignados");
+                int idProyecto = rs.getInt("idProyecto");
+                String status = rs.getString("status");
+                int idOrganizacion = rs.getInt("idOrganizacion") ;
+                int idEncargadoProyecto = rs.getInt("idEncargadoProyecto") ;
+                proyectoRecuperado = new ProyectoVO(idProyecto, nombre, descripcion, 
+                        capacidadEstudiantes, numEstudiantesAsignados, status, 
+                        idOrganizacion, idEncargadoProyecto);
+
+            }
+            con.close();
+            stm.close();
+            rs.close();
+        } catch (SQLException e) {
+         throw new Exception("Error en create SQLException " + e.getMessage());
+      } catch (NullPointerException e) {
+         throw new Exception("Error en create NullPointerException " + e.getMessage());
+      } catch (Exception e) {
+         throw new Exception("Error en create Exception " + e.getMessage());
+      } finally {
+         try {
+            if (stm != null) {
+               stm.close();
+            }
+         } catch (Exception e) {
+         };
+         try {
+            if (con != null) {
+               con.close();
+            }
+         } catch (Exception e) {
+         };
+      }
+        return proyectoRecuperado;
+   }
+
+   @Override
+   public String crearSQLRecuperarProyectoEstudiante(String periodo, String matricula) {
+      String sql;
+        sql = "SELECT Proyecto.nombre, Proyecto.descripcion, ";
+        sql += "Proyecto.capacidadEstudiantes, Proyecto.numEstudiantesAsignados, ";
+        sql += "Proyecto.status, Proyecto.idOrganizacion, Proyecto.idEncargadoProyecto,";
+        sql += " Proyecto.idProyecto";
+        sql += " FROM Estudiante INNER JOIN Asignacion on Estudiante.matricula  = "
+                + "Asignacion.matriculaEstudiante";
+        sql += " INNER JOIN Proyecto on Asignacion.idProyecto = "
+                + "Proyecto.idProyecto";
+        sql += " WHERE Asignacion.preriodo = '" + periodo + "'";
+        sql += " AND Asignacion.matriculaEstudiante = '" + matricula + "';";
+        System.out.println(sql);
+        return sql;
+   }
 }
