@@ -7,7 +7,7 @@ package modelo;
 
 /**
  *
- * @author Sammy Guergachi <sguergachi at gmail.com>
+ * @author Luis Gerardo
  * @version 1.1, 09/jul/2020
  */
 public class ExpedienteVO {
