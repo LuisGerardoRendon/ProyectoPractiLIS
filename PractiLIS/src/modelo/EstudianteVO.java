@@ -18,14 +18,14 @@ public class EstudianteVO {
    private String matricula;
    private String contrasenia;
    private String nombre;
-   private String correoElectronico;
+   private String correo;
    private String status;
 
    public EstudianteVO() {
       this.matricula = "null";// porque puede ser Asignado, Sin Asignar, Aprobado
       this.contrasenia = "null";
       this.nombre = "null";
-      this.correoElectronico = "null";
+      this.correo = "null";
       this.status = "null";
    }
    
@@ -34,7 +34,7 @@ public class EstudianteVO {
       this.matricula = matricula;
       this.contrasenia = contrasenia;
       this.nombre = nombre;
-      this.correoElectronico = correoElectronico;
+      this.correo = correoElectronico;
       this.status = status;
    }
 
@@ -51,7 +51,7 @@ public class EstudianteVO {
    }
 
    public String getCorreoElectronico() {
-      return correoElectronico;
+      return correo;
    }
 
    public String getStatus() {
@@ -71,7 +71,7 @@ public class EstudianteVO {
    }
 
    public void setCorreoElectronico(String correoElectronico) {
-      this.correoElectronico = correoElectronico;
+      this.correo = correoElectronico;
    }
 
    public void setStatus(String status) {
@@ -102,7 +102,7 @@ public class EstudianteVO {
       if (!Objects.equals(this.nombre, other.nombre)) {
          return false;
       }
-      if (!Objects.equals(this.correoElectronico, other.correoElectronico)) {
+      if (!Objects.equals(this.correo, other.correo)) {
          return false;
       }
       return true;
@@ -111,7 +111,7 @@ public class EstudianteVO {
    @Override
    public String toString() {
       return "EstudianteVO{" + "matricula=" + matricula + ", contrasenia=" + contrasenia + 
-              ", nombre=" + nombre + ", correoElectronico=" + correoElectronico + ", status=" + 
+              ", nombre=" + nombre + ", correo=" + correo + ", status=" + 
               status + '}';
    }
    
