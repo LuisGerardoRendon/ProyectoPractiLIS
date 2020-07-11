@@ -43,8 +43,24 @@ public class EstudianteDAOImplements implements EstudianteDAO {
          rs.close();
          con.close();
       } catch (SQLException e) {
-         System.out.println("ERROR. Clase Producto_DAO_Imp, metodo ReadAll");
-         e.printStackTrace();
+         throw new Exception("Error en create SQLException " + e.getMessage());
+      } catch (NullPointerException e) {
+         throw new Exception("Error en create NullPointerException " + e.getMessage());
+      } catch (Exception e) {
+         throw new Exception("Error en create Exception " + e.getMessage());
+      } finally {
+         try {
+            if (stm != null) {
+               stm.close();
+            }
+         } catch (Exception e) {
+         };
+         try {
+            if (con != null) {
+               con.close();
+            }
+         } catch (Exception e) {
+         };
       }
       return estudiantesRecuperadosList;
    }
@@ -63,7 +79,7 @@ public class EstudianteDAOImplements implements EstudianteDAO {
          rs = stm.executeQuery(sql);
          if (rs.next()) {
             String nombre = rs.getString("nombre");
-            String correoElectronico = rs.getString("correoElectronico");
+            String correoElectronico = rs.getString("correo");
             String status = rs.getString("status");
             estudianteRecuperado = new EstudianteVO(matricula, contrasenia, nombre, correoElectronico, status);
          }
@@ -71,9 +87,24 @@ public class EstudianteDAOImplements implements EstudianteDAO {
          stm.close();
          rs.close();
       } catch (SQLException e) {
-         System.out.println("ERROR EN EJECUTAR CONSULTA:  ");
-         e.printStackTrace();
-
+         throw new Exception("Error en recuperarEstudiante SQLException " + e.getMessage());
+      } catch (NullPointerException e) {
+         throw new Exception("Error en recuperarEstudiante NullPointerException " + e.getMessage());
+      } catch (Exception e) {
+         throw new Exception("Error en recuperarEstudiante Exception " + e.getMessage());
+      } finally {
+         try {
+            if (stm != null) {
+               stm.close();
+            }
+         } catch (Exception e) {
+         };
+         try {
+            if (con != null) {
+               con.close();
+            }
+         } catch (Exception e) {
+         };
       }
 
       return estudianteRecuperado;
