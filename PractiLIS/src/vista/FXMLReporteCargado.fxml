@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="195.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controlador.FXMLReporteCargadoController">
+   <children>
+      <AnchorPane id="AnchorPane" layoutY="34.0" prefHeight="128.0" prefWidth="600.0">
+         <children>
+            <Label fx:id="labelReporteCargado" layoutX="246.0" layoutY="5.0" text="REPORTE CARGADO" />
+            <Label fx:id="labelNombreArchivo" layoutX="131.0" layoutY="47.0" text="Nombre del Archivo:" />
+            <Label fx:id="labelSetNombreArchivo" layoutX="278.0" layoutY="47.0" text="setNombreArchivo" />
+            <Button fx:id="botonCancelar" layoutX="14.0" layoutY="89.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+            <Button fx:id="botonSubirReporte" layoutX="497.0" layoutY="89.0" mnemonicParsing="false" onAction="#subirReporte" text="Subir Reporte" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
