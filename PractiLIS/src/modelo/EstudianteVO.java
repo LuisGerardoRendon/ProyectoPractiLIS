@@ -120,7 +120,7 @@ public class EstudianteVO {
               status + '}';
    }
    
-   public ObservableList<EstudianteVO> obtenerEstudiantes() {
+   /*public ObservableList<EstudianteVO> obtenerEstudiantes() {
       Estudiante_DAO_Implements estudianteDAOImp = new Estudiante_DAO_Implements();
       ObservableList<EstudianteVO> obs = FXCollections.observableArrayList();
       obs = estudianteDAOImp.recuperarEstudiante();
@@ -140,4 +140,5 @@ public class EstudianteVO {
       obs = estudianteDAOImp.recuperarSolicitudes(matricula);
       return obs;
    }
+*/
 }

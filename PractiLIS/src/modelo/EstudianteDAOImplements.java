@@ -79,7 +79,7 @@ public class EstudianteDAOImplements implements EstudianteDAO {
          rs = stm.executeQuery(sql);
          if (rs.next()) {
             String nombre = rs.getString("nombre");
-            String correoElectronico = rs.getString("correoElectronico");
+            String correoElectronico = rs.getString("correo");
             String status = rs.getString("status");
             estudianteRecuperado = new EstudianteVO(matricula, contrasenia, nombre, correoElectronico, status);
          }
@@ -87,11 +87,11 @@ public class EstudianteDAOImplements implements EstudianteDAO {
          stm.close();
          rs.close();
       } catch (SQLException e) {
-         throw new Exception("Error en create SQLException " + e.getMessage());
+         throw new Exception("Error en recuperarEstudiante SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en create NullPointerException " + e.getMessage());
+         throw new Exception("Error en recuperarEstudiante NullPointerException " + e.getMessage());
       } catch (Exception e) {
-         throw new Exception("Error en create Exception " + e.getMessage());
+         throw new Exception("Error en recuperarEstudiante Exception " + e.getMessage());
       } finally {
          try {
             if (stm != null) {
