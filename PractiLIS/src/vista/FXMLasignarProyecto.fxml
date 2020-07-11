@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.FXMLasignarProyectoController">
+   <children>
+      <AnchorPane id="AnchorPane" layoutX="5.0" layoutY="5.0" prefHeight="720.0" prefWidth="1280.0">
+         <children>
+            <Label layoutX="550.0" layoutY="14.0" text="Asignar Proyecto">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="34.0" layoutY="91.0" />
+            <TableView fx:id="tablaEstudiantes" layoutX="80.0" layoutY="90.0" onMouseClicked="#seleccionarEstudiante" prefHeight="500.0" prefWidth="300.0">
+               <columns>
+                  <TableColumn fx:id="columnaNombreEstudiantes" prefWidth="200.0" text="Nombre" />
+                  <TableColumn fx:id="columnaMatricula" prefWidth="100.0" text="Matrícula" />
+               </columns>
+            </TableView>
+            <Button fx:id="botonMostrarSolicitudes" layoutX="565.0" layoutY="360.0" mnemonicParsing="false" onAction="#mostrarSolicitudes" prefHeight="26.0" prefWidth="150.0" text="Mostrar Solicitudes" />
+            <Button fx:id="botonAsignar" layoutX="1049.0" layoutY="679.0" mnemonicParsing="false" onAction="#asignar" prefHeight="26.0" prefWidth="150.0" text="Asignar" />
+            <TableView fx:id="tablaSolicitudes" layoutX="490.0" layoutY="90.0" onMouseClicked="#seleccionarProyectoSolicitado" prefHeight="250.0" prefWidth="300.0">
+               <columns>
+                  <TableColumn fx:id="columnaNombreProyectoSolicitado" prefWidth="250.0" text="Nombre" />
+                  <TableColumn fx:id="columnaCupoProyectoSolicitado" prefWidth="50.0" text="Cupo" />
+               </columns>
+            </TableView>
+            <Label layoutX="199.0" layoutY="58.0" text="Estudiantes" />
+            <Label layoutX="584.0" layoutY="58.0" text="Proyectos Solicitados" />
+            <TableView fx:id="tablaProyectos" layoutX="900.0" layoutY="90.0" onMouseClicked="#seleccionarProyecto" prefHeight="500.0" prefWidth="300.0">
+               <columns>
+                  <TableColumn fx:id="columnaNombreProyecto" prefWidth="250.0" text="Nombre" />
+                  <TableColumn fx:id="columnaCupoProyecto" prefWidth="50.0" text="Cupo" />
+               </columns>
+            </TableView>
+            <Label layoutX="997.0" layoutY="67.0" text="Todos los proyectos" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
