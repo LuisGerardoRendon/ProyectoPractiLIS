@@ -70,7 +70,6 @@ public class FXMLasignarProyectoController implements Initializable {
    @Override
    public void initialize(URL url, ResourceBundle rb) {
       //LLena tabla de proyecto
-      proyectoDAOImp = new ProyectoDAOImplements();
       proyectos = FXCollections.observableArrayList();
       obtenerProyectos();
 
@@ -80,7 +79,6 @@ public class FXMLasignarProyectoController implements Initializable {
       this.tablaProyectos.setItems(proyectos);
 
       //Llena tabla de estudiantes
-      estudianteDAOImp = new EstudianteDAOImplements();
       estudiantes = FXCollections.observableArrayList();
       obtenerEstudiantes();
 

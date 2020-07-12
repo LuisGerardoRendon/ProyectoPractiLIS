@@ -88,10 +88,10 @@ public class EstudianteDAOImplements implements EstudianteDAO {
             String matricula = rs.getString("matricula");
             String contrasenia = rs.getString("contrasenia");
             String nombre = rs.getString("nombre");
-            String correoElectronico = rs.getString("correoElectronico");
+            String correo = rs.getString("correo");
             String status = rs.getString("status");
 
-            EstudianteVO e = new EstudianteVO(matricula, contrasenia, nombre, correoElectronico, status);
+            EstudianteVO e = new EstudianteVO(matricula, contrasenia, nombre, correo, status);
             estudiantes.add(e);
          }
          stm.close();
