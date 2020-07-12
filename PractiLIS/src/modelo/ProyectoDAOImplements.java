@@ -141,7 +141,8 @@ public class ProyectoDAOImplements implements ProyectoDAO {
       System.out.println(sql);
       return sql;
    }
-
+   
+   @Override
    public ObservableList<ProyectoVO> recuperarProyectosSolicitados(String matricula) throws Exception {
       Connection con = null;
       PreparedStatement ps = null;
