@@ -24,8 +24,11 @@ import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelo.EstudianteVO;
+import modelo.ExpedienteDAOImplements;
+import modelo.ExpedienteVO;
 import modelo.ReporteDAOImplements;
 import modelo.ReporteVO;
+import vista.FXMLAlerta;
 
 /**
  * FXML Controller class
@@ -39,14 +42,12 @@ public class FXMLReporteCargadoController implements Initializable {
    @FXML
    private Label labelNombreArchivo;
    @FXML
-   private Label labelSetNombreArchivo;
-   @FXML
    private Button botonCancelar;
    @FXML
    private Button botonSubirReporte;
-   
+
    private EstudianteVO estudianteLogeado;
-   
+
    public int horasReportadas;
 
    public String fechaCarga;
@@ -61,7 +62,11 @@ public class FXMLReporteCargadoController implements Initializable {
 
    ReporteVO reporte;
 
-   ReporteDAOImplements reporte_DAO;
+   ExpedienteVO expediente;
+
+   ReporteDAOImplements reporteDAO;
+
+   ExpedienteDAOImplements expedienteDAO;
 
    /**
     * Initializes the controller class.
@@ -69,10 +74,12 @@ public class FXMLReporteCargadoController implements Initializable {
    @Override
    public void initialize(URL url, ResourceBundle rb) {
       // TODO
-      reporte_DAO = new ReporteDAOImplements();
+      reporteDAO = new ReporteDAOImplements();
+      expedienteDAO = new ExpedienteDAOImplements();
       inicializarFechaDeCarga();
       cargarReporte();
       crearReporte();
+      crearExpediente(estudianteLogeado.getMatricula());
    }
 
    public FXMLReporteCargadoController(int horasReportadas, String fechaInicio,
@@ -84,9 +91,9 @@ public class FXMLReporteCargadoController implements Initializable {
       this.archivo = archivo;
 
    }
-   
-   public void setEstudiante(EstudianteVO estudianteLogeado){
-      this.estudianteLogeado=estudianteLogeado;
+
+   public void setEstudianteLogeado(EstudianteVO estudianteLogeado) {
+      this.estudianteLogeado = estudianteLogeado;
    }
 
    @FXML
@@ -101,10 +108,9 @@ public class FXMLReporteCargadoController implements Initializable {
    private void subirReporte(ActionEvent event) {
 
       try {
-         
-         boolean creado = this.reporte_DAO.create(reporte);
-       
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/Practicante/ReporteSubidoExito.fxml"));
+
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/Practicante/"
+                 + "ReporteSubidoExito.fxml"));
          FXMLReporteSubidoController controladorReporteExito = new FXMLReporteSubidoController();
          loader.setController(controladorReporteExito);
          Parent root = loader.load();
@@ -121,7 +127,7 @@ public class FXMLReporteCargadoController implements Initializable {
 
       } catch (IOException e) {
          e.printStackTrace();
-      } catch (Exception e){
+      } catch (Exception e) {
          e.printStackTrace();
       }
    }
@@ -130,9 +136,30 @@ public class FXMLReporteCargadoController implements Initializable {
       reporte = new ReporteVO(horasReportadas, fechaCarga, estado, archivo, fechaInicio, fechaFin);
    }
 
+   public void subirReporte() {
+      boolean creado=false;
+      try {
+         creado = this.reporteDAO.create(reporte, expediente.getIdExpediente());
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      if(!creado){
+         FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonSubirReporte.getScene().getWindow());
+         alerta.alertaError("ERROR", "No se pudo subir el reporte", "Intentelo mas tarde");
+      }
+   }
+
+   public void crearExpediente(String matricula) {
+      try {
+         expediente = this.expedienteDAO.obtenerExpediente(matricula);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+   }
+
    public void cargarReporte() {
       System.out.println("");
-      this.labelSetNombreArchivo.setText(archivo.getName());
+      this.labelNombreArchivo.setText(archivo.getName());
    }
 
    public void inicializarFechaDeCarga() {

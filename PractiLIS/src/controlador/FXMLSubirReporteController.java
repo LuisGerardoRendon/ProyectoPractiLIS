@@ -51,11 +51,7 @@ public class FXMLSubirReporteController implements Initializable {
    @FXML
    private Label labelNombreProyecto;
    @FXML
-   private Label labelTotalHoras;
-   @FXML
-   private Label labelSetNombreProyecto;
-   @FXML
-   private Label labelSetTotalHoras;
+   private Label labelHorasAcumuladas;
 
    private EstudianteVO estudianteLogeado;
 
@@ -75,17 +71,20 @@ public class FXMLSubirReporteController implements Initializable {
 
       reporteDAO = new ReporteDAOImplements();
       proyectoDAO = new ProyectoDAOImplements();
+      recuperarProyecto();
+      recuperarReportes();
 
       this.columnaNumeroReporte.setCellValueFactory(new PropertyValueFactory("numero"));
       this.columnaFechaCarga.setCellValueFactory(new PropertyValueFactory("fechaCarga"));
       this.columnaHorasCubiertas.setCellValueFactory(new PropertyValueFactory("horasReportadas"));
       this.tablaReportes.setItems(reportesRecuperados);
-
-      setNombreProyecto();
-      calcularHoras();
+      
+      
+      //setNombreProyecto();
+      //calcularHoras();
    }
-
-   public void setEstudiante(EstudianteVO estudianteLogeado) {
+   
+   public void setEstudianteLogeado(EstudianteVO estudianteLogeado) {
       this.estudianteLogeado = estudianteLogeado;
    }
 
@@ -93,10 +92,11 @@ public class FXMLSubirReporteController implements Initializable {
    private void subirNuevoReporte(ActionEvent event) {
 
       try {
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/Practicante/FXMLSubirNuevoReporte.fxml"));
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/Practicante/"
+                 + "FXMLSubirNuevoReporte.fxml"));
          Parent root = loader.load();
          FXMLSubirNuevoReporteController controladorSubirNuevoReporte = loader.getController();
-         controladorSubirNuevoReporte.setEstudiante(estudianteLogeado);
+         controladorSubirNuevoReporte.setEstudianteLogeado(estudianteLogeado);
          Scene scene = new Scene(root);
          Stage stage = new Stage();
          stage.initModality(Modality.APPLICATION_MODAL);
@@ -122,32 +122,33 @@ public class FXMLSubirReporteController implements Initializable {
 
    public void setNombreProyecto() {
       String nombreProyectoRecuperado = proyectoRecuperado.getNombre();
-      this.labelSetNombreProyecto.setText(nombreProyectoRecuperado);
+      this.labelNombreProyecto.setText(nombreProyectoRecuperado);
    }
-   
+
    public void recuperarProyecto() {
       try {
-         proyectoRecuperado = this.proyectoDAO.recuperarProyectoEstudiante("Periodo", estudianteLogeado.getMatricula());
-      } catch (Exception e){
+         proyectoRecuperado = this.proyectoDAO.recuperarProyectoEstudiante("2020-2021", 
+                 estudianteLogeado.getMatricula());
+      } catch (Exception e) {
          e.printStackTrace();
-      } 
+      }
    }
 
    public void recuperarReportes() {
-      try{
-         reportesRecuperados=this.reporteDAO.recuperarReportes("Periodo", estudianteLogeado.getMatricula());
-      }catch(Exception e){
+      try {
+         reportesRecuperados = this.reporteDAO.recuperarReportes("Periodo", 
+                 estudianteLogeado.getMatricula());
+      } catch (Exception e) {
          e.printStackTrace();
       }
-      
+
    }
 
    public void calcularHoras() {
-      int suma = 0;
+      int sumaHoras = 0;
       for (ReporteVO tab : reportesRecuperados) {
-         suma += tab.getHorasReportadas();
+         sumaHoras += tab.getHorasReportadas();
       }
-      this.labelSetTotalHoras.setText(suma + "");
+      this.labelHorasAcumuladas.setText(sumaHoras + "");
    }
-
 }

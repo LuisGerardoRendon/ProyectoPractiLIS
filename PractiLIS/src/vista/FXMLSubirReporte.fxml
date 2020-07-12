@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controlador.FXMLSubirReporteController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.FXMLSubirReporteController">
    <children>
       <AnchorPane id="AnchorPane" layoutX="-56.0" layoutY="122.0" prefHeight="720.0" prefWidth="1280.0">
          <children>
@@ -20,13 +19,13 @@
             <TableView fx:id="tablaReportes" layoutX="316.0" layoutY="182.0" prefHeight="302.0" prefWidth="621.0">
                <columns>
                   <TableColumn fx:id="columnaNumeroReporte" prefWidth="187.19995498657227" text="Numero de Reporte" />
-                  <TableColumn fx:id="columnaFechaCarga" prefWidth="197.6000213623047" text="Fecha de Carga" />
-                  <TableColumn fx:id="columnaHorasCubiertas" minWidth="0.0" prefWidth="105.60003662109375" text="Horas Cubiertas" />
+                  <TableColumn fx:id="columnaFechaCarga" prefWidth="210.0" text="Fecha de Carga" />
+                  <TableColumn fx:id="columnaHorasCubiertas" minWidth="0.0" prefWidth="218.0" text="Horas Cubiertas" />
                </columns>
             </TableView>
             <Button fx:id="botonSubirNuevoReporte" layoutX="403.0" layoutY="514.0" mnemonicParsing="false" onAction="#subirNuevoReporte" text="SUBIR NUEVO REPORTE" />
             <Button fx:id="botonRegresar" layoutX="684.0" layoutY="513.0" mnemonicParsing="false" onAction="#regresar" prefHeight="26.0" prefWidth="122.0" text="REGRESAR" />
-            <Label fx:id="labelNombreProyecto" layoutX="475.0" layoutY="108.0" text="Proyecto Asignado:">
+            <Label fx:id="l" layoutX="475.0" layoutY="108.0" text="Proyecto Asignado:">
                <font>
                   <Font size="15.0" />
                </font>
@@ -36,12 +35,12 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="labelSetNombreProyecto" layoutX="673.0" layoutY="108.0" text="setNombreProyecto">
+            <Label fx:id="labelNombreProyecto" layoutX="673.0" layoutY="108.0" text="setNombreProyecto">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="labelSetTotalHoras" layoutX="676.0" layoutY="144.0" text="setHorasAcomuladas">
+            <Label fx:id="labelHorasAcumuladas" layoutX="676.0" layoutY="144.0" text="setHorasAcomuladas">
                <font>
                   <Font size="15.0" />
                </font>

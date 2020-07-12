@@ -79,7 +79,7 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
       try {
          FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/FXMLSubirReporte.fxml"));
          Parent ventanaPrincipal = (Parent) fXMLLoader.load();
-         FXMLmenuPrincipalEstudianteController controlador = fXMLLoader.getController();
+         FXMLSubirReporteController controlador = fXMLLoader.getController();
          controlador.setEstudianteLogeado(estudianteLoeagado);
          Stage stage = new Stage();
          stage.setScene(new Scene(ventanaPrincipal));

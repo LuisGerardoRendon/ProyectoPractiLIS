@@ -32,7 +32,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtFieldHorasReportas" layoutX="640.0" layoutY="239.0" prefHeight="26.0" prefWidth="187.0" />
+            <TextField fx:id="campoHorasReportas" layoutX="640.0" layoutY="239.0" prefHeight="26.0" prefWidth="187.0" />
             <Button fx:id="botonCancelar" layoutX="429.0" layoutY="509.0" mnemonicParsing="false" onAction="#cancelar" text="CANCELAR" />
             <Button fx:id="botonCargarReporte" layoutX="713.0" layoutY="509.0" mnemonicParsing="false" onAction="#cargarReporte" text="CARGAR REPORTE" />
             <Button fx:id="botonImportarArchivo" layoutX="569.0" layoutY="449.0" mnemonicParsing="false" onAction="#importarArchivo" text="IMPORTAR ARCHIVO" />

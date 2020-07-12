@@ -15,6 +15,9 @@ public class ExpedienteVO {
    private int idExpediente;
    private int idAsignacion;
 
+   public ExpedienteVO() {
+   }
+
    public ExpedienteVO(int idExpediente, int idAsignacion) {
       this.idExpediente = idExpediente;
       this.idAsignacion = idAsignacion;
