@@ -21,6 +21,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import modelo.AsignacionDAOImplements;
+import modelo.AsignacionVO;
 import modelo.EstudianteDAOImplements;
 import modelo.EstudianteVO;
 import modelo.ProyectoDAOImplements;
@@ -90,7 +92,6 @@ public class FXMLasignarProyectoController implements Initializable {
          alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",
                  e.getMessage());
       }
-
    }
 
    @FXML
@@ -115,16 +116,39 @@ public class FXMLasignarProyectoController implements Initializable {
 
    @FXML
    private void asignar(ActionEvent event) {
+      EstudianteVO estudiante = this.tablaEstudiantes.getSelectionModel().getSelectedItem();
+      ProyectoVO proyectoSolicitado = this.tablaSolicitudes.getSelectionModel().getSelectedItem();
+      ProyectoVO proyecto = this.tablaProyectos.getSelectionModel().getSelectedItem();
+
+      //Datos de la asignacion
+      boolean creado = false;
+      String periodo = "2020";
+      String nrcCurso = "85103";
+      float progreso = 0;
+      String matriculaProfesor = "1234";
+
+      if (estudiante != null && proyecto != null && proyectoSolicitado != null) {
+         if (proyecto != null){
+            //AsignacionVO asignacion = new AsignacionVO ()
+         }else{
+            
+         }
+      } else {
+         FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonAsignar.getScene().getWindow());
+         alerta.alertaError("ERROR", "", "No se ha seleccionado un estudiante o proyecto.");
+      }
    }
 
    @FXML
    private void seleccionarProyectoSolicitado(MouseEvent event) {
       ProyectoVO proyectoSolicitadoSeleccionado = this.tablaSolicitudes.getSelectionModel().getSelectedItem();
+      this.tablaProyectos.getSelectionModel().select(null);
    }
 
    @FXML
    private void seleccionarProyecto(MouseEvent event) {
       ProyectoVO proyectoSeleccionado = this.tablaProyectos.getSelectionModel().getSelectedItem();
+      this.tablaSolicitudes.getSelectionModel().select(null);
    }
 
    public void obtenerProyectos() {
@@ -151,6 +175,11 @@ public class FXMLasignarProyectoController implements Initializable {
    public void obtenerProyectosSolicitados(String matricula) {
       try {
          this.proyectosSolicitados = proyectoDAOImp.recuperarProyectosSolicitados(matricula);
+         if (proyectosSolicitados.isEmpty()) {
+            FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
+            alerta.alertaError("Error", "",
+                    "Los PROYECTOS solicitados por este estudiante no tienen cupo");
+         }
       } catch (Exception e) {
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
          alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",

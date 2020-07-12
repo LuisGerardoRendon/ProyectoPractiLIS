@@ -41,11 +41,13 @@ public class ProyectoDAOImplements implements ProyectoDAO {
             String status = rs.getString("status");
             int idOrganizacion = rs.getInt("idOrganizacion");
             int idEncargadoProyecto = rs.getInt("idEncargadoProyecto");
-
-            ProyectoVO c = new ProyectoVO(idProyecto, nombreProyecto, descripcion,
-                    capacidadEstudiantes, numEstudiantesAsignados, status, idOrganizacion,
-                    idEncargadoProyecto);
-            obs.add(c);
+            int cupo = (capacidadEstudiantes - numEstudiantesAsignados);
+            if (cupo > 0) {
+               ProyectoVO c = new ProyectoVO(idProyecto, nombreProyecto, descripcion,
+                       capacidadEstudiantes, numEstudiantesAsignados, status, idOrganizacion,
+                       idEncargadoProyecto);
+               obs.add(c);
+            }
          }
          con.close();
          stm.close();
@@ -141,7 +143,7 @@ public class ProyectoDAOImplements implements ProyectoDAO {
       System.out.println(sql);
       return sql;
    }
-   
+
    @Override
    public ObservableList<ProyectoVO> recuperarProyectosSolicitados(String matricula) throws Exception {
       Connection con = null;
@@ -168,12 +170,13 @@ public class ProyectoDAOImplements implements ProyectoDAO {
             String status = rs.getString("status");
             int idOrganizacion = rs.getInt("idOrganizacion");
             int idEncargadoProyecto = rs.getInt("idEncargadoProyecto");
-            int cupo = (rs.getInt("capacidadEstudiantes")) - (rs.getInt("numEstudiantesAsignados"));
-
-            ProyectoVO c = new ProyectoVO(idProyecto, nombreProyecto, descripcion, 
-                    capacidadEstudiantes, numEstudiantesAsignados, status, idOrganizacion, 
-                    idEncargadoProyecto);
-            proyectosSolicitados.add(c);
+            int cupo = (capacidadEstudiantes - numEstudiantesAsignados);
+            if (cupo > 0) {
+               ProyectoVO c = new ProyectoVO(idProyecto, nombreProyecto, descripcion,
+                       capacidadEstudiantes, numEstudiantesAsignados, status, idOrganizacion,
+                       idEncargadoProyecto);
+               proyectosSolicitados.add(c);
+            }
          }
          ps.close();
          rs.close();
