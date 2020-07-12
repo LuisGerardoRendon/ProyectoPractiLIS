@@ -193,5 +193,6 @@ public class ProyectoDAOImplements implements ProyectoDAO {
          };
       }
       return proyectosSolicitados;
+      //.
    }
 }

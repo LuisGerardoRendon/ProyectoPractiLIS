@@ -149,4 +149,5 @@ public class FXMLasignarProyectoController implements Initializable {
    public void obtenerProyectosSolicitados(String matricula) {
       //this.proyectosSolicitados = estudianteDAOImp.recuperarProyectosSolicitados(matricula);
    }
+   //.
 }
