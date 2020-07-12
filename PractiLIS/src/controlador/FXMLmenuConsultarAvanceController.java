@@ -7,6 +7,7 @@ package controlador;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +15,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import modelo.EstudianteVO;
+import modelo.ProyectoDAOImplements;
+import modelo.ProyectoVO;
+import modelo.ReporteDAOImplements;
+import modelo.ReporteVO;
 
 /**
  * FXML Controller class
@@ -39,7 +47,7 @@ public class FXMLmenuConsultarAvanceController implements Initializable {
     @FXML
     private Label label200;
     @FXML
-    private TableView<?> tablaReportesEntregados;
+    private TableView<ReporteVO> tablaReportesEntregados;
     @FXML
     private TableColumn<?, ?> columnaNombreReporte;
     @FXML
@@ -51,16 +59,62 @@ public class FXMLmenuConsultarAvanceController implements Initializable {
     @FXML
     private Label labelAvance;
 
+    private EstudianteVO estudianteUsuario;
+        
+    ReporteDAOImplements reporte_DAO = new ReporteDAOImplements();
+    ProyectoDAOImplements proyectoDAO = new ProyectoDAOImplements();
+    
+    ObservableList<ReporteVO> reportesRecuperados;
+    ProyectoVO proyectoRescatado;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+
+    }
 
     @FXML
     private void regresar(ActionEvent event) {
+        Stage stage = (Stage) this.botonRegresar.getScene().getWindow();
+        stage.close();
+
     }
+
+    public void inicializarTabla() {
+        this.ColumnaHorasCubiertas.setCellValueFactory(new PropertyValueFactory("horasReportadas"));
+        this.columnaNombreReporte.setCellValueFactory(new PropertyValueFactory("numero"));
+        this.comlumnaFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaCarga"));
+        this.tablaReportesEntregados.setItems(reportesRecuperados);
+
+    }
+
+    public void calcularAvance() {
+        int suma = 0;
+        for (ReporteVO tab : reportesRecuperados) {
+            suma += tab.getHorasReportadas();
+        }
+        this.labelSetHorasRegistradas.setText(suma + "");
+        float avance = (suma * 100) / 200;
+        this.labelSetAvance.setText(avance + "%");
+    }
+
+    public void setNombreProyecto() {
+        String nombreProyectoRecuperado = proyectoRescatado.getNombre();
+        this.labelSetNombreProyecto.setText(nombreProyectoRecuperado);
+        System.out.println(proyectoRescatado.toString());
+    }
+
+    public void initEstudianteUsuario(EstudianteVO estudiante) {
+        this.estudianteUsuario = estudiante;
+        //this.reportesRecuperados = this.reporte_DAO.recuperarReportes("2020-2021", this.estudianteUsuario.getMatricula());
+        //this.proyectoRescatado = this.proyectoDAO.recuperarProyecto("2020-2021", this.estudianteUsuario.getMatricula());
+        setNombreProyecto();
+        calcularAvance();
+        inicializarTabla();
+    }
+
     
 }
