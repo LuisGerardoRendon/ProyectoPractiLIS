@@ -15,7 +15,7 @@ public class ConexionBD {
     public String driver = "com.mysql.jdbc.Driver";
 
     // Nombre de la base de datos
-    public String database = "Practilisv1";
+    public String database = "practilisv1pruebas";
     
     // Host
     public String hostname = "localhost";

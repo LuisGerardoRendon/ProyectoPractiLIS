@@ -57,13 +57,15 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
 
    private void mostrarFXMLmenuconsultarAvance() {
       try {
-         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/FXMLmenuConsultarAvance.fxml"));
-         Parent ventanaPrincipal = (Parent) fXMLLoader.load();
-         FXMLmenuConsultarAvanceController controlador = fXMLLoader.getController();
-         System.out.println("ESTUDIANTE LOGEADO ES " + estudianteLoeagado.getNombre());
-         controlador.setEstudianteUsuario(estudianteLoeagado);
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/FXMLmenuConsultarAvance.fxml"));
+        
+         FXMLmenuConsultarAvanceController controladorReporteCargado = new FXMLmenuConsultarAvanceController(estudianteLoeagado);
+         loader.setController(controladorReporteCargado);
+         Parent root =loader.load();
+         Scene scene = new Scene(root);
          Stage stage = new Stage();
-         stage.setScene(new Scene(ventanaPrincipal));
+         stage.initModality(Modality.APPLICATION_MODAL);
+         stage.setScene(scene);
          stage.show();
       } catch (IOException e) {
          System.out.println("Error al abrir la ventana");
