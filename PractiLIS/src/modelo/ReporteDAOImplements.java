@@ -132,7 +132,7 @@ public class ReporteDAOImplements implements ReporteDAO {
               + "Expediente.idAsignacion ";
       sql += " INNER JOIN Reporte on Expediente.idExpediente = "
               + "Reporte.idExpediente ";
-      sql += " WHERE Asignacion.preriodo = " + "'" + periodo + "'";
+      sql += " WHERE Asignacion.periodo = " + "'" + periodo + "'";
       sql += " AND Asignacion.matriculaEstudiante =" + "'" + matricula + "';";
       System.out.println(sql);
       return sql;

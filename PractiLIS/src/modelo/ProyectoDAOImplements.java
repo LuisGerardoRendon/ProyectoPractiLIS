@@ -136,7 +136,7 @@ public class ProyectoDAOImplements implements ProyectoDAO {
               + "Asignacion.matriculaEstudiante";
       sql += " INNER JOIN Proyecto on Asignacion.idProyecto = "
               + "Proyecto.idProyecto";
-      sql += " WHERE Asignacion.preriodo = '" + periodo + "'";
+      sql += " WHERE Asignacion.periodo = '" + periodo + "'";
       sql += " AND Asignacion.matriculaEstudiante = '" + matricula + "';";
       System.out.println(sql);
       return sql;

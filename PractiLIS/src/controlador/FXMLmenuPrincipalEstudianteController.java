@@ -59,6 +59,9 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
          FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource
         ("/vista/FXMLmenuConsultarAvance.fxml"));
          Parent ventanaPrincipal = (Parent) fXMLLoader.load();
+         FXMLmenuConsultarAvanceController controlador = fXMLLoader.getController();
+         System.out.println("ESTUDIANTE LOGEADO ES " +  estudianteLoeagado.getNombre());
+         controlador.setEstudianteUsuario(estudianteLoeagado);
          Stage stage = new Stage();
          stage.setScene(new Scene(ventanaPrincipal));
          stage.show();

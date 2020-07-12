@@ -30,91 +30,98 @@ import modelo.ReporteVO;
  */
 public class FXMLmenuConsultarAvanceController implements Initializable {
 
-    @FXML
-    private Label labelProgreso;
-    @FXML
-    private Button botonRegresar;
-    @FXML
-    private Label labelNombreProyecto;
-    @FXML
-    private Label labelSetNombreProyecto;
-    @FXML
-    private Label labelHorasRegistradas;
-    @FXML
-    private Label labelSetHorasRegistradas;
-    @FXML
-    private Label labelTotalHoras;
-    @FXML
-    private Label label200;
-    @FXML
-    private TableView<ReporteVO> tablaReportesEntregados;
-    @FXML
-    private TableColumn<?, ?> columnaNombreReporte;
-    @FXML
-    private TableColumn<?, ?> comlumnaFechaEntrega;
-    @FXML
-    private TableColumn<?, ?> ColumnaHorasCubiertas;
-    @FXML
-    private Label labelSetAvance;
-    @FXML
-    private Label labelAvance;
+   @FXML
+   private Label labelProgreso;
+   @FXML
+   private Button botonRegresar;
+   @FXML
+   private Label labelNombreProyecto;
+   @FXML
+   private Label labelSetNombreProyecto;
+   @FXML
+   private Label labelHorasRegistradas;
+   @FXML
+   private Label labelSetHorasRegistradas;
+   @FXML
+   private Label labelTotalHoras;
+   @FXML
+   private Label label200;
+   @FXML
+   private TableView<ReporteVO> tablaReportesEntregados;
+   @FXML
+   private TableColumn<?, ?> columnaNombreReporte;
+   @FXML
+   private TableColumn<?, ?> comlumnaFechaEntrega;
+   @FXML
+   private TableColumn<?, ?> ColumnaHorasCubiertas;
+   @FXML
+   private Label labelSetAvance;
+   @FXML
+   private Label labelAvance;
 
-    private EstudianteVO estudianteUsuario;
-        
-    ReporteDAOImplements reporte_DAO = new ReporteDAOImplements();
-    ProyectoDAOImplements proyectoDAO = new ProyectoDAOImplements();
-    
-    ObservableList<ReporteVO> reportesRecuperados;
-    ProyectoVO proyectoRescatado;
+   private EstudianteVO estudianteLogeado;
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+   ReporteDAOImplements reporteDAO = new ReporteDAOImplements();
+   ProyectoDAOImplements proyectoDAO = new ProyectoDAOImplements();
 
-    }
+   ObservableList<ReporteVO> reportesRecuperados;
+   ProyectoVO proyectoRescatado;
 
-    @FXML
-    private void regresar(ActionEvent event) {
-        Stage stage = (Stage) this.botonRegresar.getScene().getWindow();
-        stage.close();
+   /**
+    * Initializes the controller class.
+    */
+   @Override
+   public void initialize(URL url, ResourceBundle rb) {
+      // TODO
 
-    }
+   }
 
-    public void inicializarTabla() {
-        this.ColumnaHorasCubiertas.setCellValueFactory(new PropertyValueFactory("horasReportadas"));
-        this.columnaNombreReporte.setCellValueFactory(new PropertyValueFactory("numero"));
-        this.comlumnaFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaCarga"));
-        this.tablaReportesEntregados.setItems(reportesRecuperados);
+   @FXML
+   private void regresar(ActionEvent event) {
+      Stage stage = (Stage) this.botonRegresar.getScene().getWindow();
+      stage.close();
 
-    }
+   }
 
-    public void calcularAvance() {
-        int suma = 0;
-        for (ReporteVO tab : reportesRecuperados) {
-            suma += tab.getHorasReportadas();
-        }
-        this.labelSetHorasRegistradas.setText(suma + "");
-        float avance = (suma * 100) / 200;
-        this.labelSetAvance.setText(avance + "%");
-    }
+   public void inicializarTabla() {
+      this.ColumnaHorasCubiertas.setCellValueFactory(new PropertyValueFactory("horasReportadas"));
+      this.columnaNombreReporte.setCellValueFactory(new PropertyValueFactory("numero"));
+      this.comlumnaFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaCarga"));
+      this.tablaReportesEntregados.setItems(reportesRecuperados);
 
-    public void setNombreProyecto() {
-        String nombreProyectoRecuperado = proyectoRescatado.getNombre();
-        this.labelSetNombreProyecto.setText(nombreProyectoRecuperado);
-        System.out.println(proyectoRescatado.toString());
-    }
+   }
 
-    public void initEstudianteUsuario(EstudianteVO estudiante) {
-        this.estudianteUsuario = estudiante;
-        //this.reportesRecuperados = this.reporte_DAO.recuperarReportes("2020-2021", this.estudianteUsuario.getMatricula());
-        //this.proyectoRescatado = this.proyectoDAO.recuperarProyecto("2020-2021", this.estudianteUsuario.getMatricula());
-        setNombreProyecto();
-        calcularAvance();
-        inicializarTabla();
-    }
+   public void calcularAvance() {
+      int suma = 0;
+      for (ReporteVO tab : reportesRecuperados) {
+         suma += tab.getHorasReportadas();
+      }
+      this.labelSetHorasRegistradas.setText(suma + "");
+      float avance = (suma * 100) / 200;
+      this.labelSetAvance.setText(avance + "%");
+   }
 
-    
+   public void setNombreProyecto() {
+      String nombreProyectoRecuperado = proyectoRescatado.getNombre();
+      this.labelSetNombreProyecto.setText(nombreProyectoRecuperado);
+      System.out.println(proyectoRescatado.toString());
+   }
+
+   public void setEstudianteUsuario(EstudianteVO estudiante) {
+      this.estudianteLogeado = estudiante;
+      try {
+         this.reportesRecuperados = this.reporteDAO.recuperarReportes("2020-2021", 
+                 this.estudianteLogeado.getMatricula());
+         this.proyectoRescatado = this.proyectoDAO.recuperarProyectoEstudiante("2020-2021",
+                 this.estudianteLogeado.getMatricula());
+         
+      } catch (Exception e) {
+         
+      }
+
+      setNombreProyecto();
+      calcularAvance();
+      inicializarTabla();
+   }
+
 }
