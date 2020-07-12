@@ -32,7 +32,7 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
    @FXML
    private Button botonConsultarProgreso;
 
-   private EstudianteVO estudianteLogegado;
+   private EstudianteVO estudianteLoeagado;
 
    /**
     * Initializes the controller class.
@@ -68,7 +68,7 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
    }
 
    public void setEstudianteLogeado(EstudianteVO estudianteLogeado) {
-      this.estudianteLogegado = estudianteLogeado;
+      this.estudianteLoeagado = estudianteLogeado;
    }
 
    public void cerrarMenuPrincipalEstudiante() {
@@ -80,7 +80,7 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
          FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/FXMLSubirReporte.fxml"));
          Parent ventanaPrincipal = (Parent) fXMLLoader.load();
          FXMLmenuPrincipalEstudianteController controlador = fXMLLoader.getController();
-         controlador.setEstudianteLogeado(estudianteLogeado);
+         controlador.setEstudianteLogeado(estudianteLoeagado);
          Stage stage = new Stage();
          stage.setScene(new Scene(ventanaPrincipal));
          stage.show();
