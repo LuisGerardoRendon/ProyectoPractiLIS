@@ -83,12 +83,13 @@ public class FXMLReporteCargadoController implements Initializable {
    }
 
    public FXMLReporteCargadoController(int horasReportadas, String fechaInicio,
-           String fechaFin, File archivo) {
+           String fechaFin, File archivo, EstudianteVO estudianteLogeado) {
 
       this.horasReportadas = horasReportadas;
       this.fechaInicio = fechaInicio;
       this.fechaFin = fechaFin;
       this.archivo = archivo;
+      this.estudianteLogeado = estudianteLogeado;
 
    }
 
@@ -98,21 +99,31 @@ public class FXMLReporteCargadoController implements Initializable {
 
    @FXML
    private void cancelar(ActionEvent event) {
-      Node source = (Node) event.getSource();
-      Stage stage = (Stage) source.getScene().getWindow();
-      stage.close();
+      cerrarVentana(event);
+      try {
+         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/FXMLmenuPrincipalEstudiante.fxml"));
+         Parent ventanaPrincipal = (Parent) fXMLLoader.load();
+         FXMLmenuPrincipalEstudianteController controlador = fXMLLoader.getController();
+         controlador.setEstudianteLogeado(estudianteLogeado);
+         Stage stage = new Stage();
+         stage.setScene(new Scene(ventanaPrincipal));
+         stage.show();
+      } catch (Exception e) {
+         e.getMessage();
+         e.printStackTrace();
+      }
    }
 
    @FXML
-
    private void subirReporte(ActionEvent event) {
 
       try {
+         subirReporte();
+         
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/FXMLReporteSubido.fxml"));
+         FXMLReporteSubidoController controladorReporteCargado = new FXMLReporteSubidoController(estudianteLogeado);
 
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/Practicante/"
-                 + "ReporteSubidoExito.fxml"));
-         FXMLReporteSubidoController controladorReporteExito = new FXMLReporteSubidoController();
-         loader.setController(controladorReporteExito);
+         loader.setController(controladorReporteCargado);
          Parent root = loader.load();
 
          Scene scene = new Scene(root);
@@ -121,9 +132,7 @@ public class FXMLReporteCargadoController implements Initializable {
          stage.setScene(scene);
          stage.show();
 
-         Node source = (Node) event.getSource();
-         Stage stagee = (Stage) source.getScene().getWindow();
-         stagee.close();
+         cerrarVentana(event);
 
       } catch (IOException e) {
          e.printStackTrace();
@@ -137,13 +146,13 @@ public class FXMLReporteCargadoController implements Initializable {
    }
 
    public void subirReporte() {
-      boolean creado=false;
+      boolean creado = false;
       try {
          creado = this.reporteDAO.create(reporte, expediente.getIdExpediente());
       } catch (Exception e) {
          e.printStackTrace();
       }
-      if(!creado){
+      if (!creado) {
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonSubirReporte.getScene().getWindow());
          alerta.alertaError("ERROR", "No se pudo subir el reporte", "Intentelo mas tarde");
       }
@@ -158,7 +167,6 @@ public class FXMLReporteCargadoController implements Initializable {
    }
 
    public void cargarReporte() {
-      System.out.println("");
       this.labelNombreArchivo.setText(archivo.getName());
    }
 
@@ -168,7 +176,12 @@ public class FXMLReporteCargadoController implements Initializable {
       Date date = new Date();
       String fecha = dateFormat.format(date);
       fechaCarga = fecha;
+   }
 
+   public void cerrarVentana(ActionEvent event) {
+      Node source = (Node) event.getSource();
+      Stage stage = (Stage) source.getScene().getWindow();
+      stage.close();
    }
 
 }

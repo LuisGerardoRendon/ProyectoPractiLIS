@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -71,20 +72,24 @@ public class FXMLSubirReporteController implements Initializable {
 
       reporteDAO = new ReporteDAOImplements();
       proyectoDAO = new ProyectoDAOImplements();
-      recuperarProyecto();
       recuperarReportes();
+      recuperarProyecto();
+      setNombreProyecto();
+      calcularHoras();
 
       this.columnaNumeroReporte.setCellValueFactory(new PropertyValueFactory("numero"));
       this.columnaFechaCarga.setCellValueFactory(new PropertyValueFactory("fechaCarga"));
       this.columnaHorasCubiertas.setCellValueFactory(new PropertyValueFactory("horasReportadas"));
       this.tablaReportes.setItems(reportesRecuperados);
-      
-      
-      //setNombreProyecto();
-      //calcularHoras();
+
    }
-   
+
    public void setEstudianteLogeado(EstudianteVO estudianteLogeado) {
+      this.estudianteLogeado = estudianteLogeado;
+
+   }
+
+   public FXMLSubirReporteController(EstudianteVO estudianteLogeado) {
       this.estudianteLogeado = estudianteLogeado;
    }
 
@@ -92,17 +97,19 @@ public class FXMLSubirReporteController implements Initializable {
    private void subirNuevoReporte(ActionEvent event) {
 
       try {
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/Practicante/"
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/"
                  + "FXMLSubirNuevoReporte.fxml"));
+         FXMLSubirNuevoReporteController controladorSubirNuevoReporte = new FXMLSubirNuevoReporteController(estudianteLogeado);
+         loader.setController(controladorSubirNuevoReporte);
          Parent root = loader.load();
-         FXMLSubirNuevoReporteController controladorSubirNuevoReporte = loader.getController();
-         controladorSubirNuevoReporte.setEstudianteLogeado(estudianteLogeado);
+
          Scene scene = new Scene(root);
          Stage stage = new Stage();
          stage.initModality(Modality.APPLICATION_MODAL);
          stage.setScene(scene);
          stage.show();
 
+         cerrarVentana(event);
       } catch (IOException e) {
          System.out.println(e.getMessage());
          e.printStackTrace();
@@ -115,10 +122,22 @@ public class FXMLSubirReporteController implements Initializable {
 
    @FXML
    private void regresar(ActionEvent event) {
-      Node source = (Node) event.getSource();
-      Stage stage = (Stage) source.getScene().getWindow();
-      stage.close();
+      cerrarVentana(event);
+      try {
+         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/FXMLmenuPrincipalEstudiante.fxml"));
+         Parent ventanaPrincipal = (Parent) fXMLLoader.load();
+         FXMLmenuPrincipalEstudianteController controlador = fXMLLoader.getController();
+         controlador.setEstudianteLogeado(estudianteLogeado);
+         Stage stage = new Stage();
+         stage.setScene(new Scene(ventanaPrincipal));
+         stage.show();
+      } catch (Exception e){
+        e.getMessage();
+        e.printStackTrace();
+      } 
    }
+
+   
 
    public void setNombreProyecto() {
       String nombreProyectoRecuperado = proyectoRecuperado.getNombre();
@@ -127,7 +146,7 @@ public class FXMLSubirReporteController implements Initializable {
 
    public void recuperarProyecto() {
       try {
-         proyectoRecuperado = this.proyectoDAO.recuperarProyectoEstudiante("2020-2021", 
+         proyectoRecuperado = this.proyectoDAO.recuperarProyectoEstudiante("2020-2021",
                  estudianteLogeado.getMatricula());
       } catch (Exception e) {
          e.printStackTrace();
@@ -136,7 +155,7 @@ public class FXMLSubirReporteController implements Initializable {
 
    public void recuperarReportes() {
       try {
-         reportesRecuperados = this.reporteDAO.recuperarReportes("Periodo", 
+         reportesRecuperados = this.reporteDAO.recuperarReportes("2020-2021",
                  estudianteLogeado.getMatricula());
       } catch (Exception e) {
          e.printStackTrace();
@@ -151,4 +170,11 @@ public class FXMLSubirReporteController implements Initializable {
       }
       this.labelHorasAcumuladas.setText(sumaHoras + "");
    }
+
+   public void cerrarVentana(ActionEvent event) {
+      Node source = (Node) event.getSource();
+      Stage stage = (Stage) source.getScene().getWindow();
+      stage.close();
+   }
+
 }

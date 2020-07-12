@@ -63,7 +63,7 @@ public class FXMLSubirNuevoReporteController implements Initializable {
 
    Alerta alerta;
    @FXML
-   
+   private TextField campoHorasReportadas;
 
    /**
     * Initializes the controller class.
@@ -71,14 +71,29 @@ public class FXMLSubirNuevoReporteController implements Initializable {
    @Override
    public void initialize(URL url, ResourceBundle rb) {
       // TODO
+
       reporteDAO = new ReporteDAOImplements();
+   }
+
+   FXMLSubirNuevoReporteController(EstudianteVO estudianteLogeado) {
+      this.estudianteLogeado = estudianteLogeado;
    }
 
    @FXML
    private void cancelar(ActionEvent event) {
-      Node source = (Node) event.getSource();
-      Stage stage = (Stage) source.getScene().getWindow();
-      stage.close();
+      cerrarVentana(event);
+      try {
+         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/FXMLmenuPrincipalEstudiante.fxml"));
+         Parent ventanaPrincipal = (Parent) fXMLLoader.load();
+         FXMLmenuPrincipalEstudianteController controlador = fXMLLoader.getController();
+         controlador.setEstudianteLogeado(estudianteLogeado);
+         Stage stage = new Stage();
+         stage.setScene(new Scene(ventanaPrincipal));
+         stage.show();
+      } catch (Exception e){
+        e.getMessage();
+        e.printStackTrace();
+      } 
    }
 
    @FXML
@@ -87,16 +102,14 @@ public class FXMLSubirNuevoReporteController implements Initializable {
       try {
          if (validarFormulario() && validarArchivo()) {
 
-            horasReportadas = Integer.parseInt(campoHorasReportas.getText());
+            horasReportadas = Integer.parseInt(campoHorasReportadas.getText());
             fechaInicio = datePickerFechaInicio.getValue().toString();
             fechaFin = datePickerFechaFin.getValue().toString();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/Practicante"
-                    + "/ReporteCargado_.fxml"));
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/FXMLReporteCargado.fxml"));
             FXMLReporteCargadoController controladorReporteCargado = new FXMLReporteCargadoController(horasReportadas,
-                    fechaInicio, fechaFin, archivo);
-            controladorReporteCargado.setEstudianteLogeado(estudianteLogeado);
+                    fechaInicio, fechaFin, archivo, estudianteLogeado);
+
             loader.setController(controladorReporteCargado);
             Parent root = loader.load();
 
@@ -106,9 +119,7 @@ public class FXMLSubirNuevoReporteController implements Initializable {
             stage.setScene(scene);
             stage.show();
 
-            Node source = (Node) event.getSource();
-            Stage stagee = (Stage) source.getScene().getWindow();
-            stagee.close();
+            cerrarVentana(event);
          }
 
       } catch (IOException e) {
@@ -134,8 +145,8 @@ public class FXMLSubirNuevoReporteController implements Initializable {
          archivoValido = false;
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonImportarArchivo.getScene()
                  .getWindow());
-         alerta.alertaError("Archivo No elegido", "Realiza lo siguiente", "Debes elegir  "
-                 + "un archivo");
+         alerta.alertaError("ARCHIVO NO ELEGIDO", "No has seleccionado el archivo del reporte", 
+                 "Debes elegir un archivo");
       } else {
          if (!validarExtencionArchivo()) {
             archivoValido = false;
@@ -160,14 +171,13 @@ public class FXMLSubirNuevoReporteController implements Initializable {
          extencion = "";
       }
       extencion = nombre.substring(lastIndexOf);
-      System.out.println(extencion);
-
+      
       if (!extencion.equals(".docx") && !extencion.equals(".pdf")) {
          extencionValida = false;
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonImportarArchivo.getScene()
                  .getWindow());
-         alerta.alertaError("Extención invalida", "Realiza lo siguiente", "Solo se permiten "
-                 + "archivos doxc. y pdf.");
+         alerta.alertaError("ERROR EN EL ARCHIVO", "No se permita archivos con extencion"+ extencion
+                 , "Solo se permiten archivos doxc. y pdf.");
       }
 
       return extencionValida;
@@ -192,14 +202,14 @@ public class FXMLSubirNuevoReporteController implements Initializable {
 
    public boolean validarCamposLlenos() {
       boolean camposLlenos = true;
-      String horas = campoHorasReportas.getText();
 
-      if (horas.isEmpty() || datePickerFechaFin.getValue() == null || datePickerFechaFin.getValue()
+      if (campoHorasReportadas.getText().trim().equals("") || datePickerFechaFin.getValue() == null
+              || datePickerFechaFin.getValue()
               == null) {
          camposLlenos = false;
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonCargarReporte.getScene().getWindow());
-         alerta.alertaError("Campos vacios o incompletos", "Realiza lo siguiente",
-                 "Llena todos los campos");
+         alerta.alertaError("CAMPOS INCORRECTOS", "Tienes campos incompletos o incorrectos",
+                 "Por favor llena todos los campos");
       }
       return camposLlenos;
    }
@@ -215,12 +225,12 @@ public class FXMLSubirNuevoReporteController implements Initializable {
 
    public boolean validarHoras() {
       boolean horasValidas = true;
-      String horasReportadas = campoHorasReportas.getText();
+      String horasReportadas = campoHorasReportadas.getText();
       if (!horasReportadas.matches("^-?[0-9]+$")) {
          horasValidas = false;
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonCargarReporte.getScene().getWindow());
-         alerta.alertaError("Formato de horas incorrecto", "Realiza lo siguiente",
-                 "Ingresa un dato de tipo entero");
+         alerta.alertaError("ERROR DE FORMATO", "Formato de horas invalido",
+                 "Por favor ingresa un numero en el campo de horas");
       }
       return horasValidas;
    }
@@ -232,8 +242,8 @@ public class FXMLSubirNuevoReporteController implements Initializable {
          fechaInicioValida = false;
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.datePickerFechaInicio.getScene()
                  .getWindow());
-         alerta.alertaError("Formato fecha inicio invalido", "Realiza lo siguiente",
-                 "Ingresa un formato de fecha valido");
+         alerta.alertaError("ERROR EN FECHA INICIO", "El formato de fecha inicio es incorrecto",
+                 "Por favor usa la herramienta de fecha para elegir un formato correcto");
       }
       return fechaInicioValida;
    }
@@ -244,11 +254,17 @@ public class FXMLSubirNuevoReporteController implements Initializable {
               + "(0[1-9]|[12][0-9]|3[01])$")) {
          fechaFinValida = false;
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.datePickerFechaFin.getScene().getWindow());
-         alerta.alertaError("Formato fecha fin ivalido", "Realiza lo siguiente",
-                 "Ingresa un formato de fecha valido");
+         alerta.alertaError("ERROR FECHA FIN", "Formato de la fecha invalido",
+                 "Por favor usa la herramienta de fecha para elegir un formato correcto");
       }
 
       return fechaFinValida;
+   }
+
+   public void cerrarVentana(ActionEvent event) {
+      Node source = (Node) event.getSource();
+      Stage stage = (Stage) source.getScene().getWindow();
+      stage.close();
    }
 
    @FXML

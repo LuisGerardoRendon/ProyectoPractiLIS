@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelo.EstudianteVO;
 
@@ -56,11 +57,10 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
 
    private void mostrarFXMLmenuconsultarAvance() {
       try {
-         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource
-        ("/vista/FXMLmenuConsultarAvance.fxml"));
+         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/FXMLmenuConsultarAvance.fxml"));
          Parent ventanaPrincipal = (Parent) fXMLLoader.load();
          FXMLmenuConsultarAvanceController controlador = fXMLLoader.getController();
-         System.out.println("ESTUDIANTE LOGEADO ES " +  estudianteLoeagado.getNombre());
+         System.out.println("ESTUDIANTE LOGEADO ES " + estudianteLoeagado.getNombre());
          controlador.setEstudianteUsuario(estudianteLoeagado);
          Stage stage = new Stage();
          stage.setScene(new Scene(ventanaPrincipal));
@@ -78,18 +78,27 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
       Stage stage = (Stage) this.botonConsultarProgreso.getScene().getWindow();
       stage.close();
    }
+
    private void mostrarFXMLSubirReporte() {
       try {
-         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/FXMLSubirReporte.fxml"));
-         Parent ventanaPrincipal = (Parent) fXMLLoader.load();
-         FXMLSubirReporteController controlador = fXMLLoader.getController();
-         controlador.setEstudianteLogeado(estudianteLoeagado);
+
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/FXMLSubirReporte.fxml"));
+
+         FXMLSubirReporteController controladorSubirReporte = new FXMLSubirReporteController(estudianteLoeagado);
+         loader.setController(controladorSubirReporte);
+         Parent root = loader.load();
+
+         Scene scene = new Scene(root);
          Stage stage = new Stage();
-         stage.setScene(new Scene(ventanaPrincipal));
+         stage.initModality(Modality.APPLICATION_MODAL);
+         stage.setScene(scene);
          stage.show();
+
       } catch (IOException e) {
          System.out.println("Error al abrir la ventana");
+         e.getMessage();
          e.printStackTrace();
+
       }
    }
 

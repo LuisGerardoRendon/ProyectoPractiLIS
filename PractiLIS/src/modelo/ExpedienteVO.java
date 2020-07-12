@@ -23,6 +23,12 @@ public class ExpedienteVO {
       this.idAsignacion = idAsignacion;
    }
 
+   public ExpedienteVO(int idExpediente) {
+      this.idExpediente = idExpediente;
+   }
+   
+   
+
   
    public int getIdExpediente() {
       return idExpediente;

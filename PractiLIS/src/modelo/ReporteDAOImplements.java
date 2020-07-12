@@ -33,7 +33,7 @@ public class ReporteDAOImplements implements ReporteDAO {
          con = cc.conectarMySQL();
 
          String sql = "INSERT INTO reporte (numero,horasReportadas, fechaCarga, estado, reporte,"
-                 + "fechaInicio, fechaFin"+",'"+ idExpediente+"'"+") VALUES (?, ?, ?, ?, ?, ?,?,?)";
+                 + "fechaInicio, fechaFin, idExpediente) VALUES (?, ?, ?, ?, ?, ?,?,?)";
          ps = con.prepareStatement(sql);
 
          ps.setInt(1, 0);
@@ -44,7 +44,7 @@ public class ReporteDAOImplements implements ReporteDAO {
          ps.setBlob(5, archivo);
          ps.setString(6, reporte.getFechaInicio());
          ps.setString(7, reporte.getFechaFin());
-         ps.setInt(8, 1);
+         ps.setInt(8, idExpediente);
 
          ps.executeUpdate();
          created = true;

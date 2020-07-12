@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controlador.FXMLSubirNuevoReporteController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane id="AnchorPane" layoutX="10.0" layoutY="10.0" prefHeight="720.0" prefWidth="1280.0">
          <children>
@@ -32,7 +31,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="campoHorasReportas" layoutX="640.0" layoutY="239.0" prefHeight="26.0" prefWidth="187.0" />
+            <TextField fx:id="campoHorasReportadas" layoutX="640.0" layoutY="239.0" prefHeight="26.0" prefWidth="187.0" />
             <Button fx:id="botonCancelar" layoutX="429.0" layoutY="509.0" mnemonicParsing="false" onAction="#cancelar" text="CANCELAR" />
             <Button fx:id="botonCargarReporte" layoutX="713.0" layoutY="509.0" mnemonicParsing="false" onAction="#cargarReporte" text="CARGAR REPORTE" />
             <Button fx:id="botonImportarArchivo" layoutX="569.0" layoutY="449.0" mnemonicParsing="false" onAction="#importarArchivo" text="IMPORTAR ARCHIVO" />

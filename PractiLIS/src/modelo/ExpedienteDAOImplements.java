@@ -29,9 +29,8 @@ public class ExpedienteDAOImplements implements ExpedienteDAO{
          rs = stm.executeQuery(sql);
          if (rs.next()) {
             int idExpediente= rs.getInt("idExpediente");
-            int idAsignacion= rs.getInt("idAsignacion");
             
-            expedienteRecuperado=new ExpedienteVO(idExpediente,idAsignacion);
+            expedienteRecuperado=new ExpedienteVO(idExpediente);
 
          }
          con.close();
@@ -63,8 +62,8 @@ public class ExpedienteDAOImplements implements ExpedienteDAO{
    
    public String crearSQLRecuperarExpedienteEstudiante(String matricula) {
       String sql;
-      sql="SELECT idExpediente, idAsignacion FROM Expediente INNER JOIN "
-                 + "Asignacion ON Expediente.idAsignacion=Asignacion.idAsignacion" +
+      sql="SELECT idExpediente FROM Expediente INNER JOIN "
+                 + "Asignacion ON Expediente.idAsignacion=Asignacion.idAsignacion " +
                  "INNER JOIN Estudiante ON Asignacion.matriculaEstudiante=Estudiante.matricula "
                  + "WHERE matricula= '"+matricula+"';";
       System.out.println(sql);
