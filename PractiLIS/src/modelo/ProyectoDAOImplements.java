@@ -6,6 +6,7 @@
 package modelo;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -139,5 +140,58 @@ public class ProyectoDAOImplements implements ProyectoDAO {
       sql += " AND Asignacion.matriculaEstudiante = '" + matricula + "';";
       System.out.println(sql);
       return sql;
+   }
+
+   public ObservableList<ProyectoVO> recuperarProyectosSolicitados(String matricula) throws Exception {
+      Connection con = null;
+      PreparedStatement ps = null;
+      ResultSet rs = null;
+      String sql = "SELECT p.nombre, p.descripcion, p.capacidadEstudiantes, p.numEstudiantesAsignados, p.idProyecto, p.status, p.idOrganizacion, p.idEncargadoProyecto FROM proyecto p INNER JOIN solicitud s ON s.idProyecto=p.idProyecto WHERE matricula= ?";
+
+      ObservableList<ProyectoVO> proyectosSolicitados = FXCollections.observableArrayList();
+
+      try {
+         con = new ConexionBD().conectarMySQL();
+         ps = con.prepareStatement(sql);
+         ps.setString(1, matricula);
+         rs = ps.executeQuery();
+         while (rs.next()) {
+            int idProyecto = rs.getInt("idProyecto");
+            String nombreProyecto = rs.getString("nombre");
+            String descripcion = rs.getString("descripcion");
+            int capacidadEstudiantes = rs.getInt("capacidadEstudiantes");
+            int numEstudiantesAsignados = rs.getInt("numEstudiantesAsignados");
+            String status = rs.getString("status");
+            int idOrganizacion = rs.getInt("idOrganizacion");
+            int idEncargadoProyecto = rs.getInt("idEncargadoProyecto");
+            int cupo = (rs.getInt("capacidadEstudiantes")) - (rs.getInt("numEstudiantesAsignados"));
+
+            ProyectoVO c = new ProyectoVO(idProyecto, nombreProyecto, descripcion, capacidadEstudiantes, numEstudiantesAsignados, status, idOrganizacion, idEncargadoProyecto);
+            proyectosSolicitados.add(c);
+         }
+         ps.close();
+         rs.close();
+         con.close();
+      } catch (SQLException e) {
+         throw new Exception("Error en create SQLException " + e.getMessage());
+      } catch (NullPointerException e) {
+         throw new Exception("Error en create NullPointerException " + e.getMessage());
+      } catch (Exception e) {
+         throw new Exception("Error en create Exception " + e.getMessage());
+      } finally {
+         try {
+            if (ps != null) {
+               ps.close();
+            }
+         } catch (Exception e) {
+         };
+         try {
+            if (con != null) {
+               con.close();
+            }
+         } catch (Exception e) {
+         };
+      }
+      return proyectosSolicitados;
    }
 }

@@ -20,10 +20,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import modelo.EstudianteDAOImplements;
 import modelo.EstudianteVO;
 import modelo.ProyectoDAOImplements;
 import modelo.ProyectoVO;
+import vista.FXMLAlerta;
 
 /**
  * FXML Controller class
@@ -134,7 +136,14 @@ public class FXMLasignarProyectoController implements Initializable {
    }
 
    public void obtenerEstudiantes() {
-      //this.estudiantes = estudianteDAOImp.recuperarEstudiantes();
+      try {
+         this.estudiantes = estudianteDAOImp.recuperarEstudiantes();
+      } catch (Exception e) {
+         FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
+         alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",
+                 e.getMessage());
+      }
+
    }
 
    public void obtenerProyectosSolicitados(String matricula) {

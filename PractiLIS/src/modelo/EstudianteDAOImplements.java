@@ -20,52 +20,6 @@ import javafx.collections.ObservableList;
 public class EstudianteDAOImplements implements EstudianteDAO {
 
    @Override
-   public ObservableList<EstudianteVO> recuperaNombreMatricula() throws Exception {
-      Connection con = null;
-      Statement stm = null;
-      ResultSet rs = null;
-      String sql = "SELECT matricula, nombre FROM estudiante WHERE status='Sin asignar'";
-
-      ObservableList<EstudianteVO> estudiantesRecuperadosList = FXCollections.observableArrayList();
-
-      try {
-         con = new ConexionBD().conectarMySQL();
-         stm = con.createStatement();
-         rs = stm.executeQuery(sql);
-         while (rs.next()) {
-            String matricula = rs.getString("matricula");
-            String nombre = rs.getString("nombre");
-            
-            EstudianteVO e = new EstudianteVO(nombre, matricula);
-            estudiantesRecuperadosList.add(e);
-         }
-         stm.close();
-         rs.close();
-         con.close();
-      } catch (SQLException e) {
-         throw new Exception("Error en create SQLException " + e.getMessage());
-      } catch (NullPointerException e) {
-         throw new Exception("Error en create NullPointerException " + e.getMessage());
-      } catch (Exception e) {
-         throw new Exception("Error en create Exception " + e.getMessage());
-      } finally {
-         try {
-            if (stm != null) {
-               stm.close();
-            }
-         } catch (Exception e) {
-         };
-         try {
-            if (con != null) {
-               con.close();
-            }
-         } catch (Exception e) {
-         };
-      }
-      return estudiantesRecuperadosList;
-   }
-
-   @Override
    public EstudianteVO recuperarEstudiante(String matricula, String contrasenia) throws Exception {
       EstudianteVO estudianteRecuperado = null;
       String sql = crearSQLestaRegistrado(matricula, contrasenia);
@@ -117,4 +71,52 @@ public class EstudianteDAOImplements implements EstudianteDAO {
       return sql;
    }
 
+   @Override
+   public ObservableList<EstudianteVO> recuperarEstudiantes() throws Exception {
+      Connection con = null;
+      Statement stm = null;
+      ResultSet rs = null;
+      String sql = "SELECT * FROM estudiante WHERE status='Sin asignar'";
+
+      ObservableList<EstudianteVO> estudiantes = FXCollections.observableArrayList();
+
+      try {
+         con = new ConexionBD().conectarMySQL();
+         stm = con.createStatement();
+         rs = stm.executeQuery(sql);
+         while (rs.next()) {
+            String matricula = rs.getString("matricula");
+            String contrasenia = rs.getString("contrasenia");
+            String nombre = rs.getString("nombre");
+            String correoElectronico = rs.getString("correoElectronico");
+            String status = rs.getString("status");
+
+            EstudianteVO e = new EstudianteVO(matricula, contrasenia, nombre, correoElectronico, status);
+            estudiantes.add(e);
+         }
+         stm.close();
+         rs.close();
+         con.close();
+      } catch (SQLException e) {
+         throw new Exception("Error en recuperarEstudiantes SQLException " + e.getMessage());
+      } catch (NullPointerException e) {
+         throw new Exception("Error en recuperarEstudiantes NullPointerException " + e.getMessage());
+      } catch (Exception e) {
+         throw new Exception("Error en recuperarEstudiantes Exception " + e.getMessage());
+      } finally {
+         try {
+            if (stm != null) {
+               stm.close();
+            }
+         } catch (Exception e) {
+         };
+         try {
+            if (con != null) {
+               con.close();
+            }
+         } catch (Exception e) {
+         };
+      }
+      return estudiantes;
+   }
 }

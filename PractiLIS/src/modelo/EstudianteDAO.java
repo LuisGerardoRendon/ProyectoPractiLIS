@@ -16,8 +16,8 @@ public interface EstudianteDAO {
 
    public EstudianteVO recuperarEstudiante(String matricula, String contrasenia) throws Exception;
 
-   public ObservableList<EstudianteVO> recuperaNombreMatricula() throws Exception;
-
    public String crearSQLestaRegistrado(String matricula, String contrasenia);
+
+   public ObservableList<EstudianteVO> recuperarEstudiantes() throws Exception;
 
 }
