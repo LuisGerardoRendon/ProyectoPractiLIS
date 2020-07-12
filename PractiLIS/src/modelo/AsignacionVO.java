@@ -49,12 +49,19 @@ public class AsignacionVO {
       this.matriculaEstudiante = matriculaEstudiante;
       this.idAsignacion = 0;
    }
+   
+   public AsignacionVO(String periodo, float progreso, int idProyecto, String matriculaEstudiante){
+      this.periodo = periodo;
+      this.progreso = progreso;
+      this.idProyecto = idProyecto;
+      this.matriculaEstudiante = matriculaEstudiante;
+   }
 
    public int getIdAsignacion() {
       return idAsignacion;
    }
 
-   public String getPreriodo() {
+   public String getPeriodo() {
       return periodo;
    }
 
@@ -82,8 +89,8 @@ public class AsignacionVO {
       this.idAsignacion = idAsignacion;
    }
 
-   public void setPreriodo(String preriodo) {
-      this.periodo = preriodo;
+   public void setPeriodo(String periodo) {
+      this.periodo = periodo;
    }
 
    public void setNrcCurso(String nrcCurso) {

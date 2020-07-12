@@ -6,9 +6,9 @@
 package modelo;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -20,24 +20,17 @@ public class AsignacionDAOImplements implements AsignacionDAO {
    public boolean create(AsignacionVO asignacion) throws Exception {
       boolean created = false;
       Connection con = null;
-      PreparedStatement ps = null;
+      Statement stm = null;
       ResultSet rs = null;
-      String sql = "INSERT INTO asignacion VALUES (?,?,?,?,?,?,?)";
-
+      String sql = "INSERT INTO asignacion VALUES (null,'"+asignacion.getPeriodo()+"',null,"
+              +asignacion.getProgreso()+","+asignacion.getIdProyecto()+",null,'"
+              +asignacion.getMatriculaEstudiante()+"')";
       try {
          con = new ConexionBD().conectarMySQL();
-         ps = con.prepareStatement(sql);
-         ps.setString(1, asignacion.getPreriodo());
-         ps.setInt(2, asignacion.getIdAsignacion());
-         ps.setString(3, asignacion.getNrcCurso());
-         ps.setFloat(4, asignacion.getProgreso());
-         ps.setInt(5, asignacion.getIdProyecto());
-         ps.setString(6, asignacion.getMatriculaProfesor());
-         ps.setString(7, asignacion.getMatriculaEstudiante());
-         rs = ps.executeQuery();
+         stm=con.createStatement();
+         stm.execute(sql);
          created = true;
-         ps.close();
-         rs.close();
+         stm.close();
          con.close();
       } catch (SQLException e) {
          throw new Exception("Error en create SQLException " + e.getMessage());
@@ -47,8 +40,8 @@ public class AsignacionDAOImplements implements AsignacionDAO {
          throw new Exception("Error en create Exception " + e.getMessage());
       } finally {
          try {
-            if (ps != null) {
-               ps.close();
+            if (stm != null) {
+               stm.close();
             }
          } catch (Exception e) {
          };

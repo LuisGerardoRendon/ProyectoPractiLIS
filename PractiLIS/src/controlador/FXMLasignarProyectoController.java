@@ -14,7 +14,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -61,6 +60,7 @@ public class FXMLasignarProyectoController implements Initializable {
 
    private ProyectoDAOImplements proyectoDAOImp;
    private EstudianteDAOImplements estudianteDAOImp;
+   private AsignacionDAOImplements asignacionDAOImp;
 
    private ObservableList<ProyectoVO> proyectos;
    private ObservableList<ProyectoVO> proyectosSolicitados;
@@ -95,11 +95,6 @@ public class FXMLasignarProyectoController implements Initializable {
    }
 
    @FXML
-   private void seleccionarEstudiante(MouseEvent event) {
-      EstudianteVO estudianteSeleccionado = this.tablaEstudiantes.getSelectionModel().getSelectedItem();
-   }
-
-   @FXML
    private void mostrarSolicitudes(ActionEvent event) {
       EstudianteVO estudianteSeleccionado = this.tablaEstudiantes.getSelectionModel().getSelectedItem();
 
@@ -121,34 +116,53 @@ public class FXMLasignarProyectoController implements Initializable {
       ProyectoVO proyecto = this.tablaProyectos.getSelectionModel().getSelectedItem();
 
       //Datos de la asignacion
-      boolean creado = false;
-      String periodo = "2020";
-      String nrcCurso = "85103";
+      String periodo = "Ene 2020-Ago 2020";
       float progreso = 0;
-      String matriculaProfesor = "1234";
-
+      //Crear método para validar de que tabla se elige el proyecto.
       if (estudiante != null && proyecto != null && proyectoSolicitado != null) {
-         if (proyecto != null){
-            //AsignacionVO asignacion = new AsignacionVO ()
-         }else{
-            
-         }
-      } else {
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonAsignar.getScene().getWindow());
          alerta.alertaError("ERROR", "", "No se ha seleccionado un estudiante o proyecto.");
+      } else {
+         if (proyecto != null) {
+            AsignacionVO asignacion = new AsignacionVO(periodo, progreso, proyecto.getIdProyecto(),estudiante.getMatricula());
+            asignacionDAOImp = new AsignacionDAOImplements();
+            try {
+               asignacionDAOImp.create(asignacion);
+            } catch (Exception e) {
+               FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
+               alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",
+                       e.getMessage());
+            }
+         } else {
+            AsignacionVO asignacion = new AsignacionVO(periodo, progreso, proyectoSolicitado.getIdProyecto(), estudiante.getMatricula());
+            asignacionDAOImp = new AsignacionDAOImplements();
+            try {
+               asignacionDAOImp.create(asignacion);
+            } catch (Exception e) {
+               FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
+               alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",
+                       e.getMessage());
+            }
+         }
+
       }
    }
 
    @FXML
-   private void seleccionarProyectoSolicitado(MouseEvent event) {
-      ProyectoVO proyectoSolicitadoSeleccionado = this.tablaSolicitudes.getSelectionModel().getSelectedItem();
-      this.tablaProyectos.getSelectionModel().select(null);
+   private void seleccionarEstudiante(MouseEvent event) {
+      EstudianteVO estudianteSeleccionado = this.tablaEstudiantes.getSelectionModel().getSelectedItem();
    }
 
    @FXML
    private void seleccionarProyecto(MouseEvent event) {
       ProyectoVO proyectoSeleccionado = this.tablaProyectos.getSelectionModel().getSelectedItem();
       this.tablaSolicitudes.getSelectionModel().select(null);
+   }
+
+   @FXML
+   private void seleccionarProyectoSolicitado(MouseEvent event) {
+      ProyectoVO proyectoSolicitadoSeleccionado = this.tablaSolicitudes.getSelectionModel().getSelectedItem();
+      this.tablaProyectos.getSelectionModel().select(null);
    }
 
    public void obtenerProyectos() {
