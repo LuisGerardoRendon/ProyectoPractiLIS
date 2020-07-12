@@ -147,7 +147,10 @@ public class ProyectoDAOImplements implements ProyectoDAO {
       Connection con = null;
       PreparedStatement ps = null;
       ResultSet rs = null;
-      String sql = "SELECT p.nombre, p.descripcion, p.capacidadEstudiantes, p.numEstudiantesAsignados, p.idProyecto, p.status, p.idOrganizacion, p.idEncargadoProyecto FROM proyecto p INNER JOIN solicitud s ON s.idProyecto=p.idProyecto WHERE matricula= ?";
+      String sql = "SELECT p.nombre, p.descripcion, p.capacidadEstudiantes, "
+              + "p.numEstudiantesAsignados, p.idProyecto, p.status, p.idOrganizacion,"
+              + " p.idEncargadoProyecto FROM proyecto p INNER JOIN solicitud s ON "
+              + "s.idProyecto=p.idProyecto WHERE matricula= ? AND s.periodo = 'Ene 2020-Ago 2020'";
 
       ObservableList<ProyectoVO> proyectosSolicitados = FXCollections.observableArrayList();
 
@@ -167,7 +170,9 @@ public class ProyectoDAOImplements implements ProyectoDAO {
             int idEncargadoProyecto = rs.getInt("idEncargadoProyecto");
             int cupo = (rs.getInt("capacidadEstudiantes")) - (rs.getInt("numEstudiantesAsignados"));
 
-            ProyectoVO c = new ProyectoVO(idProyecto, nombreProyecto, descripcion, capacidadEstudiantes, numEstudiantesAsignados, status, idOrganizacion, idEncargadoProyecto);
+            ProyectoVO c = new ProyectoVO(idProyecto, nombreProyecto, descripcion, 
+                    capacidadEstudiantes, numEstudiantesAsignados, status, idOrganizacion, 
+                    idEncargadoProyecto);
             proyectosSolicitados.add(c);
          }
          ps.close();

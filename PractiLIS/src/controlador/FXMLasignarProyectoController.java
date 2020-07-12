@@ -69,47 +69,47 @@ public class FXMLasignarProyectoController implements Initializable {
     */
    @Override
    public void initialize(URL url, ResourceBundle rb) {
-      //LLena tabla de proyecto
-      proyectos = FXCollections.observableArrayList();
-      obtenerProyectos();
+      try {
+         //LLena tabla de proyecto
+         proyectoDAOImp = new ProyectoDAOImplements();
+         proyectos = FXCollections.observableArrayList();
+         this.obtenerProyectos();
+         this.columnaNombreProyecto.setCellValueFactory(new PropertyValueFactory("nombre"));
+         this.columnaCupoProyecto.setCellValueFactory(new PropertyValueFactory("capacidadEstudiantes"));
+         this.tablaProyectos.setItems(proyectos);
 
-      this.columnaNombreProyecto.setCellValueFactory(new PropertyValueFactory("nombre"));
-      this.columnaCupoProyecto.setCellValueFactory(new PropertyValueFactory("capacidadEstudiantes"));
+         //Llena tabla de estudiantes
+         estudianteDAOImp = new EstudianteDAOImplements();
+         estudiantes = FXCollections.observableArrayList();
+         this.obtenerEstudiantes();
+         this.columnaNombreEstudiantes.setCellValueFactory(new PropertyValueFactory("nombre"));
+         this.columnaMatricula.setCellValueFactory(new PropertyValueFactory("matricula"));
+         this.tablaEstudiantes.setItems(estudiantes);
+      } catch (Exception e) {
+         FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
+         alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",
+                 e.getMessage());
+      }
 
-      this.tablaProyectos.setItems(proyectos);
-
-      //Llena tabla de estudiantes
-      estudiantes = FXCollections.observableArrayList();
-      obtenerEstudiantes();
-
-      this.columnaNombreEstudiantes.setCellValueFactory(new PropertyValueFactory("nombre"));
-      this.columnaMatricula.setCellValueFactory(new PropertyValueFactory("matricula"));
-
-      this.tablaEstudiantes.setItems(estudiantes);
    }
 
    @FXML
    private void seleccionarEstudiante(MouseEvent event) {
+      EstudianteVO estudianteSeleccionado = this.tablaEstudiantes.getSelectionModel().getSelectedItem();
    }
 
    @FXML
    private void mostrarSolicitudes(ActionEvent event) {
-      EstudianteVO e = this.tablaEstudiantes.getSelectionModel().getSelectedItem();
+      EstudianteVO estudianteSeleccionado = this.tablaEstudiantes.getSelectionModel().getSelectedItem();
 
-      if (e != null) {
-         //proyectosSolicitados = e.obtenerProyectosSolicitados();
-
+      if (estudianteSeleccionado != null) {
+         this.obtenerProyectosSolicitados(estudianteSeleccionado.getMatricula());
          this.columnaNombreProyectoSolicitado.setCellValueFactory(new PropertyValueFactory("nombre"));
          this.columnaCupoProyectoSolicitado.setCellValueFactory(new PropertyValueFactory("capacidadEstudiantes"));
-
          this.tablaSolicitudes.setItems(proyectosSolicitados);
-
       } else {
-         Alert alert = new Alert(Alert.AlertType.ERROR);
-         alert.setTitle("ERROR");
-         alert.setHeaderText(null);
-         alert.setContentText("No se ha seleccionado un estudiante");
-         alert.showAndWait();
+         FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaSolicitudes.getScene().getWindow());
+         alerta.alertaError("ERROR", "", "No se ha seleccionado ningún estudiante.");
       }
    }
 
@@ -119,17 +119,21 @@ public class FXMLasignarProyectoController implements Initializable {
 
    @FXML
    private void seleccionarProyectoSolicitado(MouseEvent event) {
+      ProyectoVO proyectoSolicitadoSeleccionado = this.tablaSolicitudes.getSelectionModel().getSelectedItem();
    }
 
    @FXML
    private void seleccionarProyecto(MouseEvent event) {
+      ProyectoVO proyectoSeleccionado = this.tablaProyectos.getSelectionModel().getSelectedItem();
    }
 
    public void obtenerProyectos() {
       try {
          this.proyectos = proyectoDAOImp.recuperarProyectos();
-      } catch (Exception ex) {
-         Logger.getLogger(FXMLasignarProyectoController.class.getName()).log(Level.SEVERE, null, ex);
+      } catch (Exception e) {
+         FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
+         alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",
+                 e.getMessage());
       }
    }
 
@@ -145,7 +149,12 @@ public class FXMLasignarProyectoController implements Initializable {
    }
 
    public void obtenerProyectosSolicitados(String matricula) {
-      //this.proyectosSolicitados = estudianteDAOImp.recuperarProyectosSolicitados(matricula);
+      try {
+         this.proyectosSolicitados = proyectoDAOImp.recuperarProyectosSolicitados(matricula);
+      } catch (Exception e) {
+         FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
+         alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",
+                 e.getMessage());
+      }
    }
-   //.
 }
