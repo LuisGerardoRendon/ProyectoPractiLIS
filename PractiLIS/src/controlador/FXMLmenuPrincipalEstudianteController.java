@@ -32,7 +32,7 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
    @FXML
    private Button botonConsultarProgreso;
 
-   private EstudianteVO estudianteLoegado;
+   private EstudianteVO estudianteLogegado;
 
    /**
     * Initializes the controller class.
@@ -68,7 +68,7 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
    }
 
    public void setEstudianteLogeado(EstudianteVO estudianteLogeado) {
-      this.estudianteLoegado = estudianteLogeado;
+      this.estudianteLogegado = estudianteLogeado;
    }
 
    public void cerrarMenuPrincipalEstudiante() {
