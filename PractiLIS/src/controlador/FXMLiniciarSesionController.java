@@ -74,7 +74,7 @@ public class FXMLiniciarSesionController implements Initializable {
 
             } else if (coordinadorDAOImplements.login(matricula, contrasenia)) {
                cerrarVentanaInicio();
-//               mostrarFXMLasignarProyecto();
+               mostrarFXMLasignarProyecto();
                
             } else {
                FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonIniciarSesion.getScene().getWindow());
@@ -143,6 +143,8 @@ public class FXMLiniciarSesionController implements Initializable {
             for (int i = 1; i < matricula.length(); i++) {
                matriculaFormateada += matricula.charAt(i);
             }
+         }else{
+            matriculaFormateada = matricula;
          }
       } else if (matricula.length() == 10) {
          for (int i = 2; i < matricula.length(); i++) {
