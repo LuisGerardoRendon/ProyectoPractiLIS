@@ -15,8 +15,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelo.EstudianteVO;
 
@@ -33,13 +33,17 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
    private Button botonConsultarProgreso;
 
    private EstudianteVO estudianteLoeagado;
+   @FXML
+   private Label labeNombre;
+   @FXML
+   private Label labelMatricula;
 
    /**
     * Initializes the controller class.
     */
    @Override
    public void initialize(URL url, ResourceBundle rb) {
-
+       
    }
 
    @FXML
@@ -56,22 +60,25 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
 
    private void mostrarFXMLmenuconsultarAvance() {
       try {
-         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource
-        ("/vista/FXMLmenuConsultarAvance.fxml"));
-         Parent ventanaPrincipal = (Parent) fXMLLoader.load();
-         FXMLmenuConsultarAvanceController controlador = fXMLLoader.getController();
-         System.out.println("ESTUDIANTE LOGEADO ES " +  estudianteLoeagado.getNombre());
-         controlador.setEstudianteUsuario(estudianteLoeagado);
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/FXMLmenuConsultarAvance.fxml"));
+        
+         FXMLmenuConsultarAvanceController controladorReporteCargado = new FXMLmenuConsultarAvanceController(estudianteLoeagado);
+         loader.setController(controladorReporteCargado);
+         Parent root =loader.load();
+         Scene scene = new Scene(root);
          Stage stage = new Stage();
-         stage.setScene(new Scene(ventanaPrincipal));
+         stage.initModality(Modality.APPLICATION_MODAL);
+         stage.setScene(scene);
          stage.show();
       } catch (IOException e) {
          System.out.println("Error al abrir la ventana");
+         e.printStackTrace();
       }
    }
 
    public void setEstudianteLogeado(EstudianteVO estudianteLogeado) {
       this.estudianteLoeagado = estudianteLogeado;
+      inicializarDatosEstudianteLogeado();
    }
 
    public void cerrarMenuPrincipalEstudiante() {
@@ -91,6 +98,10 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
          System.out.println("Error al abrir la ventana");
          e.printStackTrace();
       }
+   }
+   private void inicializarDatosEstudianteLogeado(){
+      this.labeNombre.setText(estudianteLoeagado.getNombre()); 
+      this.labelMatricula.setText(estudianteLoeagado.getMatricula());
    }
 
 }

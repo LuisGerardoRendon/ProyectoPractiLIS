@@ -52,7 +52,7 @@ public class FXMLiniciarSesionController implements Initializable {
       coordinadorDAOImplements = new CoordinadorDAOImplements();
       // TODO
    }
-
+   
    @FXML
    private void iniciarSesion(ActionEvent event) {
 

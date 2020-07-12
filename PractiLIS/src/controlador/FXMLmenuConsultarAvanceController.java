@@ -5,12 +5,18 @@
  */
 package controlador;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -22,6 +28,7 @@ import modelo.ProyectoDAOImplements;
 import modelo.ProyectoVO;
 import modelo.ReporteDAOImplements;
 import modelo.ReporteVO;
+import vista.FXMLAlerta;
 
 /**
  * FXML Controller class
@@ -72,22 +79,31 @@ public class FXMLmenuConsultarAvanceController implements Initializable {
     */
    @Override
    public void initialize(URL url, ResourceBundle rb) {
-      // TODO
+      inicializarDatos();
+      setNombreProyecto();
+      calcularAvance();
+      inicializarTabla();
 
+   }
+
+   public FXMLmenuConsultarAvanceController(EstudianteVO estudianteLogeado) {
+      this.estudianteLogeado = estudianteLogeado;
    }
 
    @FXML
    private void regresar(ActionEvent event) {
-      Stage stage = (Stage) this.botonRegresar.getScene().getWindow();
-      stage.close();
+      cerrarEstaVentana();
+      mostrarFXMLmenuPrincipalEstudiante(estudianteLogeado);
 
    }
 
    public void inicializarTabla() {
+
       this.ColumnaHorasCubiertas.setCellValueFactory(new PropertyValueFactory("horasReportadas"));
       this.columnaNombreReporte.setCellValueFactory(new PropertyValueFactory("numero"));
       this.comlumnaFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaCarga"));
       this.tablaReportesEntregados.setItems(reportesRecuperados);
+      hayReportesSubidos();
 
    }
 
@@ -107,21 +123,57 @@ public class FXMLmenuConsultarAvanceController implements Initializable {
       System.out.println(proyectoRescatado.toString());
    }
 
-   public void setEstudianteUsuario(EstudianteVO estudiante) {
-      this.estudianteLogeado = estudiante;
+   public void cerrarEstaVentana() {
+      Stage stage = (Stage) this.botonRegresar.getScene().getWindow();
+      stage.close();
+   }
+
+   private void mostrarFXMLmenuPrincipalEstudiante(EstudianteVO estudianteLogeado) {
       try {
-         this.reportesRecuperados = this.reporteDAO.recuperarReportes("2020-2021", 
+         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/FXMLmenuPrincipalEstudiante.fxml"));
+         Parent ventanaPrincipal = (Parent) fXMLLoader.load();
+         FXMLmenuPrincipalEstudianteController controlador = fXMLLoader.getController();
+         controlador.setEstudianteLogeado(estudianteLogeado);
+         Stage stage = new Stage();
+         stage.setScene(new Scene(ventanaPrincipal));
+         stage.show();
+      } catch (IOException e) {
+         System.out.println("Error al abrir la ventana");
+         e.printStackTrace();
+      }
+   }
+
+   public boolean hayReportesSubidos() {
+      boolean hayReportesSubidos = false;
+
+      if (!this.reportesRecuperados.isEmpty()) {
+         System.out.println("SI HAY REPORTES");
+         hayReportesSubidos = true;
+      } else {
+         System.out.println("No hay reportes");
+         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+         alert.setTitle("INFORMACIÓN");
+         alert.setHeaderText(null);
+         alert.setContentText("No hay avance en este proyecto"
+                 + "Nombre del proyecto: " + this.proyectoRescatado.getNombre());
+         alert.showAndWait();
+
+      }
+      return hayReportesSubidos;
+
+   }
+
+   private void inicializarDatos() {
+      try {
+         this.reportesRecuperados = this.reporteDAO.recuperarReportes("2020-2021",
                  this.estudianteLogeado.getMatricula());
          this.proyectoRescatado = this.proyectoDAO.recuperarProyectoEstudiante("2020-2021",
                  this.estudianteLogeado.getMatricula());
-         
+
       } catch (Exception e) {
-         
+
       }
 
-      setNombreProyecto();
-      calcularAvance();
-      inicializarTabla();
    }
 
 }
