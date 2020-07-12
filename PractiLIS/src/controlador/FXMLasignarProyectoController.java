@@ -30,7 +30,7 @@ import vista.FXMLAlerta;
 /**
  * FXML Controller class
  *
- * @author Daniel Pale
+ * @author Daniel Pale Parra
  */
 public class FXMLasignarProyectoController implements Initializable {
 
