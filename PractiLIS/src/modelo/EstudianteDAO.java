@@ -18,8 +18,8 @@ public interface EstudianteDAO {
 
    public String crearSQLestaRegistrado(String matricula, String contrasenia);
 
-   public ObservableList<EstudianteVO> recuperarEstudiantes() throws Exception;
+   public ObservableList<EstudianteVO> recuperarEstudiantesSinAsignar() throws Exception;
    
-   public boolean cambiarStatus (String matricula) throws Exception;
+   public boolean cambiarStatusAsignado(String matricula) throws Exception;
    
 }

@@ -10,7 +10,7 @@ package modelo;
  * @author ALDO
  */
 public interface ExpedienteDAO {
-    public ExpedienteVO obtenerExpediente(String matricula) throws Exception;
+    public ExpedienteVO obtenerExpedienteEstudiante(String matricula) throws Exception;
     
     public String crearSQLRecuperarExpedienteEstudiante(String matricula);
     

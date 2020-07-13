@@ -76,7 +76,7 @@ public class EstudianteDAOImplements implements EstudianteDAO {
    }
 
    @Override
-   public ObservableList<EstudianteVO> recuperarEstudiantes() throws Exception {
+   public ObservableList<EstudianteVO> recuperarEstudiantesSinAsignar() throws Exception {
       Connection con = null;
       Statement stm = null;
       ResultSet rs = null;
@@ -127,7 +127,7 @@ public class EstudianteDAOImplements implements EstudianteDAO {
    }
 
    @Override
-   public boolean cambiarStatus(String matricula) throws Exception {
+   public boolean cambiarStatusAsignado(String matricula) throws Exception {
       boolean changed = false;
       Connection con = null;
       Statement stm = null;

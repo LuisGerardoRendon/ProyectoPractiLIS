@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo;
+package modeloTest;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import modelo.EncargadoProyectoDAOImplements;
+import modelo.EncargadoProyectoVO;
+import modelo.ProyectoVO;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;

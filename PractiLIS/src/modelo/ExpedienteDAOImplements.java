@@ -18,7 +18,7 @@ import java.sql.Statement;
 public class ExpedienteDAOImplements implements ExpedienteDAO {
 
    @Override
-   public ExpedienteVO obtenerExpediente(String matricula) throws Exception {
+   public ExpedienteVO obtenerExpedienteEstudiante(String matricula) throws Exception {
       String sql = crearSQLRecuperarExpedienteEstudiante(matricula);
       ExpedienteVO expedienteRecuperado = new ExpedienteVO();
       Connection con = null;
