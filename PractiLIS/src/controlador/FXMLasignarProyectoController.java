@@ -8,8 +8,6 @@ package controlador;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -166,7 +164,7 @@ public class FXMLasignarProyectoController implements Initializable {
 
    public void obtenerProyectos() {
       try {
-         this.proyectos = proyectoDAOImp.recuperarProyectos();
+         this.proyectos = proyectoDAOImp.recuperarProyectosSinAsignar();
       } catch (Exception e) {
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
          alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",
