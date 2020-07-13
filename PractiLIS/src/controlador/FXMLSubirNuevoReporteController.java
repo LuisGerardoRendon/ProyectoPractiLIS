@@ -9,6 +9,9 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -44,6 +48,8 @@ public class FXMLSubirNuevoReporteController implements Initializable {
    private Button botonImportarArchivo;
    @FXML
    private DatePicker datePickerFechaInicio;
+   @FXML
+   private Label labelNombreArchivo;
    @FXML
    private DatePicker datePickerFechaFin;
 
@@ -90,10 +96,10 @@ public class FXMLSubirNuevoReporteController implements Initializable {
          Stage stage = new Stage();
          stage.setScene(new Scene(ventanaPrincipal));
          stage.show();
-      } catch (Exception e){
-        e.getMessage();
-        e.printStackTrace();
-      } 
+      } catch (Exception e) {
+         e.getMessage();
+         e.printStackTrace();
+      }
    }
 
    @FXML
@@ -136,6 +142,29 @@ public class FXMLSubirNuevoReporteController implements Initializable {
       FileChooser fileChooser = new FileChooser();
       fileChooser.setTitle("Open Resource File");
       archivo = fileChooser.showOpenDialog(stage);
+      cargarReporte();
+   }
+   
+   public void cargarReporte() {
+      this.labelNombreArchivo.setText(archivo.getName());
+   }
+
+   public boolean validarTamanioArchivo() {
+      boolean archivoValido = true;
+      
+      long tamanioArchivoEnBytes = archivo.length();
+      long tamanioArchivoEnKiloBytes = tamanioArchivoEnBytes / 1024;
+      long tamanioArchivoEnMegas = tamanioArchivoEnKiloBytes / 1024;
+
+      if (tamanioArchivoEnMegas > 12) {
+         FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonImportarArchivo.getScene()
+                 .getWindow());
+         alerta.alertaError("ERROR EN ARCHIVO", "El archivo sobrepasa el tamanio maximo",
+                  "Elige un archivo de tamanio menor 12MB");
+         archivoValido=false;
+      }
+      
+      return archivoValido;
    }
 
    public boolean validarArchivo() {
@@ -145,10 +174,12 @@ public class FXMLSubirNuevoReporteController implements Initializable {
          archivoValido = false;
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonImportarArchivo.getScene()
                  .getWindow());
-         alerta.alertaError("ARCHIVO NO ELEGIDO", "No has seleccionado el archivo del reporte", 
+         alerta.alertaError("ARCHIVO NO ELEGIDO", "No has seleccionado el archivo del reporte",
                  "Debes elegir un archivo");
       } else {
          if (!validarExtencionArchivo()) {
+            archivoValido = false;
+         }else if(!validarTamanioArchivo()){
             archivoValido = false;
          }
       }
@@ -171,13 +202,13 @@ public class FXMLSubirNuevoReporteController implements Initializable {
          extencion = "";
       }
       extencion = nombre.substring(lastIndexOf);
-      
+
       if (!extencion.equals(".docx") && !extencion.equals(".pdf")) {
          extencionValida = false;
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonImportarArchivo.getScene()
                  .getWindow());
-         alerta.alertaError("ERROR EN EL ARCHIVO", "No se permita archivos con extencion"+ extencion
-                 , "Solo se permiten archivos doxc. y pdf.");
+         alerta.alertaError("ERROR EN EL ARCHIVO", "No se permita archivos con extencion" + extencion,
+                  "Solo se permiten archivos doxc. y pdf.");
       }
 
       return extencionValida;
@@ -217,7 +248,7 @@ public class FXMLSubirNuevoReporteController implements Initializable {
    public boolean validarFormatoDatos() {
       boolean formatoCorrecto = true;
 
-      if (!validarHoras() || !validarFechaInicio() || !validarFechaFin()) {
+      if (!validarHoras() || !validarFechaInicio() || !validarFechaFin() || !validarFechas()) {
          formatoCorrecto = false;
       }
       return formatoCorrecto;
@@ -245,6 +276,7 @@ public class FXMLSubirNuevoReporteController implements Initializable {
          alerta.alertaError("ERROR EN FECHA INICIO", "El formato de fecha inicio es incorrecto",
                  "Por favor usa la herramienta de fecha para elegir un formato correcto");
       }
+      System.out.println(datePickerFechaInicio.getValue().toString());
       return fechaInicioValida;
    }
 
@@ -260,7 +292,32 @@ public class FXMLSubirNuevoReporteController implements Initializable {
 
       return fechaFinValida;
    }
+  
+   public boolean validarFechas() {
+      boolean fechasValidas = true;
 
+      try {
+         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+         Date fechaInicio = date.parse(datePickerFechaInicio.getValue().toString());
+         Date fechaFin = date.parse(datePickerFechaFin.getValue().toString());
+
+         if (!(fechaFin.compareTo(fechaInicio) >=0)) {
+            FXMLAlerta alerta = new FXMLAlerta((Stage) this.datePickerFechaFin.getScene().getWindow());
+            alerta.alertaError("ERROR: FECHA INICIO ES MAYOR A LA FECHA FIN", "La fecha inicio"
+                    + " debe ser menor a la fecha fin",
+                    "Por favor ingresa las fechas correctas");
+            fechasValidas=false;
+            System.out.println("Entro");
+         }
+      } catch (Exception e) {
+         e.getMessage();
+         e.printStackTrace();
+      }
+
+      return fechasValidas;
+   }
+   
+   
    public void cerrarVentana(ActionEvent event) {
       Node source = (Node) event.getSource();
       Stage stage = (Stage) source.getScene().getWindow();

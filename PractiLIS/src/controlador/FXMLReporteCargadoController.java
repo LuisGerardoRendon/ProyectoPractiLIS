@@ -118,21 +118,23 @@ public class FXMLReporteCargadoController implements Initializable {
    private void subirReporte(ActionEvent event) {
 
       try {
-         subirReporte();
+         if (subirReporte()) {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/FXMLReporteSubido.fxml"));
+            FXMLReporteSubidoController controladorReporteCargado = new FXMLReporteSubidoController(estudianteLogeado);
+
+            loader.setController(controladorReporteCargado);
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.show();
+            cerrarVentana(event);
+         }
+
          
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/FXMLReporteSubido.fxml"));
-         FXMLReporteSubidoController controladorReporteCargado = new FXMLReporteSubidoController(estudianteLogeado);
-
-         loader.setController(controladorReporteCargado);
-         Parent root = loader.load();
-
-         Scene scene = new Scene(root);
-         Stage stage = new Stage();
-         stage.initModality(Modality.APPLICATION_MODAL);
-         stage.setScene(scene);
-         stage.show();
-
-         cerrarVentana(event);
 
       } catch (IOException e) {
          e.printStackTrace();
@@ -145,7 +147,7 @@ public class FXMLReporteCargadoController implements Initializable {
       reporte = new ReporteVO(horasReportadas, fechaCarga, estado, archivo, fechaInicio, fechaFin);
    }
 
-   public void subirReporte() {
+   public boolean subirReporte() {
       boolean creado = false;
       try {
          creado = this.reporteDAO.create(reporte, expediente.getIdExpediente());
@@ -156,6 +158,7 @@ public class FXMLReporteCargadoController implements Initializable {
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonSubirReporte.getScene().getWindow());
          alerta.alertaError("ERROR", "No se pudo subir el reporte", "Intentelo mas tarde");
       }
+      return creado;
    }
 
    public void crearExpediente(String matricula) {

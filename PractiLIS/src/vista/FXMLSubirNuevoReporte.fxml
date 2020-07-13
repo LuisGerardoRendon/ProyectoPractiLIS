@@ -37,6 +37,11 @@
             <Button fx:id="botonImportarArchivo" layoutX="569.0" layoutY="449.0" mnemonicParsing="false" onAction="#importarArchivo" text="IMPORTAR ARCHIVO" />
             <DatePicker fx:id="datePickerFechaInicio" layoutX="640.0" layoutY="307.0" onAction="#seleccionarFechaInicio" prefHeight="26.0" prefWidth="187.0" />
             <DatePicker fx:id="datePickerFechaFin" layoutX="640.0" layoutY="375.0" onAction="#seleccionarFechaFin" prefHeight="26.0" prefWidth="187.0" />
+            <Label fx:id="labelNombreArchivo" layoutX="724.0" layoutY="449.0" prefHeight="25.0" prefWidth="466.0">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>
