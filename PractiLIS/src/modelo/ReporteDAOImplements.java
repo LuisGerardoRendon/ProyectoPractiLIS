@@ -1,7 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * LISTA DE CONTENIDO:
+ *    > Clases y librerias importadas
+ *    > Metodo create
+ *    > Metodo recuperar
+ *    > Metodos creación de sql's
  */
 package modelo;
 
@@ -17,11 +19,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
+ * Esta clase implementa los metodos CRUD de la clase ReporteDAO
  *
- * @author ALDO
+ * @author Aldo Colorado
  */
 public class ReporteDAOImplements implements ReporteDAO {
 
+   /**
+    * Metodo para la creación de un reporte a la base de datos
+    *
+    * @param reporte Define el objeto reporte que se esta creando
+    * @param idExpediente Define el idExpediente que se relacioará con el Reporte
+    * @return Regresa un valor booleano para determinar el exito o fallo en la creación
+    * @throws Exception Arroja las excepciones que pudieran presentarse durante el proceso
+    */
    @Override
    public boolean create(ReporteVO reporte, int idExpediente) throws Exception {
       boolean created = false;
@@ -55,9 +66,11 @@ public class ReporteDAOImplements implements ReporteDAO {
       } catch (SQLException exception) {
          throw new SQLException("Error en create SQLException " + exception.getMessage());
       } catch (NullPointerException exception) {
-         throw new NullPointerException("Error en create NullPointerException " + exception.getMessage());
-      }catch (ConnectException exception) {
-         throw new ConnectException("Error en create ConnectException " + exception.getMessage());
+         throw new NullPointerException("Error en create NullPointerException "
+                 + exception.getMessage());
+      } catch (ConnectException exception) {
+         throw new ConnectException("Error en create ConnectException "
+                 + exception.getMessage());
       } catch (Exception exception) {
          throw new Exception("Error en create Exception " + exception.getMessage());
       } finally {
@@ -77,10 +90,18 @@ public class ReporteDAOImplements implements ReporteDAO {
       return created;
    }
 
+   /**
+    * Metodo para recuperar reportes desde la base de datos
+    *
+    * @param periodo Define el periodo correspondiente de los reportes a recuperar
+    * @param matricula Define la matricula del estudiante del que se recuperarán los reportes
+    * @return Regresa una lista de los reportes recuperados
+    * @throws Exception Arroja las posibles excepciones durante el proceso
+    */
    @Override
-   public ObservableList<ReporteVO> recuperarReportes(String periodo, String matricula)
+   public ObservableList<ReporteVO> recuperarReportesDeEstudiante(String periodo, String matricula)
            throws Exception {
-      String sql = crearSQLRecuperarReportes(periodo, matricula);
+      String sql = crearSQLRecuperarReportesDeEstudiante(periodo, matricula);
       ObservableList<ReporteVO> reportesRecuperados = FXCollections.observableArrayList();
       Connection connection = null;
       Statement statement = null;
@@ -105,7 +126,7 @@ public class ReporteDAOImplements implements ReporteDAO {
          throw new SQLException("Error en recuperarReportes SQLException " + exception.getMessage());
       } catch (NullPointerException exception) {
          throw new NullPointerException("Error en recuperarReportes NullPointerException " + exception.getMessage());
-      }catch (ConnectException exception) {
+      } catch (ConnectException exception) {
          throw new ConnectException("Error en recuperarReportes ConnectException " + exception.getMessage());
       } catch (Exception exception) {
          throw new Exception("Error en recuperarReportes Exception " + exception.getMessage());
@@ -126,8 +147,16 @@ public class ReporteDAOImplements implements ReporteDAO {
       return reportesRecuperados;
    }
 
+   /**
+    * Metodo para la creación de la sentencia sql recuperarReportes
+    *
+    * @param periodo Define el periodo del que se recuperan los reportes
+    * @param matricula Define la matricula del alumno del que se recuperan los reports
+    * @return Regresa una cadena del sentencia
+    * @throws Exception Arroja las posibles excepciones durante el proceso
+    */
    @Override
-   public String crearSQLRecuperarReportes(String periodo, String matricula) throws Exception {
+   public String crearSQLRecuperarReportesDeEstudiante(String periodo, String matricula) throws Exception {
       String sql = "SELECT Reporte.numero,Reporte.horasReportadas,"
               + "Reporte.fechaCarga, Reporte.Estado,Reporte.reporte,"
               + " Reporte.fechaInicio, Reporte.fechaFin";
@@ -139,7 +168,7 @@ public class ReporteDAOImplements implements ReporteDAO {
               + "Reporte.idExpediente ";
       sql += " WHERE Asignacion.periodo = " + "'" + periodo + "'";
       sql += " AND Asignacion.matriculaEstudiante =" + "'" + matricula + "';";
-      System.out.println(sql);
+
       return sql;
    }
 

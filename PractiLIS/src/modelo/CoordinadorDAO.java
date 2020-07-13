@@ -1,17 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * LISTA DE CONTENIDO:
+ *    > Clases y librerias importadas
+ *    > Definición de metodos sin implemetar del ReportaDAO
  */
 package modelo;
 
 /**
+ * Esta Interface define los metodos correspondientes al CoordinadorDAO
  *
- * @author Sammy Guergachi <sguergachi at gmail.com>
- * @version 1.1, 11/jul/2020
+ * @author Luis Gerardo Rendon
  */
 public interface CoordinadorDAO {
 
-   public boolean login(String usuario, String contrasenia)throws Exception;
+   public boolean login(String usuario, String contrasenia) throws Exception;
+
    public String crearSQLrecuperarCoordinador(String usuario, String contrasenia);
 }

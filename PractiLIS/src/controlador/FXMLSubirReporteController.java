@@ -76,11 +76,7 @@ public class FXMLSubirReporteController implements Initializable {
       recuperarProyecto();
       setNombreProyecto();
       calcularHoras();
-
-      this.columnaNumeroReporte.setCellValueFactory(new PropertyValueFactory("numero"));
-      this.columnaFechaCarga.setCellValueFactory(new PropertyValueFactory("fechaCarga"));
-      this.columnaHorasCubiertas.setCellValueFactory(new PropertyValueFactory("horasReportadas"));
-      this.tablaReportes.setItems(reportesRecuperados);
+      inicializarTabla();
 
    }
 
@@ -89,7 +85,14 @@ public class FXMLSubirReporteController implements Initializable {
 
    }
    
-   
+   public void inicializarTabla() {
+
+      this.columnaNumeroReporte.setCellValueFactory(new PropertyValueFactory("numero"));
+      this.columnaFechaCarga.setCellValueFactory(new PropertyValueFactory("fechaCarga"));
+      this.columnaHorasCubiertas.setCellValueFactory(new PropertyValueFactory("horasReportadas"));
+      this.tablaReportes.setItems(reportesRecuperados);
+
+   }
 
    public FXMLSubirReporteController(EstudianteVO estudianteLogeado) {
       this.estudianteLogeado = estudianteLogeado;
@@ -157,7 +160,7 @@ public class FXMLSubirReporteController implements Initializable {
 
    public void recuperarReportes() {
       try {
-         reportesRecuperados = this.reporteDAO.recuperarReportes("2020-2021",
+         reportesRecuperados = this.reporteDAO.recuperarReportesDeEstudiante("2020-2021",
                  estudianteLogeado.getMatricula());
       } catch (Exception e) {
          e.printStackTrace();

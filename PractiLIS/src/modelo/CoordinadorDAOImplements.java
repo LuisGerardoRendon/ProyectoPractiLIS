@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * LISTA DE CONTENIDO:
+ *    > Clases y librerias importadas
+ *    > Metodo login
+ *    > Metodos creación de sql's
  */
 package modelo;
 
@@ -14,15 +15,23 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Esta clase implementa los metodos de la clase CoordinadorDAO
  *
- * @author Sammy Guergachi <sguergachi at gmail.com>
- * @version 1.1, 11/jul/2020
+ * @author Luis Gerardo Rendon
  */
 public class CoordinadorDAOImplements implements CoordinadorDAO {
 
+   /**
+    * Metodo para verificar que un usuario y su contraseña existan dentro de la base de datos
+    *
+    * @param matricula Define la matricula con la que esta identificado el coordinador
+    * @param contrasenia Define la contraseña dado por el coordinador
+    * @return Regresa un valor booleano para determinar si coinciden los datos del usuario
+    * @throws Exception Arroja las posibles excepciones durante el proceso
+    */
    @Override
-   public boolean login(String usuario, String contrasenia) throws Exception {
-      String sql = crearSQLrecuperarCoordinador(usuario, contrasenia);
+   public boolean login(String matricula, String contrasenia) throws Exception {
+      String sql = crearSQLrecuperarCoordinador(matricula, contrasenia);
       boolean encontrado = false;
       Connection connection = null;
       Statement statement = null;
@@ -42,7 +51,8 @@ public class CoordinadorDAOImplements implements CoordinadorDAO {
       } catch (SQLException exception) {
          throw new SQLException("Error en login SQLException " + exception.getMessage());
       } catch (NullPointerException exception) {
-         throw new NullPointerException("Error en login NullPointerException " + exception.getMessage());
+         throw new NullPointerException("Error en login NullPointerException "
+                 + exception.getMessage());
       } catch (ConnectException exception) {
          throw new ConnectException("Error en login ConnectException " + exception.getMessage());
       } catch (Exception exception) {
@@ -71,10 +81,17 @@ public class CoordinadorDAOImplements implements CoordinadorDAO {
 
    }
 
+   /**
+    * Metodo para la creación de la sql de recuperarCoordinador
+    *
+    * @param matricula Define la matricula del coordinador
+    * @param contrasenia Define la contrasenia del coordinador
+    * @return Regresa la cadena de la sentencia
+    */
    @Override
-   public String crearSQLrecuperarCoordinador(String usuario, String contrasenia) {
+   public String crearSQLrecuperarCoordinador(String matricula, String contrasenia) {
       String sql = "SELECT * FROM coordinador WHERE usuario "
-              + "= '" + usuario + "'" + "AND contrasenia = '" + contrasenia + "';";
+              + "= '" + matricula + "'" + "AND contrasenia = '" + contrasenia + "';";
 
       return sql;
    }
