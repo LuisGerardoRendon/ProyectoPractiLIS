@@ -21,112 +21,112 @@ import javafx.collections.ObservableList;
 public class ProyectoDAOImplements implements ProyectoDAO {
 
    @Override
-   public ObservableList<ProyectoVO> recuperarProyectos() throws Exception {
+   public ObservableList<ProyectoVO> recuperarProyectosSinAsignar() throws Exception {
       String sql = "SELECT * FROM proyecto WHERE status='Sin asignar'";
-      Connection con = null;
-      Statement stm = null;
-      ConexionBD cc = new ConexionBD();
-      ResultSet rs = null;
+      Connection connection = null;
+      Statement statement = null;
+      ConexionBD conexion = new ConexionBD();
+      ResultSet resultset = null;
 
-      ObservableList<ProyectoVO> obs = FXCollections.observableArrayList();
+      ObservableList<ProyectoVO> proyectosRecuperadosList = FXCollections.observableArrayList();
       try {
-         con = cc.conectarMySQL();
-         stm = con.createStatement();
-         rs = stm.executeQuery(sql);
-         while (rs.next()) {
-            int idProyecto = rs.getInt("idProyecto");
-            String nombreProyecto = rs.getString("nombre");
-            String descripcion = rs.getString("descripcion");
-            int capacidadEstudiantes = rs.getInt("capacidadEstudiantes");
-            int numEstudiantesAsignados = rs.getInt("numEstudiantesAsignados");
-            String status = rs.getString("status");
-            int idOrganizacion = rs.getInt("idOrganizacion");
-            int idEncargadoProyecto = rs.getInt("idEncargadoProyecto");
+         connection = conexion.conectarMySQL();
+         statement = connection.createStatement();
+         resultset = statement.executeQuery(sql);
+         while (resultset.next()) {
+            int idProyecto = resultset.getInt("idProyecto");
+            String nombreProyecto = resultset.getString("nombre");
+            String descripcion = resultset.getString("descripcion");
+            int capacidadEstudiantes = resultset.getInt("capacidadEstudiantes");
+            int numEstudiantesAsignados = resultset.getInt("numEstudiantesAsignados");
+            String status = resultset.getString("status");
+            int idOrganizacion = resultset.getInt("idOrganizacion");
+            int idEncargadoProyecto = resultset.getInt("idEncargadoProyecto");
             int cupo = (capacidadEstudiantes - numEstudiantesAsignados);
             if (cupo > 0) {
-               ProyectoVO c = new ProyectoVO(idProyecto, nombreProyecto, descripcion,
+               ProyectoVO proyectoRecuperado = new ProyectoVO(idProyecto, nombreProyecto, descripcion,
                        capacidadEstudiantes, numEstudiantesAsignados, status, idOrganizacion,
                        idEncargadoProyecto);
-               obs.add(c);
+               proyectosRecuperadosList.add(proyectoRecuperado);
             }
          }
-         con.close();
-         stm.close();
-         rs.close();
-      } catch (SQLException e) {
-         throw new SQLException("Error en recuperarProyectos SQLException " + e.getMessage());
-      } catch (NullPointerException e) {
-         throw new NullPointerException("Error en recuperarProyectos NullPointerException " + e.getMessage());
-      }catch (ConnectException e) {
-         throw new ConnectException("Error en recuperarProyectos ConnectException " + e.getMessage());
-      } catch (Exception e) {
-         throw new Exception("Error en recuperarProyectos Exception " + e.getMessage());
+         connection.close();
+         statement.close();
+         resultset.close();
+      } catch (SQLException exception) {
+         throw new SQLException("Error en recuperarProyectos SQLException " + exception.getMessage());
+      } catch (NullPointerException exception) {
+         throw new NullPointerException("Error en recuperarProyectos NullPointerException " + exception.getMessage());
+      }catch (ConnectException exception) {
+         throw new ConnectException("Error en recuperarProyectos ConnectException " + exception.getMessage());
+      } catch (Exception exception) {
+         throw new Exception("Error en recuperarProyectos Exception " + exception.getMessage());
       } finally {
          try {
-            if (stm != null) {
-               stm.close();
+            if (statement != null) {
+               statement.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
          try {
-            if (con != null) {
-               con.close();
+            if (connection != null) {
+               connection.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
       }
-      return obs;
+      return proyectosRecuperadosList;
    }
 
    @Override
    public ProyectoVO recuperarProyectoEstudiante(String periodo, String matricula) throws Exception {
       String sql = crearSQLRecuperarProyectoEstudiante(periodo, matricula);
       ProyectoVO proyectoRecuperado = new ProyectoVO();
-      Connection con = null;
-      Statement stm = null;
-      ConexionBD cc = new ConexionBD();
-      ResultSet rs = null;
+      Connection connection = null;
+      Statement statement = null;
+      ConexionBD conexion = new ConexionBD();
+      ResultSet resultset = null;
       try {
-         con = cc.conectarMySQL();
-         stm = con.createStatement();
-         rs = stm.executeQuery(sql);
-         if (rs.next()) {
-            String nombre = rs.getString("nombre");
-            String descripcion = rs.getString("descripcion");
-            int capacidadEstudiantes = rs.getInt("capacidadEstudiantes");
-            int numEstudiantesAsignados = rs.getInt("numEstudiantesAsignados");
-            int idProyecto = rs.getInt("idProyecto");
-            String status = rs.getString("status");
-            int idOrganizacion = rs.getInt("idOrganizacion");
-            int idEncargadoProyecto = rs.getInt("idEncargadoProyecto");
+         connection = conexion.conectarMySQL();
+         statement = connection.createStatement();
+         resultset = statement.executeQuery(sql);
+         if (resultset.next()) {
+            String nombre = resultset.getString("nombre");
+            String descripcion = resultset.getString("descripcion");
+            int capacidadEstudiantes = resultset.getInt("capacidadEstudiantes");
+            int numEstudiantesAsignados = resultset.getInt("numEstudiantesAsignados");
+            int idProyecto = resultset.getInt("idProyecto");
+            String status = resultset.getString("status");
+            int idOrganizacion = resultset.getInt("idOrganizacion");
+            int idEncargadoProyecto = resultset.getInt("idEncargadoProyecto");
             proyectoRecuperado = new ProyectoVO(idProyecto, nombre, descripcion,
                     capacidadEstudiantes, numEstudiantesAsignados, status,
                     idOrganizacion, idEncargadoProyecto);
 
          }
-         con.close();
-         stm.close();
-         rs.close();
-      } catch (SQLException e) {
-         throw new SQLException("Error en recuperarProyectoEstudiante SQLException " + e.getMessage());
-      } catch (NullPointerException e) {
-         throw new NullPointerException("Error en recuperarProyectoEstudiante NullPointerException " + e.getMessage());
-      }catch (ConnectException e) {
-         throw new ConnectException("Error en recuperarProyectoEstudiante ConnectException " + e.getMessage());
-      } catch (Exception e) {
-         throw new Exception("Error en recuperarProyectoEstudiante Exception " + e.getMessage());
+         connection.close();
+         statement.close();
+         resultset.close();
+      } catch (SQLException exception) {
+         throw new SQLException("Error en recuperarProyectoEstudiante SQLException " + exception.getMessage());
+      } catch (NullPointerException exception) {
+         throw new NullPointerException("Error en recuperarProyectoEstudiante NullPointerException " + exception.getMessage());
+      }catch (ConnectException exception) {
+         throw new ConnectException("Error en recuperarProyectoEstudiante ConnectException " + exception.getMessage());
+      } catch (Exception exception) {
+         throw new Exception("Error en recuperarProyectoEstudiante Exception " + exception.getMessage());
       } finally {
          try {
-            if (stm != null) {
-               stm.close();
+            if (statement != null) {
+               statement.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
          try {
-            if (con != null) {
-               con.close();
+            if (connection != null) {
+               connection.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
       }
       return proyectoRecuperado;
@@ -151,102 +151,102 @@ public class ProyectoDAOImplements implements ProyectoDAO {
 
    @Override
    public ObservableList<ProyectoVO> recuperarProyectosSolicitados(String matricula) throws Exception {
-      Connection con = null;
-      PreparedStatement ps = null;
-      ResultSet rs = null;
+      Connection connection = null;
+      PreparedStatement prepareStatement = null;
+      ResultSet resultset = null;
       String sql = "SELECT p.nombre, p.descripcion, p.capacidadEstudiantes, "
               + "p.numEstudiantesAsignados, p.idProyecto, p.status, p.idOrganizacion,"
               + " p.idEncargadoProyecto FROM proyecto p INNER JOIN solicitud s ON "
               + "s.idProyecto=p.idProyecto WHERE matricula= ? AND s.periodo = 'Ene 2020-Ago 2020'";
 
-      ObservableList<ProyectoVO> proyectosSolicitados = FXCollections.observableArrayList();
+      ObservableList<ProyectoVO> proyectosSolicitadosList = FXCollections.observableArrayList();
 
       try {
-         con = new ConexionBD().conectarMySQL();
-         ps = con.prepareStatement(sql);
-         ps.setString(1, matricula);
-         rs = ps.executeQuery();
-         while (rs.next()) {
-            int idProyecto = rs.getInt("idProyecto");
-            String nombreProyecto = rs.getString("nombre");
-            String descripcion = rs.getString("descripcion");
-            int capacidadEstudiantes = rs.getInt("capacidadEstudiantes");
-            int numEstudiantesAsignados = rs.getInt("numEstudiantesAsignados");
-            String status = rs.getString("status");
-            int idOrganizacion = rs.getInt("idOrganizacion");
-            int idEncargadoProyecto = rs.getInt("idEncargadoProyecto");
+         connection = new ConexionBD().conectarMySQL();
+         prepareStatement = connection.prepareStatement(sql);
+         prepareStatement.setString(1, matricula);
+         resultset = prepareStatement.executeQuery();
+         while (resultset.next()) {
+            int idProyecto = resultset.getInt("idProyecto");
+            String nombreProyecto = resultset.getString("nombre");
+            String descripcion = resultset.getString("descripcion");
+            int capacidadEstudiantes = resultset.getInt("capacidadEstudiantes");
+            int numEstudiantesAsignados = resultset.getInt("numEstudiantesAsignados");
+            String status = resultset.getString("status");
+            int idOrganizacion = resultset.getInt("idOrganizacion");
+            int idEncargadoProyecto = resultset.getInt("idEncargadoProyecto");
             int cupo = (capacidadEstudiantes - numEstudiantesAsignados);
             if (cupo > 0) {
                ProyectoVO c = new ProyectoVO(idProyecto, nombreProyecto, descripcion,
                        capacidadEstudiantes, numEstudiantesAsignados, status, idOrganizacion,
                        idEncargadoProyecto);
-               proyectosSolicitados.add(c);
+               proyectosSolicitadosList.add(c);
             }
          }
-         ps.close();
-         rs.close();
-         con.close();
-      } catch (SQLException e) {
-         throw new SQLException("Error en recuperarProyectosSolicitados SQLException " + e.getMessage());
-      } catch (NullPointerException e) {
-         throw new NullPointerException("Error en recuperarProyectosSolicitados NullPointerException " + e.getMessage());
-      }catch (ConnectException e) {
-         throw new ConnectException("Error en recuperarProyectosSolicitados ConnectException " + e.getMessage());
-      } catch (Exception e) {
-         throw new Exception("Error en recuperarProyectosSolicitados Exception " + e.getMessage());
+         prepareStatement.close();
+         resultset.close();
+         connection.close();
+      } catch (SQLException exception) {
+         throw new SQLException("Error en recuperarProyectosSolicitados SQLException " + exception.getMessage());
+      } catch (NullPointerException exception) {
+         throw new NullPointerException("Error en recuperarProyectosSolicitados NullPointerException " + exception.getMessage());
+      }catch (ConnectException exception) {
+         throw new ConnectException("Error en recuperarProyectosSolicitados ConnectException " + exception.getMessage());
+      } catch (Exception exception) {
+         throw new Exception("Error en recuperarProyectosSolicitados Exception " + exception.getMessage());
       } finally {
          try {
-            if (ps != null) {
-               ps.close();
+            if (prepareStatement != null) {
+               prepareStatement.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
          try {
-            if (con != null) {
-               con.close();
+            if (connection != null) {
+               connection.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
       }
-      return proyectosSolicitados;
+      return proyectosSolicitadosList;
    }
 
    @Override
    public boolean cambiarEstudiantesAsignados(int idProyecto, int numEstudiantesAsignado, 
            String status) throws Exception {
       boolean changed = false;
-      Connection con = null;
-      Statement stm = null;
+      Connection connection = null;
+      Statement statement = null;
       String sql = "UPDATE proyecto SET status='" + status + "', numEstudiantesAsignados="
               +numEstudiantesAsignado+"  WHERE idProyecto='" + idProyecto + "'";
 
       try {
-         con = new ConexionBD().conectarMySQL();
-         stm = con.createStatement();
-         stm.execute(sql);
+         connection = new ConexionBD().conectarMySQL();
+         statement = connection.createStatement();
+         statement.execute(sql);
          changed = true;
-         stm.close();
-         con.close();
-      } catch (SQLException e) {
-         throw new SQLException("Error en cambiarEstudiantesAsignados SQLException " + e.getMessage());
-      } catch (NullPointerException e) {
-         throw new NullPointerException("Error en cambiarEstudiantesAsignados NullPointerException " + e.getMessage());
-      }catch (ConnectException e) {
-         throw new ConnectException("Error en cambiarEstudiantesAsignados ConnectException " + e.getMessage());
-      } catch (Exception e) {
-         throw new Exception("Error en cambiarEstudiantesAsignados Exception " + e.getMessage());
+         statement.close();
+         connection.close();
+      } catch (SQLException exception) {
+         throw new SQLException("Error en cambiarEstudiantesAsignados SQLException " + exception.getMessage());
+      } catch (NullPointerException exception) {
+         throw new NullPointerException("Error en cambiarEstudiantesAsignados NullPointerException " + exception.getMessage());
+      }catch (ConnectException exception) {
+         throw new ConnectException("Error en cambiarEstudiantesAsignados ConnectException " + exception.getMessage());
+      } catch (Exception exception) {
+         throw new Exception("Error en cambiarEstudiantesAsignados Exception " + exception.getMessage());
       } finally {
          try {
-            if (stm != null) {
-               stm.close();
+            if (statement != null) {
+               statement.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
          try {
-            if (con != null) {
-               con.close();
+            if (connection != null) {
+               connection.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
       }
       return changed;

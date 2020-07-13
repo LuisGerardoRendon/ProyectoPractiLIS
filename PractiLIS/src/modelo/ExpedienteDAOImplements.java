@@ -21,43 +21,43 @@ public class ExpedienteDAOImplements implements ExpedienteDAO {
    public ExpedienteVO obtenerExpedienteEstudiante(String matricula) throws Exception {
       String sql = crearSQLRecuperarExpedienteEstudiante(matricula);
       ExpedienteVO expedienteRecuperado = new ExpedienteVO();
-      Connection con = null;
-      Statement stm = null;
-      ConexionBD cc = new ConexionBD();
-      ResultSet rs = null;
+      Connection connection = null;
+      Statement statement = null;
+      ConexionBD conexion = new ConexionBD();
+      ResultSet resultset = null;
       try {
-         con = cc.conectarMySQL();
-         stm = con.createStatement();
-         rs = stm.executeQuery(sql);
-         if (rs.next()) {
-            int idExpediente = rs.getInt("idExpediente");
+         connection = conexion.conectarMySQL();
+         statement = connection.createStatement();
+         resultset = statement.executeQuery(sql);
+         if (resultset.next()) {
+            int idExpediente = resultset.getInt("idExpediente");
 
             expedienteRecuperado = new ExpedienteVO(idExpediente);
 
          }
-         con.close();
-         stm.close();
-         rs.close();
-      } catch (SQLException e) {
-         throw new SQLException("Error en obtenerExpediente SQLException " + e.getMessage());
-      } catch (NullPointerException e) {
-         throw new NullPointerException("Error en obtenerExpediente NullPointerException " + e.getMessage());
-      }catch (ConnectException e) {
-         throw new ConnectException("Error en obtenerExpediente ConnectException " + e.getMessage());
-      } catch (Exception e) {
-         throw new Exception("Error en obtenerExpediente Exception " + e.getMessage());
+         connection.close();
+         statement.close();
+         resultset.close();
+      } catch (SQLException exception) {
+         throw new SQLException("Error en obtenerExpediente SQLException " + exception.getMessage());
+      } catch (NullPointerException exception) {
+         throw new NullPointerException("Error en obtenerExpediente NullPointerException " + exception.getMessage());
+      }catch (ConnectException exception) {
+         throw new ConnectException("Error en obtenerExpediente ConnectException " + exception.getMessage());
+      } catch (Exception exception) {
+         throw new Exception("Error en obtenerExpediente Exception " + exception.getMessage());
       } finally {
          try {
-            if (stm != null) {
-               stm.close();
+            if (statement != null) {
+               statement.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
          try {
-            if (con != null) {
-               con.close();
+            if (connection != null) {
+               connection.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
       }
       return expedienteRecuperado;
@@ -77,37 +77,37 @@ public class ExpedienteDAOImplements implements ExpedienteDAO {
    @Override
    public boolean create(ExpedienteVO expediente) throws Exception {
       boolean created = false;
-      Connection con = null;
-      Statement stm = null;
+      Connection connection = null;
+      Statement statement = null;
       String sql = "INSERT INTO expediente VALUES (null, '" + expediente.getIdAsignacion() + "')";
       System.out.println(sql);
       try {
-         con = new ConexionBD().conectarMySQL();
-         stm = con.createStatement();
-         stm.execute(sql);
+         connection = new ConexionBD().conectarMySQL();
+         statement = connection.createStatement();
+         statement.execute(sql);
          created = true;
-         stm.close();
-         con.close();
-      } catch (SQLException e) {
-         throw new SQLException("Error en create SQLException " + e.getMessage());
-      } catch (NullPointerException e) {
-         throw new NullPointerException("Error en create NullPointerException " + e.getMessage());
-      }catch (ConnectException e) {
-         throw new ConnectException("Error en create ConnectException " + e.getMessage());
-      } catch (Exception e) {
-         throw new Exception("Error en create Exception " + e.getMessage());
+         statement.close();
+         connection.close();
+      } catch (SQLException exception) {
+         throw new SQLException("Error en create SQLException " + exception.getMessage());
+      } catch (NullPointerException exception) {
+         throw new NullPointerException("Error en create NullPointerException " + exception.getMessage());
+      }catch (ConnectException exception) {
+         throw new ConnectException("Error en create ConnectException " + exception.getMessage());
+      } catch (Exception exception) {
+         throw new Exception("Error en create Exception " + exception.getMessage());
       } finally {
          try {
-            if (stm != null) {
-               stm.close();
+            if (statement != null) {
+               statement.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
          try {
-            if (con != null) {
-               con.close();
+            if (connection != null) {
+               connection.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
       }
       return created;

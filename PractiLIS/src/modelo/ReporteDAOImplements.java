@@ -25,53 +25,53 @@ public class ReporteDAOImplements implements ReporteDAO {
    @Override
    public boolean create(ReporteVO reporte, int idExpediente) throws Exception {
       boolean created = false;
-      PreparedStatement ps = null;
-      Connection con = null;
+      PreparedStatement prepareStatement = null;
+      Connection connection = null;
 
       try {
-         con = null;
-         ConexionBD cc = new ConexionBD();
-         con = cc.conectarMySQL();
+         connection = null;
+         ConexionBD conexion = new ConexionBD();
+         connection = conexion.conectarMySQL();
 
          String sql = "INSERT INTO reporte (numero,horasReportadas, fechaCarga, estado, reporte,"
                  + "fechaInicio, fechaFin, idExpediente) VALUES (?, ?, ?, ?, ?, ?,?,?)";
-         ps = con.prepareStatement(sql);
+         prepareStatement = connection.prepareStatement(sql);
 
-         ps.setInt(1, 0);
-         ps.setInt(2, reporte.getHorasReportadas());
-         ps.setString(3, reporte.getFechaCarga());
-         ps.setString(4, reporte.getEstado());
+         prepareStatement.setInt(1, 0);
+         prepareStatement.setInt(2, reporte.getHorasReportadas());
+         prepareStatement.setString(3, reporte.getFechaCarga());
+         prepareStatement.setString(4, reporte.getEstado());
          FileInputStream archivo = new FileInputStream(reporte.getReporte());
-         ps.setBlob(5, archivo);
-         ps.setString(6, reporte.getFechaInicio());
-         ps.setString(7, reporte.getFechaFin());
-         ps.setInt(8, idExpediente);
+         prepareStatement.setBlob(5, archivo);
+         prepareStatement.setString(6, reporte.getFechaInicio());
+         prepareStatement.setString(7, reporte.getFechaFin());
+         prepareStatement.setInt(8, idExpediente);
 
-         ps.executeUpdate();
+         prepareStatement.executeUpdate();
          created = true;
-         con.close();
-         ps.close();
+         connection.close();
+         prepareStatement.close();
 
-      } catch (SQLException e) {
-         throw new SQLException("Error en create SQLException " + e.getMessage());
-      } catch (NullPointerException e) {
-         throw new NullPointerException("Error en create NullPointerException " + e.getMessage());
-      }catch (ConnectException e) {
-         throw new ConnectException("Error en create ConnectException " + e.getMessage());
-      } catch (Exception e) {
-         throw new Exception("Error en create Exception " + e.getMessage());
+      } catch (SQLException exception) {
+         throw new SQLException("Error en create SQLException " + exception.getMessage());
+      } catch (NullPointerException exception) {
+         throw new NullPointerException("Error en create NullPointerException " + exception.getMessage());
+      }catch (ConnectException exception) {
+         throw new ConnectException("Error en create ConnectException " + exception.getMessage());
+      } catch (Exception exception) {
+         throw new Exception("Error en create Exception " + exception.getMessage());
       } finally {
          try {
-            if (ps != null) {
-               ps.close();
+            if (prepareStatement != null) {
+               prepareStatement.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
          try {
-            if (con != null) {
-               con.close();
+            if (connection != null) {
+               connection.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
       }
       return created;
@@ -82,45 +82,45 @@ public class ReporteDAOImplements implements ReporteDAO {
            throws Exception {
       String sql = crearSQLRecuperarReportes(periodo, matricula);
       ObservableList<ReporteVO> reportesRecuperados = FXCollections.observableArrayList();
-      Connection con = null;
-      Statement stm = null;
-      ConexionBD cc = new ConexionBD();
-      ResultSet rs = null;
+      Connection connection = null;
+      Statement statement = null;
+      ConexionBD conexion = new ConexionBD();
+      ResultSet resultset = null;
       try {
-         con = cc.conectarMySQL();
-         stm = con.createStatement();
-         rs = stm.executeQuery(sql);
-         while (rs.next()) {
-            int numero = rs.getInt("numero");
-            int horasReportadas = rs.getInt("horasReportadas");
-            String fechaCarga = rs.getString("fechaCarga");
+         connection = conexion.conectarMySQL();
+         statement = connection.createStatement();
+         resultset = statement.executeQuery(sql);
+         while (resultset.next()) {
+            int numero = resultset.getInt("numero");
+            int horasReportadas = resultset.getInt("horasReportadas");
+            String fechaCarga = resultset.getString("fechaCarga");
             ReporteVO reporteRecuperado = new ReporteVO(numero, horasReportadas, fechaCarga);
             reportesRecuperados.add(reporteRecuperado);
          }
 
-         con.close();
-         stm.close();
-         rs.close();
-      } catch (SQLException e) {
-         throw new SQLException("Error en recuperarReportes SQLException " + e.getMessage());
-      } catch (NullPointerException e) {
-         throw new NullPointerException("Error en recuperarReportes NullPointerException " + e.getMessage());
-      }catch (ConnectException e) {
-         throw new ConnectException("Error en recuperarReportes ConnectException " + e.getMessage());
-      } catch (Exception e) {
-         throw new Exception("Error en recuperarReportes Exception " + e.getMessage());
+         connection.close();
+         statement.close();
+         resultset.close();
+      } catch (SQLException exception) {
+         throw new SQLException("Error en recuperarReportes SQLException " + exception.getMessage());
+      } catch (NullPointerException exception) {
+         throw new NullPointerException("Error en recuperarReportes NullPointerException " + exception.getMessage());
+      }catch (ConnectException exception) {
+         throw new ConnectException("Error en recuperarReportes ConnectException " + exception.getMessage());
+      } catch (Exception exception) {
+         throw new Exception("Error en recuperarReportes Exception " + exception.getMessage());
       } finally {
          try {
-            if (stm != null) {
-               stm.close();
+            if (statement != null) {
+               statement.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
          try {
-            if (con != null) {
-               con.close();
+            if (connection != null) {
+               connection.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
       }
       return reportesRecuperados;

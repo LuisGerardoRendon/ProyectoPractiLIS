@@ -13,7 +13,7 @@ import javafx.collections.ObservableList;
  */
 public interface ProyectoDAO {
 
-   public ObservableList<ProyectoVO> recuperarProyectos() throws Exception;
+   public ObservableList<ProyectoVO> recuperarProyectosSinAsignar() throws Exception;
 
    public ProyectoVO recuperarProyectoEstudiante(String periodo, String matricula) throws Exception;
 

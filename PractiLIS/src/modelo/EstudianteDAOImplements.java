@@ -7,7 +7,6 @@ package modelo;
 
 import java.net.ConnectException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,43 +24,43 @@ public class EstudianteDAOImplements implements EstudianteDAO {
    public EstudianteVO recuperarEstudiante(String matricula, String contrasenia) throws Exception {
       EstudianteVO estudianteRecuperado = null;
       String sql = crearSQLestaRegistrado(matricula, contrasenia);
-      Connection con = null;
-      Statement stm = null;
-      ConexionBD cc = new ConexionBD();
-      ResultSet rs = null;
+      Connection connection = null;
+      Statement statement = null;
+      ConexionBD conexion = new ConexionBD();
+      ResultSet resultset = null;
       try {
-         con = cc.conectarMySQL();
-         stm = con.createStatement();
-         rs = stm.executeQuery(sql);
-         if (rs.next()) {
-            String nombre = rs.getString("nombre");
-            String correoElectronico = rs.getString("correo");
-            String status = rs.getString("status");
+         connection = conexion.conectarMySQL();
+         statement = connection.createStatement();
+         resultset = statement.executeQuery(sql);
+         if (resultset.next()) {
+            String nombre = resultset.getString("nombre");
+            String correoElectronico = resultset.getString("correo");
+            String status = resultset.getString("status");
             estudianteRecuperado = new EstudianteVO(matricula, contrasenia, nombre, correoElectronico, status);
          }
-         con.close();
-         stm.close();
-         rs.close();
-      } catch (SQLException e) {
-         throw new SQLException("Error en recuperarEstudiante SQLException " + e.getMessage());
-      } catch (NullPointerException e) {
-         throw new NullPointerException("Error en recuperarEstudiante NullPointerException " + e.getMessage());
-      }catch (ConnectException e) {
-         throw new ConnectException("Error en recuperarEstudiante ConnectException " + e.getMessage());
-      } catch (Exception e) {
-         throw new Exception("Error en recuperarEstudiante Exception " + e.getMessage());
+         connection.close();
+         statement.close();
+         resultset.close();
+      } catch (SQLException exception) {
+         throw new SQLException("Error en recuperarEstudiante SQLException " + exception.getMessage());
+      } catch (NullPointerException exception) {
+         throw new NullPointerException("Error en recuperarEstudiante NullPointerException " + exception.getMessage());
+      }catch (ConnectException exception) {
+         throw new ConnectException("Error en recuperarEstudiante ConnectException " + exception.getMessage());
+      } catch (Exception exception) {
+         throw new Exception("Error en recuperarEstudiante Exception " + exception.getMessage());
       } finally {
          try {
-            if (stm != null) {
-               stm.close();
+            if (statement != null) {
+               statement.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
          try {
-            if (con != null) {
-               con.close();
+            if (connection != null) {
+               connection.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
       }
 
@@ -77,89 +76,89 @@ public class EstudianteDAOImplements implements EstudianteDAO {
 
    @Override
    public ObservableList<EstudianteVO> recuperarEstudiantesSinAsignar() throws Exception {
-      Connection con = null;
-      Statement stm = null;
-      ResultSet rs = null;
+      Connection connection = null;
+      Statement statement = null;
+      ResultSet resultset = null;
       String sql = "SELECT * FROM estudiante WHERE status='Sin asignar'";
 
-      ObservableList<EstudianteVO> estudiantes = FXCollections.observableArrayList();
+      ObservableList<EstudianteVO> estudiantesSinAsignarList = FXCollections.observableArrayList();
 
       try {
-         con = new ConexionBD().conectarMySQL();
-         stm = con.createStatement();
-         rs = stm.executeQuery(sql);
-         while (rs.next()) {
-            String matricula = rs.getString("matricula");
-            String contrasenia = rs.getString("contrasenia");
-            String nombre = rs.getString("nombre");
-            String correo = rs.getString("correo");
-            String status = rs.getString("status");
+         connection = new ConexionBD().conectarMySQL();
+         statement = connection.createStatement();
+         resultset = statement.executeQuery(sql);
+         while (resultset.next()) {
+            String matricula = resultset.getString("matricula");
+            String contrasenia = resultset.getString("contrasenia");
+            String nombre = resultset.getString("nombre");
+            String correo = resultset.getString("correo");
+            String status = resultset.getString("status");
 
-            EstudianteVO e = new EstudianteVO(matricula, contrasenia, nombre, correo, status);
-            estudiantes.add(e);
+            EstudianteVO estudianteRecuperado = new EstudianteVO(matricula, contrasenia, nombre, correo, status);
+            estudiantesSinAsignarList.add(estudianteRecuperado);
          }
-         stm.close();
-         rs.close();
-         con.close();
-      } catch (SQLException e) {
-         throw new SQLException("Error en recuperarEstudiantes SQLException " + e.getMessage());
-      } catch (NullPointerException e) {
-         throw new NullPointerException("Error en recuperarEstudiantes NullPointerException " + e.getMessage());
-      }catch (ConnectException e) {
-         throw new ConnectException("Error en recuperarEstudiantes ConnectException " + e.getMessage());
-      } catch (Exception e) {
-         throw new Exception("Error en recuperarEstudiantes Exception " + e.getMessage());
+         statement.close();
+         resultset.close();
+         connection.close();
+      } catch (SQLException exception) {
+         throw new SQLException("Error en recuperarEstudiantes SQLException " + exception.getMessage());
+      } catch (NullPointerException exception) {
+         throw new NullPointerException("Error en recuperarEstudiantes NullPointerException " + exception.getMessage());
+      }catch (ConnectException exception) {
+         throw new ConnectException("Error en recuperarEstudiantes ConnectException " + exception.getMessage());
+      } catch (Exception exception) {
+         throw new Exception("Error en recuperarEstudiantes Exception " + exception.getMessage());
       } finally {
          try {
-            if (stm != null) {
-               stm.close();
+            if (statement != null) {
+               statement.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
          try {
-            if (con != null) {
-               con.close();
+            if (connection != null) {
+               connection.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
       }
-      return estudiantes;
+      return estudiantesSinAsignarList;
    }
 
    @Override
    public boolean cambiarStatusAsignado(String matricula) throws Exception {
       boolean changed = false;
-      Connection con = null;
-      Statement stm = null;
+      Connection connection = null;
+      Statement statement = null;
       String sql = "UPDATE estudiante SET status='Asignado' WHERE matricula='" + matricula + "'";
 
       try {
-         con = new ConexionBD().conectarMySQL();
-         stm = con.createStatement();
-         stm.execute(sql);
+         connection = new ConexionBD().conectarMySQL();
+         statement = connection.createStatement();
+         statement.execute(sql);
          changed = true;
-         stm.close();
-         con.close();
-      } catch (SQLException e) {
-         throw new SQLException("Error en cambiarStatus SQLException " + e.getMessage());
-      } catch (NullPointerException e) {
-         throw new NullPointerException("Error en cambiarStatus NullPointerException " + e.getMessage());
-      }catch (ConnectException e) {
-         throw new ConnectException("Error en cambiarStatus ConnectException " + e.getMessage());
-      } catch (Exception e) {
-         throw new Exception("Error en cambiarStatus Exception " + e.getMessage());
+         statement.close();
+         connection.close();
+      } catch (SQLException exception) {
+         throw new SQLException("Error en cambiarStatus SQLException " + exception.getMessage());
+      } catch (NullPointerException exception) {
+         throw new NullPointerException("Error en cambiarStatus NullPointerException " + exception.getMessage());
+      }catch (ConnectException exception) {
+         throw new ConnectException("Error en cambiarStatus ConnectException " + exception.getMessage());
+      } catch (Exception exception) {
+         throw new Exception("Error en cambiarStatus Exception " + exception.getMessage());
       } finally {
          try {
-            if (stm != null) {
-               stm.close();
+            if (statement != null) {
+               statement.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
          try {
-            if (con != null) {
-               con.close();
+            if (connection != null) {
+               connection.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
       }
       return changed;

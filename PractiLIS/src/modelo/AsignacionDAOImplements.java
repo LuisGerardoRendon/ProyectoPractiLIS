@@ -20,39 +20,39 @@ public class AsignacionDAOImplements implements AsignacionDAO {
    @Override
    public boolean create(AsignacionVO asignacion) throws Exception {
       boolean created = false;
-      Connection con = null;
-      Statement stm = null;
-      ResultSet rs = null;
+      Connection connection = null;
+      Statement statement = null;
+      ResultSet resultSets = null;
       String sql = "INSERT INTO asignacion VALUES (null,'" + asignacion.getPeriodo() + "',null,"
               + asignacion.getProgreso() + "," + asignacion.getIdProyecto() + ",null,'"
               + asignacion.getMatriculaEstudiante() + "')";
       try {
-         con = new ConexionBD().conectarMySQL();
-         stm = con.createStatement();
-         stm.execute(sql);
+         connection = new ConexionBD().conectarMySQL();
+         statement = connection.createStatement();
+         statement.execute(sql);
          created = true;
-         stm.close();
-         con.close();
-      }catch (SQLException e) {
-         throw new SQLException("Error en create SQLException " + e.getMessage());
-      } catch (NullPointerException e) {
-         throw new NullPointerException("Error en create NullPointerException " + e.getMessage());
-      }catch (ConnectException e) {
-         throw new ConnectException("Error en create ConnectException " + e.getMessage());
-      } catch (Exception e) {
-         throw new Exception("Error en create Exception " + e.getMessage());
+         statement.close();
+         connection.close();
+      }catch (SQLException exception) {
+         throw new SQLException("Error en create SQLException " + exception.getMessage());
+      } catch (NullPointerException exception) {
+         throw new NullPointerException("Error en create NullPointerException " + exception.getMessage());
+      }catch (ConnectException exception) {
+         throw new ConnectException("Error en create ConnectException " + exception.getMessage());
+      } catch (Exception exception) {
+         throw new Exception("Error en create Exception " + exception.getMessage());
       } finally {
          try {
-            if (stm != null) {
-               stm.close();
+            if (statement != null) {
+               statement.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
          try {
-            if (con != null) {
-               con.close();
+            if (connection != null) {
+               connection.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
       }
       return created;
@@ -61,48 +61,48 @@ public class AsignacionDAOImplements implements AsignacionDAO {
    @Override
    public int obtenerIdAsingacion(String matricula, String periodo) throws Exception {
       int idAsignacion = 0;
-      Connection con = null;
-      Statement stm = null;
-      ResultSet rs = null;
+      Connection connection = null;
+      Statement statement = null;
+      ResultSet resultset = null;
       String sql = "SELECT idAsignacion FROM asignacion WHERE matriculaEstudiante = '"
               + matricula + "' AND periodo = '" + periodo + "'";
       System.out.println(sql);
       try {
-         con = new ConexionBD().conectarMySQL();
-         stm = con.createStatement();
-         rs = stm.executeQuery(sql);
-         if(rs.next()){
-            idAsignacion = rs.getInt("idAsignacion");
+         connection = new ConexionBD().conectarMySQL();
+         statement = connection.createStatement();
+         resultset = statement.executeQuery(sql);
+         if(resultset.next()){
+            idAsignacion = resultset.getInt("idAsignacion");
          }
-         stm.close();
-         rs.close();
-         con.close();
-      }catch (SQLException e) {
-         throw new SQLException("Error en obtenerIdAsingacion SQLException " + e.getMessage());
-      } catch (NullPointerException e) {
-         throw new NullPointerException("Error en obtenerIdAsingacion NullPointerException " + e.getMessage());
-      }catch (ConnectException e) {
-         throw new ConnectException("Error en obtenerIdAsingacion ConnectException " + e.getMessage());
-      } catch (Exception e) {
-         throw new Exception("Error en obtenerIdAsingacion Exception " + e.getMessage());
+         statement.close();
+         resultset.close();
+         connection.close();
+      }catch (SQLException exception) {
+         throw new SQLException("Error en obtenerIdAsingacion SQLException " + exception.getMessage());
+      } catch (NullPointerException exception) {
+         throw new NullPointerException("Error en obtenerIdAsingacion NullPointerException " + exception.getMessage());
+      }catch (ConnectException exception) {
+         throw new ConnectException("Error en obtenerIdAsingacion ConnectException " + exception.getMessage());
+      } catch (Exception exception) {
+         throw new Exception("Error en obtenerIdAsingacion Exception " + exception.getMessage());
       } finally {
          try {
-            if (stm != null) {
-               stm.close();
+            if (statement != null) {
+               statement.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
          try {
-            if (rs != null) {
-               rs.close();
+            if (resultset != null) {
+               resultset.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
          try {
-            if (con != null) {
-               con.close();
+            if (connection != null) {
+               connection.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
       }
       return idAsignacion;

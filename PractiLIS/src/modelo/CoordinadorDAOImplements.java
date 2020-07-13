@@ -24,47 +24,47 @@ public class CoordinadorDAOImplements implements CoordinadorDAO {
    public boolean login(String usuario, String contrasenia) throws Exception {
       String sql = crearSQLrecuperarCoordinador(usuario, contrasenia);
       boolean encontrado = false;
-      Connection con = null;
-      Statement stm = null;
-      ConexionBD cc = new ConexionBD();
-      ResultSet rs = null;
+      Connection connection = null;
+      Statement statement = null;
+      ConexionBD conexion = new ConexionBD();
+      ResultSet resultset = null;
 
       try {
-         con = cc.conectarMySQL();
-         stm = con.createStatement();
-         rs = stm.executeQuery(sql);
-         if (rs.next()) {
+         connection = conexion.conectarMySQL();
+         statement = connection.createStatement();
+         resultset = statement.executeQuery(sql);
+         if (resultset.next()) {
             encontrado = true;
          }
-         stm.close();
-         rs.close();
-         con.close();
-      } catch (SQLException e) {
-         throw new SQLException("Error en login SQLException " + e.getMessage());
-      } catch (NullPointerException e) {
-         throw new NullPointerException("Error en login NullPointerException " + e.getMessage());
-      } catch (ConnectException e) {
-         throw new ConnectException("Error en login ConnectException " + e.getMessage());
-      } catch (Exception e) {
-         throw new Exception("Error en login Exception " + e.getMessage());
+         statement.close();
+         resultset.close();
+         connection.close();
+      } catch (SQLException exception) {
+         throw new SQLException("Error en login SQLException " + exception.getMessage());
+      } catch (NullPointerException exception) {
+         throw new NullPointerException("Error en login NullPointerException " + exception.getMessage());
+      } catch (ConnectException exception) {
+         throw new ConnectException("Error en login ConnectException " + exception.getMessage());
+      } catch (Exception exception) {
+         throw new Exception("Error en login Exception " + exception.getMessage());
       } finally {
          try {
-            if (stm != null) {
-               stm.close();
+            if (statement != null) {
+               statement.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
          try {
-            if (rs != null) {
-               rs.close();
+            if (resultset != null) {
+               resultset.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
          try {
-            if (con != null) {
-               con.close();
+            if (connection != null) {
+               connection.close();
             }
-         } catch (Exception e) {
+         } catch (Exception exception) {
          };
       }
       return encontrado;
