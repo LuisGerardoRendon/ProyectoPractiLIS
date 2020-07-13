@@ -7,6 +7,7 @@ package modelo;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -52,9 +53,11 @@ public class ReporteDAOImplements implements ReporteDAO {
          ps.close();
 
       } catch (SQLException e) {
-         throw new Exception("Error en create SQLException " + e.getMessage());
+         throw new SQLException("Error en create SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en create NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en create NullPointerException " + e.getMessage());
+      }catch (ConnectException e) {
+         throw new ConnectException("Error en create ConnectException " + e.getMessage());
       } catch (Exception e) {
          throw new Exception("Error en create Exception " + e.getMessage());
       } finally {
@@ -99,11 +102,13 @@ public class ReporteDAOImplements implements ReporteDAO {
          stm.close();
          rs.close();
       } catch (SQLException e) {
-         throw new Exception("Error en create SQLException " + e.getMessage());
+         throw new SQLException("Error en recuperarReportes SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en create NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en recuperarReportes NullPointerException " + e.getMessage());
+      }catch (ConnectException e) {
+         throw new ConnectException("Error en recuperarReportes ConnectException " + e.getMessage());
       } catch (Exception e) {
-         throw new Exception("Error en create Exception " + e.getMessage());
+         throw new Exception("Error en recuperarReportes Exception " + e.getMessage());
       } finally {
          try {
             if (stm != null) {

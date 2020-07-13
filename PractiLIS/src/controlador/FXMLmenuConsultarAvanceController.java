@@ -6,6 +6,7 @@
 package controlador;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -79,10 +80,11 @@ public class FXMLmenuConsultarAvanceController implements Initializable {
     */
    @Override
    public void initialize(URL url, ResourceBundle rb) {
-      inicializarDatos();
-      setNombreProyecto();
-      calcularAvance();
-      inicializarTabla();
+      if (inicializarDatos()) {
+         setNombreProyecto();
+         calcularAvance();
+         inicializarTabla();
+      }
 
    }
 
@@ -147,15 +149,13 @@ public class FXMLmenuConsultarAvanceController implements Initializable {
       boolean hayReportesSubidos = false;
 
       if (!this.reportesRecuperados.isEmpty()) {
-         System.out.println("SI HAY REPORTES");
          hayReportesSubidos = true;
       } else {
          System.out.println("No hay reportes");
          Alert alert = new Alert(Alert.AlertType.INFORMATION);
          alert.setTitle("INFORMACIÓN");
-         alert.setHeaderText(null);
-         alert.setContentText("No hay avance en este proyecto"
-                 + "Nombre del proyecto: " + this.proyectoRescatado.getNombre());
+         alert.setHeaderText("No hay avance en este proyecto");
+         alert.setContentText("Nombre del proyecto: " + this.proyectoRescatado.getNombre());
          alert.showAndWait();
 
       }
@@ -163,17 +163,46 @@ public class FXMLmenuConsultarAvanceController implements Initializable {
 
    }
 
-   private void inicializarDatos() {
+   private boolean inicializarDatos() {
+      boolean datosInicializados = false;
       try {
          this.reportesRecuperados = this.reporteDAO.recuperarReportes("2020-2021",
                  this.estudianteLogeado.getMatricula());
-         this.proyectoRescatado = this.proyectoDAO.recuperarProyectoEstudiante("2020-2021",
-                 this.estudianteLogeado.getMatricula());
+         //this.proyectoRescatado = this.proyectoDAO.recuperarProyectoEstudiante("2020-2021",
+                 //this.estudianteLogeado.getMatricula());
+         datosInicializados = true;
 
-      } catch (Exception e) {
+      } catch (NullPointerException e) {
+         System.out.println("No conexion con la bd");
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle("ERROR");
+         alert.setHeaderText("");
+         alert.setContentText("ERROR. No hay conexión con la base de datos, inténtelo más tarde");
+         alert.showAndWait();
+
+      } catch (SQLException e) {
+         System.out.println("SQLExeption" );
+         e.printStackTrace();
+
+      }catch(ConnectException e){
+         System.out.println("No conexion con la bd CONNECT");
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle("ERROR");
+         alert.setHeaderText("");
+         alert.setContentText("ERROR. No hay conexión con la base de datos, inténtelo más tarde");
+         alert.showAndWait();
+         
+      }catch (Exception e) {
+         System.out.println("Exeption" );
+         e.printStackTrace();
+          Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle("ERROR");
+         alert.setHeaderText("");
+         alert.setContentText("ERROR. No hay conexión con la base de datos, inténtelo más tarde");
+         alert.showAndWait();
 
       }
-
+      return datosInicializados;
    }
 
 }

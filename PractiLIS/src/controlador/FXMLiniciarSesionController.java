@@ -136,7 +136,7 @@ public class FXMLiniciarSesionController implements Initializable {
       return mensajeCamposVacios;
    }
 
-   private String formatearMatricula(String matricula) {
+   public String formatearMatricula(String matricula) {
       String matriculaFormateada = "S";
       if (matricula.length() == 9) {
          if (matricula.charAt(0) != 'S') {

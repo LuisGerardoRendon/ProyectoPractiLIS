@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -39,9 +40,13 @@ public class ConexionBD {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, username, password);
             
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new Exception("Error en ConexionBD la causa es: " +  e.getCause().toString());
-        }
+        } catch (SQLException e) {
+         throw new SQLException("Error en recuperarReportes SQLException " + e.getMessage());
+      } catch (NullPointerException e) {
+         throw new NullPointerException("Error en recuperarReportes NullPointerException " + e.getMessage());
+      } catch (Exception e) {
+         throw new Exception("Error en recuperarReportes Exception " + e.getMessage());
+      }
 
         return conn;
     }
