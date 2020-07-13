@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,17 +36,27 @@ public class CoordinadorDAOImplements implements CoordinadorDAO {
          if (rs.next()) {
             encontrado = true;
          }
-
+         stm.close();
+         rs.close();
+         con.close();
       } catch (SQLException e) {
-         throw new Exception("Error en Login SQLException " + e.getMessage());
+         throw new SQLException("Error en login SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en Login NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en login NullPointerException " + e.getMessage());
+      } catch (ConnectException e) {
+         throw new ConnectException("Error en login ConnectException " + e.getMessage());
       } catch (Exception e) {
-         throw new Exception("Error en Login Exception " + e.getMessage());
+         throw new Exception("Error en login Exception " + e.getMessage());
       } finally {
          try {
             if (stm != null) {
                stm.close();
+            }
+         } catch (Exception e) {
+         };
+         try {
+            if (rs != null) {
+               rs.close();
             }
          } catch (Exception e) {
          };

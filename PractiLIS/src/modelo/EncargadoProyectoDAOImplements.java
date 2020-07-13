@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,21 +37,31 @@ public class EncargadoProyectoDAOImplements implements EncargadoProyectoDAO {
          String nombre = rs.getString("nombre");
          String cargo = rs.getString("cargo");
          String correoElectronico = rs.getString("correoElectronico");
-         encargadoProyectoRecuperdo = new EncargadoProyectoVO(idEncargado ,
+         encargadoProyectoRecuperdo = new EncargadoProyectoVO(idEncargado,
                  nombre, cargo, correoElectronico);
          con.close();
          stm.close();
          rs.close();
       } catch (SQLException e) {
-         throw new Exception("Error en create SQLException " + e.getMessage());
+         throw new SQLException("Error en recuperarEncargadoProyecto SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en create NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en recuperarEncargadoProyecto NullPointerException " 
+                 + e.getMessage());
+      } catch (ConnectException e) {
+         throw new ConnectException("Error en recuperarEncargadoProyecto ConnectException " 
+                 + e.getMessage());
       } catch (Exception e) {
-         throw new Exception("Error en create Exception " + e.getMessage());
+         throw new Exception("Error en recuperarEncargadoProyecto Exception " + e.getMessage());
       } finally {
          try {
             if (stm != null) {
                stm.close();
+            }
+         } catch (Exception e) {
+         };
+         try {
+            if (rs != null) {
+               rs.close();
             }
          } catch (Exception e) {
          };
@@ -86,12 +97,14 @@ public class EncargadoProyectoDAOImplements implements EncargadoProyectoDAO {
          registrado = true;
          con.close();
          stm.close();
-      } catch (SQLException e) {
-         throw new Exception("Error en create SQLException " + e.getMessage());
+      }catch (SQLException e) {
+         throw new SQLException("Error en registrarEncargadoProyecto SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en create NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en registrarEncargadoProyecto NullPointerException " + e.getMessage());
+      }catch (ConnectException e) {
+         throw new ConnectException("Error en registrarEncargadoProyecto ConnectException " + e.getMessage());
       } catch (Exception e) {
-         throw new Exception("Error en create Exception " + e.getMessage());
+         throw new Exception("Error en registrarEncargadoProyecto Exception " + e.getMessage());
       } finally {
          try {
             if (stm != null) {

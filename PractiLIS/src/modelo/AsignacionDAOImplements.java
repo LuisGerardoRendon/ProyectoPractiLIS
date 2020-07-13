@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,10 +33,12 @@ public class AsignacionDAOImplements implements AsignacionDAO {
          created = true;
          stm.close();
          con.close();
-      } catch (SQLException e) {
-         throw new Exception("Error en create SQLException " + e.getMessage());
+      }catch (SQLException e) {
+         throw new SQLException("Error en create SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en create NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en create NullPointerException " + e.getMessage());
+      }catch (ConnectException e) {
+         throw new ConnectException("Error en create ConnectException " + e.getMessage());
       } catch (Exception e) {
          throw new Exception("Error en create Exception " + e.getMessage());
       } finally {
@@ -74,16 +77,24 @@ public class AsignacionDAOImplements implements AsignacionDAO {
          stm.close();
          rs.close();
          con.close();
-      } catch (SQLException e) {
-         throw new Exception("Error en create SQLException " + e.getMessage());
+      }catch (SQLException e) {
+         throw new SQLException("Error en obtenerIdAsingacion SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en create NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en obtenerIdAsingacion NullPointerException " + e.getMessage());
+      }catch (ConnectException e) {
+         throw new ConnectException("Error en obtenerIdAsingacion ConnectException " + e.getMessage());
       } catch (Exception e) {
-         throw new Exception("Error en create Exception " + e.getMessage());
+         throw new Exception("Error en obtenerIdAsingacion Exception " + e.getMessage());
       } finally {
          try {
             if (stm != null) {
                stm.close();
+            }
+         } catch (Exception e) {
+         };
+         try {
+            if (rs != null) {
+               rs.close();
             }
          } catch (Exception e) {
          };
