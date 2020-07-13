@@ -115,7 +115,8 @@ public class FXMLasignarProyectoController implements Initializable {
       float progreso = 0;
 
       if (estudiante != null && proyecto != null) {
-         AsignacionVO asignacion = new AsignacionVO(periodo, progreso, proyecto.getIdProyecto(), estudiante.getMatricula());
+         AsignacionVO asignacion = new AsignacionVO(periodo, progreso, proyecto.getIdProyecto(), 
+                 estudiante.getMatricula());
          asignacionDAOImp = new AsignacionDAOImplements();
          try {
             asignacionDAOImp.create(asignacion);
