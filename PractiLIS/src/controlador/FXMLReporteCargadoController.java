@@ -96,7 +96,7 @@ public class FXMLReporteCargadoController implements Initializable {
    public void setEstudianteLogeado(EstudianteVO estudianteLogeado) {
       this.estudianteLogeado = estudianteLogeado;
    }
-
+//
    @FXML
    private void cancelar(ActionEvent event) {
       cerrarVentana(event);
