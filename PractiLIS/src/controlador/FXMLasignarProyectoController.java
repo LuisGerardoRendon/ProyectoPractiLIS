@@ -6,6 +6,7 @@
 package controlador;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -115,26 +117,30 @@ public class FXMLasignarProyectoController implements Initializable {
       float progreso = 0;
 
       if (estudiante != null && proyecto != null) {
-         AsignacionVO asignacion = new AsignacionVO(periodo, progreso, proyecto.getIdProyecto(), 
-                 estudiante.getMatricula());
-         asignacionDAOImp = new AsignacionDAOImplements();
          try {
+            AsignacionVO asignacion = new AsignacionVO(periodo, progreso, proyecto.getIdProyecto(),
+                    estudiante.getMatricula());
+            asignacionDAOImp = new AsignacionDAOImplements();
             asignacionDAOImp.create(asignacion);
+            cambiarStatus(estudiante.getMatricula());
+            cambiarEstudiantesAsignados(proyecto);
+            this.crearExpediente(estudiante.getMatricula(), periodo);
+            FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonAsignar.getScene().getWindow());
+            alerta.alertaInformacion("EXITO", "", "La asignación se realizó con éxito");
+            this.inicializarTablas();
+         } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("");
+            alert.setContentText("ERROR. No hay conexión con la base de datos, inténtelo más tarde");
+            alert.showAndWait();
          } catch (Exception e) {
-            FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
-            alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",
-                    e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR.Algo Ocurrio");
+            alert.setHeaderText("");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
          }
-
-         cambiarStatus(estudiante.getMatricula());
-         cambiarEstudiantesAsignados(proyecto);
-
-         this.crearExpediente(estudiante.getMatricula(), periodo);
-
-         FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonAsignar.getScene().getWindow());
-         alerta.alertaInformacion("EXITO", "", "La asignación se realizó con éxito");
-
-         this.inicializarTablas();
       } else {
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonAsignar.getScene().getWindow());
          alerta.alertaError("ERROR", "", "No se ha seleccionado un estudiante o proyecto.");
@@ -170,7 +176,7 @@ public class FXMLasignarProyectoController implements Initializable {
 
    public void obtenerEstudiantes() {
       try {
-         this.estudiantes = estudianteDAOImp.recuperarEstudiantes();
+         this.estudiantes = estudianteDAOImp.recuperarEstudiantesSinAsignar();
       } catch (Exception e) {
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
          alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",
@@ -181,16 +187,26 @@ public class FXMLasignarProyectoController implements Initializable {
 
    public void obtenerProyectosSolicitados(String matricula) {
       try {
-         this.proyectosSolicitados = proyectoDAOImp.recuperarProyectosSolicitados(matricula);
-         if (proyectosSolicitados.isEmpty()) {
+         if (!proyectosSolicitados.isEmpty()) {
+            this.proyectosSolicitados = proyectoDAOImp.recuperarProyectosSolicitados(matricula);
+         } else {
             FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
             alerta.alertaError("Error", "",
                     "Los PROYECTOS solicitados por este estudiante no tienen cupo");
          }
+      } catch (SQLException e) {
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle("ERROR");
+         alert.setHeaderText("");
+         alert.setContentText("ERROR. No hay conexión con la base de datos, inténtelo más tarde");
+         alert.showAndWait();
+
       } catch (Exception e) {
-         FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
-         alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",
-                 e.getMessage());
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle("ERROR.Algo Orurrio");
+         alert.setHeaderText("");
+         alert.setContentText(e.getMessage());
+         alert.showAndWait();
       }
    }
 
@@ -209,7 +225,7 @@ public class FXMLasignarProyectoController implements Initializable {
 
    public void cambiarStatus(String matricula) {
       try {
-         boolean changed = this.estudianteDAOImp.cambiarStatus(matricula);
+         boolean changed = this.estudianteDAOImp.cambiarStatusAsignado(matricula);
          if (changed == false) {
             FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonAsignar.getScene().getWindow());
             alerta.alertaError("ERROR", "", "No se ha podido asignar el estudiante a proyecto");
