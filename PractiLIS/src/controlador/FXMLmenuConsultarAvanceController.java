@@ -168,8 +168,8 @@ public class FXMLmenuConsultarAvanceController implements Initializable {
       try {
          this.reportesRecuperados = this.reporteDAO.recuperarReportes("2020-2021",
                  this.estudianteLogeado.getMatricula());
-         //this.proyectoRescatado = this.proyectoDAO.recuperarProyectoEstudiante("2020-2021",
-         //this.estudianteLogeado.getMatricula());
+         this.proyectoRescatado = this.proyectoDAO.recuperarProyectoEstudiante("2020-2021",
+         this.estudianteLogeado.getMatricula());
          datosInicializados = true;
 
       } catch (SQLException e) {

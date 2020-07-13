@@ -94,7 +94,7 @@ public class FXMLiniciarSesionController implements Initializable {
 
          }  catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR.Algo Orurrio");
+            alert.setTitle("ERROR.Algo Ocurrio");
             alert.setHeaderText("");
             alert.setContentText(e.getMessage());
             alert.showAndWait();

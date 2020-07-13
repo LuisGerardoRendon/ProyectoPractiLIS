@@ -14,6 +14,6 @@ public interface EncargadoProyectoDAO {
 
    EncargadoProyectoVO recuperarEncargadoProyecto(ProyectoVO proyectoVO)throws Exception;
 
-   boolean registrarEncargadoProyecto(EncargadoProyectoVO encargado)throws Exception;
+   
 
 }

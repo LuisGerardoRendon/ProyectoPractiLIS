@@ -69,6 +69,7 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
          stage.show();
       } catch (IOException e) {
          System.out.println("Error al abrir la ventana");
+         e.printStackTrace();
       }
    }
 
