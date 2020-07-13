@@ -166,7 +166,7 @@ public class FXMLmenuConsultarAvanceController implements Initializable {
    private boolean inicializarDatos() {
       boolean datosInicializados = false;
       try {
-         this.reportesRecuperados = this.reporteDAO.recuperarReportes("2020-2021",
+         this.reportesRecuperados = this.reporteDAO.recuperarReportesDeEstudiante("2020-2021",
                  this.estudianteLogeado.getMatricula());
          this.proyectoRescatado = this.proyectoDAO.recuperarProyectoEstudiante("2020-2021",
          this.estudianteLogeado.getMatricula());
