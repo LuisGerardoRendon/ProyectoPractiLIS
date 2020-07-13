@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -53,11 +54,13 @@ public class ProyectoDAOImplements implements ProyectoDAO {
          stm.close();
          rs.close();
       } catch (SQLException e) {
-         throw new Exception("Error en create SQLException " + e.getMessage());
+         throw new SQLException("Error en recuperarProyectos SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en create NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en recuperarProyectos NullPointerException " + e.getMessage());
+      }catch (ConnectException e) {
+         throw new ConnectException("Error en recuperarProyectos ConnectException " + e.getMessage());
       } catch (Exception e) {
-         throw new Exception("Error en create Exception " + e.getMessage());
+         throw new Exception("Error en recuperarProyectos Exception " + e.getMessage());
       } finally {
          try {
             if (stm != null) {
@@ -105,11 +108,13 @@ public class ProyectoDAOImplements implements ProyectoDAO {
          stm.close();
          rs.close();
       } catch (SQLException e) {
-         throw new Exception("Error en create SQLException " + e.getMessage());
+         throw new SQLException("Error en recuperarProyectoEstudiante SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en create NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en recuperarProyectoEstudiante NullPointerException " + e.getMessage());
+      }catch (ConnectException e) {
+         throw new ConnectException("Error en recuperarProyectoEstudiante ConnectException " + e.getMessage());
       } catch (Exception e) {
-         throw new Exception("Error en create Exception " + e.getMessage());
+         throw new Exception("Error en recuperarProyectoEstudiante Exception " + e.getMessage());
       } finally {
          try {
             if (stm != null) {
@@ -182,11 +187,13 @@ public class ProyectoDAOImplements implements ProyectoDAO {
          rs.close();
          con.close();
       } catch (SQLException e) {
-         throw new Exception("Error en create SQLException " + e.getMessage());
+         throw new SQLException("Error en recuperarProyectosSolicitados SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en create NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en recuperarProyectosSolicitados NullPointerException " + e.getMessage());
+      }catch (ConnectException e) {
+         throw new ConnectException("Error en recuperarProyectosSolicitados ConnectException " + e.getMessage());
       } catch (Exception e) {
-         throw new Exception("Error en create Exception " + e.getMessage());
+         throw new Exception("Error en recuperarProyectosSolicitados Exception " + e.getMessage());
       } finally {
          try {
             if (ps != null) {
@@ -221,11 +228,13 @@ public class ProyectoDAOImplements implements ProyectoDAO {
          stm.close();
          con.close();
       } catch (SQLException e) {
-         throw new Exception("Error en create SQLException " + e.getMessage());
+         throw new SQLException("Error en cambiarEstudiantesAsignados SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en create NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en cambiarEstudiantesAsignados NullPointerException " + e.getMessage());
+      }catch (ConnectException e) {
+         throw new ConnectException("Error en cambiarEstudiantesAsignados ConnectException " + e.getMessage());
       } catch (Exception e) {
-         throw new Exception("Error en create Exception " + e.getMessage());
+         throw new Exception("Error en cambiarEstudiantesAsignados Exception " + e.getMessage());
       } finally {
          try {
             if (stm != null) {

@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,11 +39,13 @@ public class ExpedienteDAOImplements implements ExpedienteDAO {
          stm.close();
          rs.close();
       } catch (SQLException e) {
-         throw new Exception("Error en create SQLException " + e.getMessage());
+         throw new SQLException("Error en obtenerExpediente SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en create NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en obtenerExpediente NullPointerException " + e.getMessage());
+      }catch (ConnectException e) {
+         throw new ConnectException("Error en obtenerExpediente ConnectException " + e.getMessage());
       } catch (Exception e) {
-         throw new Exception("Error en create Exception " + e.getMessage());
+         throw new Exception("Error en obtenerExpediente Exception " + e.getMessage());
       } finally {
          try {
             if (stm != null) {
@@ -86,9 +89,11 @@ public class ExpedienteDAOImplements implements ExpedienteDAO {
          stm.close();
          con.close();
       } catch (SQLException e) {
-         throw new Exception("Error en create SQLException " + e.getMessage());
+         throw new SQLException("Error en create SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en create NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en create NullPointerException " + e.getMessage());
+      }catch (ConnectException e) {
+         throw new ConnectException("Error en create ConnectException " + e.getMessage());
       } catch (Exception e) {
          throw new Exception("Error en create Exception " + e.getMessage());
       } finally {

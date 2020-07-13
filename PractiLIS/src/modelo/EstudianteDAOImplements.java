@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,9 +43,11 @@ public class EstudianteDAOImplements implements EstudianteDAO {
          stm.close();
          rs.close();
       } catch (SQLException e) {
-         throw new Exception("Error en recuperarEstudiante SQLException " + e.getMessage());
+         throw new SQLException("Error en recuperarEstudiante SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en recuperarEstudiante NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en recuperarEstudiante NullPointerException " + e.getMessage());
+      }catch (ConnectException e) {
+         throw new ConnectException("Error en recuperarEstudiante ConnectException " + e.getMessage());
       } catch (Exception e) {
          throw new Exception("Error en recuperarEstudiante Exception " + e.getMessage());
       } finally {
@@ -99,9 +102,11 @@ public class EstudianteDAOImplements implements EstudianteDAO {
          rs.close();
          con.close();
       } catch (SQLException e) {
-         throw new Exception("Error en recuperarEstudiantes SQLException " + e.getMessage());
+         throw new SQLException("Error en recuperarEstudiantes SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en recuperarEstudiantes NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en recuperarEstudiantes NullPointerException " + e.getMessage());
+      }catch (ConnectException e) {
+         throw new ConnectException("Error en recuperarEstudiantes ConnectException " + e.getMessage());
       } catch (Exception e) {
          throw new Exception("Error en recuperarEstudiantes Exception " + e.getMessage());
       } finally {
@@ -136,11 +141,13 @@ public class EstudianteDAOImplements implements EstudianteDAO {
          stm.close();
          con.close();
       } catch (SQLException e) {
-         throw new Exception("Error en create SQLException " + e.getMessage());
+         throw new SQLException("Error en cambiarStatus SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new Exception("Error en create NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en cambiarStatus NullPointerException " + e.getMessage());
+      }catch (ConnectException e) {
+         throw new ConnectException("Error en cambiarStatus ConnectException " + e.getMessage());
       } catch (Exception e) {
-         throw new Exception("Error en create Exception " + e.getMessage());
+         throw new Exception("Error en cambiarStatus Exception " + e.getMessage());
       } finally {
          try {
             if (stm != null) {

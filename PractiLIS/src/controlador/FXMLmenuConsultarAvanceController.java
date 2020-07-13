@@ -169,38 +169,22 @@ public class FXMLmenuConsultarAvanceController implements Initializable {
          this.reportesRecuperados = this.reporteDAO.recuperarReportes("2020-2021",
                  this.estudianteLogeado.getMatricula());
          //this.proyectoRescatado = this.proyectoDAO.recuperarProyectoEstudiante("2020-2021",
-                 //this.estudianteLogeado.getMatricula());
+         //this.estudianteLogeado.getMatricula());
          datosInicializados = true;
 
-      } catch (NullPointerException e) {
-         System.out.println("No conexion con la bd");
-         Alert alert = new Alert(Alert.AlertType.ERROR);
-         alert.setTitle("ERROR");
-         alert.setHeaderText("");
-         alert.setContentText("ERROR. No hay conexión con la base de datos, inténtelo más tarde");
-         alert.showAndWait();
-
       } catch (SQLException e) {
-         System.out.println("SQLExeption" );
-         e.printStackTrace();
-
-      }catch(ConnectException e){
-         System.out.println("No conexion con la bd CONNECT");
          Alert alert = new Alert(Alert.AlertType.ERROR);
          alert.setTitle("ERROR");
          alert.setHeaderText("");
          alert.setContentText("ERROR. No hay conexión con la base de datos, inténtelo más tarde");
          alert.showAndWait();
-         
-      }catch (Exception e) {
-         System.out.println("Exeption" );
-         e.printStackTrace();
-          Alert alert = new Alert(Alert.AlertType.ERROR);
-         alert.setTitle("ERROR");
-         alert.setHeaderText("");
-         alert.setContentText("ERROR. No hay conexión con la base de datos, inténtelo más tarde");
-         alert.showAndWait();
 
+      } catch (Exception e) {
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle("ERROR. Algo malo ocurrió");
+         alert.setHeaderText("");
+         alert.setContentText(e.getMessage());
+         alert.showAndWait();
       }
       return datosInicializados;
    }

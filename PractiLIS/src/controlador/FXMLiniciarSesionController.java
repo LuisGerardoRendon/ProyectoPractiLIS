@@ -6,7 +6,9 @@
 package controlador;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -75,7 +77,7 @@ public class FXMLiniciarSesionController implements Initializable {
             } else if (coordinadorDAOImplements.login(matricula, contrasenia)) {
                cerrarVentanaInicio();
                mostrarFXMLasignarProyecto();
-               
+
             } else {
                FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonIniciarSesion.getScene().getWindow());
                alerta.alertaInformacion("USUARIO NO ENCONTRADO",
@@ -83,8 +85,20 @@ public class FXMLiniciarSesionController implements Initializable {
                        + "campos requeridos");
             }
 
-         } catch (Exception e) {
-            e.printStackTrace();
+         }  catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("");
+            alert.setContentText("ERROR. No hay conexión con la base de datos, inténtelo más tarde");
+            alert.showAndWait();
+
+         }  catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR.Algo Orurrio");
+            alert.setHeaderText("");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+
          }
       }
 
@@ -143,7 +157,7 @@ public class FXMLiniciarSesionController implements Initializable {
             for (int i = 1; i < matricula.length(); i++) {
                matriculaFormateada += matricula.charAt(i);
             }
-         }else{
+         } else {
             matriculaFormateada = matricula;
          }
       } else if (matricula.length() == 10) {
@@ -168,7 +182,8 @@ public class FXMLiniciarSesionController implements Initializable {
          e.printStackTrace();
       }
    }
-   private  void mostrarFXMLasignarProyecto(){
+
+   private void mostrarFXMLasignarProyecto() {
       try {
          FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/FXMLasignarProyecto.fxml"));
          Parent ventanaPrincipal = (Parent) fXMLLoader.load();
@@ -180,8 +195,6 @@ public class FXMLiniciarSesionController implements Initializable {
          e.printStackTrace();
       }
    }
-
-   
 
    public void cerrarVentanaInicio() {
       Stage stage = (Stage) this.botonIniciarSesion.getScene().getWindow();
