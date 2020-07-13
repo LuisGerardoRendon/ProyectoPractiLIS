@@ -88,6 +88,8 @@ public class FXMLSubirReporteController implements Initializable {
       this.estudianteLogeado = estudianteLogeado;
 
    }
+   
+   
 
    public FXMLSubirReporteController(EstudianteVO estudianteLogeado) {
       this.estudianteLogeado = estudianteLogeado;

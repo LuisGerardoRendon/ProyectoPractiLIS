@@ -163,7 +163,7 @@ public class FXMLReporteCargadoController implements Initializable {
 
    public void crearExpediente(String matricula) {
       try {
-         expediente = this.expedienteDAO.obtenerExpediente(matricula);
+         expediente = this.expedienteDAO.obtenerExpedienteEstudiante(matricula);
       } catch (Exception e) {
          e.printStackTrace();
       }
