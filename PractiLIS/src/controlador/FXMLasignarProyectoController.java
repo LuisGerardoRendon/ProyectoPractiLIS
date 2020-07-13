@@ -24,6 +24,8 @@ import modelo.AsignacionDAOImplements;
 import modelo.AsignacionVO;
 import modelo.EstudianteDAOImplements;
 import modelo.EstudianteVO;
+import modelo.ExpedienteDAOImplements;
+import modelo.ExpedienteVO;
 import modelo.ProyectoDAOImplements;
 import modelo.ProyectoVO;
 import vista.FXMLAlerta;
@@ -61,6 +63,7 @@ public class FXMLasignarProyectoController implements Initializable {
    private ProyectoDAOImplements proyectoDAOImp;
    private EstudianteDAOImplements estudianteDAOImp;
    private AsignacionDAOImplements asignacionDAOImp;
+   private ExpedienteDAOImplements expedienteDAOImp;
 
    private ObservableList<ProyectoVO> proyectos;
    private ObservableList<ProyectoVO> proyectosSolicitados;
@@ -75,18 +78,12 @@ public class FXMLasignarProyectoController implements Initializable {
          //LLena tabla de proyecto
          proyectoDAOImp = new ProyectoDAOImplements();
          proyectos = FXCollections.observableArrayList();
-         this.obtenerProyectos();
-         this.columnaNombreProyecto.setCellValueFactory(new PropertyValueFactory("nombre"));
-         this.columnaCupoProyecto.setCellValueFactory(new PropertyValueFactory("capacidadEstudiantes"));
-         this.tablaProyectos.setItems(proyectos);
 
          //Llena tabla de estudiantes
          estudianteDAOImp = new EstudianteDAOImplements();
          estudiantes = FXCollections.observableArrayList();
-         this.obtenerEstudiantes();
-         this.columnaNombreEstudiantes.setCellValueFactory(new PropertyValueFactory("nombre"));
-         this.columnaMatricula.setCellValueFactory(new PropertyValueFactory("matricula"));
-         this.tablaEstudiantes.setItems(estudiantes);
+
+         this.inicializarTablas();
       } catch (Exception e) {
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
          alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",
@@ -112,39 +109,34 @@ public class FXMLasignarProyectoController implements Initializable {
    @FXML
    private void asignar(ActionEvent event) {
       EstudianteVO estudiante = this.tablaEstudiantes.getSelectionModel().getSelectedItem();
-      ProyectoVO proyectoSolicitado = this.tablaSolicitudes.getSelectionModel().getSelectedItem();
-      ProyectoVO proyecto = this.tablaProyectos.getSelectionModel().getSelectedItem();
-
+      ProyectoVO proyecto = this.obtenerProyectoSeleccionado();
       //Datos de la asignacion
       String periodo = "Ene 2020-Ago 2020";
       float progreso = 0;
-      //Crear método para validar de que tabla se elige el proyecto.
-      if (estudiante != null && proyecto != null && proyectoSolicitado != null) {
-         FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonAsignar.getScene().getWindow());
-         alerta.alertaError("ERROR", "", "No se ha seleccionado un estudiante o proyecto.");
-      } else {
-         if (proyecto != null) {
-            AsignacionVO asignacion = new AsignacionVO(periodo, progreso, proyecto.getIdProyecto(),estudiante.getMatricula());
-            asignacionDAOImp = new AsignacionDAOImplements();
-            try {
-               asignacionDAOImp.create(asignacion);
-            } catch (Exception e) {
-               FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
-               alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",
-                       e.getMessage());
-            }
-         } else {
-            AsignacionVO asignacion = new AsignacionVO(periodo, progreso, proyectoSolicitado.getIdProyecto(), estudiante.getMatricula());
-            asignacionDAOImp = new AsignacionDAOImplements();
-            try {
-               asignacionDAOImp.create(asignacion);
-            } catch (Exception e) {
-               FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
-               alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",
-                       e.getMessage());
-            }
+
+      if (estudiante != null && proyecto != null) {
+         AsignacionVO asignacion = new AsignacionVO(periodo, progreso, proyecto.getIdProyecto(), estudiante.getMatricula());
+         asignacionDAOImp = new AsignacionDAOImplements();
+         try {
+            asignacionDAOImp.create(asignacion);
+         } catch (Exception e) {
+            FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
+            alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",
+                    e.getMessage());
          }
 
+         cambiarStatus(estudiante.getMatricula());
+         cambiarEstudiantesAsignados(proyecto);
+
+         this.crearExpediente(estudiante.getMatricula(), periodo);
+
+         FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonAsignar.getScene().getWindow());
+         alerta.alertaInformacion("EXITO", "", "La asignación se realizó con éxito");
+
+         this.inicializarTablas();
+      } else {
+         FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonAsignar.getScene().getWindow());
+         alerta.alertaError("ERROR", "", "No se ha seleccionado un estudiante o proyecto.");
       }
    }
 
@@ -198,6 +190,84 @@ public class FXMLasignarProyectoController implements Initializable {
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
          alerta.alertaError("Error", "Ocurrio un error al realizar la operacion con la base de datos",
                  e.getMessage());
+      }
+   }
+
+   public ProyectoVO obtenerProyectoSeleccionado() {
+      ProyectoVO proyectoTablaProyectos = this.tablaProyectos.getSelectionModel().getSelectedItem();
+      ProyectoVO proyectoTablaSolicitudes = this.tablaSolicitudes.getSelectionModel().getSelectedItem();
+      ProyectoVO proyectoSeleccionado;
+
+      if (proyectoTablaProyectos != null) {
+         proyectoSeleccionado = proyectoTablaProyectos;
+      } else {
+         proyectoSeleccionado = proyectoTablaSolicitudes;
+      }
+      return proyectoSeleccionado;
+   }
+
+   public void cambiarStatus(String matricula) {
+      try {
+         boolean changed = this.estudianteDAOImp.cambiarStatus(matricula);
+         if (changed == false) {
+            FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonAsignar.getScene().getWindow());
+            alerta.alertaError("ERROR", "", "No se ha podido asignar el estudiante a proyecto");
+         }
+      } catch (Exception e) {
+         FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
+         alerta.alertaError("Error", "Ocurrio un error al realizar el método cambiarStatus",
+                 e.getMessage());
+      }
+   }
+
+   public void cambiarEstudiantesAsignados(ProyectoVO proyecto) {
+      if ((proyecto.getCapacidadEstudiantes() - (proyecto.getNumEstudiantesAsignados() + 1)) != 0) {
+         try {
+            boolean changed = this.proyectoDAOImp.cambiarEstudiantesAsignados(proyecto.getIdProyecto(), (proyecto.getNumEstudiantesAsignados() + 1), "Sin asignar");
+         } catch (Exception e) {
+            FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
+            alerta.alertaError("Error", "Ocurrio un error al realizar el método cambiarEstudianteAsignado",
+                    e.getMessage());
+         }
+      } else {
+         try {
+            this.proyectoDAOImp.cambiarEstudiantesAsignados(proyecto.getIdProyecto(), (proyecto.getNumEstudiantesAsignados() + 1), "Asignado");
+         } catch (Exception e) {
+            FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
+            alerta.alertaError("Error", "Ocurrio un error al realizar el método cambiarEstudianteAsignado",
+                    e.getMessage());
+         }
+      }
+   }
+
+   public void inicializarTablas() {
+      this.obtenerProyectos();
+      this.columnaNombreProyecto.setCellValueFactory(new PropertyValueFactory("nombre"));
+      this.columnaCupoProyecto.setCellValueFactory(new PropertyValueFactory("capacidadEstudiantes"));
+      this.tablaProyectos.setItems(proyectos);
+
+      this.obtenerEstudiantes();
+      this.columnaNombreEstudiantes.setCellValueFactory(new PropertyValueFactory("nombre"));
+      this.columnaMatricula.setCellValueFactory(new PropertyValueFactory("matricula"));
+      this.tablaEstudiantes.setItems(estudiantes);
+   }
+
+   public void crearExpediente(String matricula, String periodo) {
+      expedienteDAOImp = new ExpedienteDAOImplements();
+      try {
+         int idAsignacion = this.asignacionDAOImp.obtenerIdAsingacion(matricula, periodo);
+         System.out.println(idAsignacion);
+         ExpedienteVO expediente = new ExpedienteVO(0, idAsignacion);
+         boolean created = this.expedienteDAOImp.create(expediente);
+         if (created == false) {
+            FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonAsignar.getScene().getWindow());
+            alerta.alertaError("ERROR", "", "No se ha podido crear el expediente");
+         }
+      } catch (Exception e) {
+         FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
+         alerta.alertaError("Error", "Ocurrio un error al realizar el método crear Expediente",
+                 e.getMessage());
+         e.printStackTrace();
       }
    }
 }

@@ -6,6 +6,7 @@
 package modelo;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -118,5 +119,42 @@ public class EstudianteDAOImplements implements EstudianteDAO {
          };
       }
       return estudiantes;
+   }
+
+   @Override
+   public boolean cambiarStatus(String matricula) throws Exception {
+      boolean changed = false;
+      Connection con = null;
+      Statement stm = null;
+      String sql = "UPDATE estudiante SET status='Asignado' WHERE matricula='" + matricula + "'";
+
+      try {
+         con = new ConexionBD().conectarMySQL();
+         stm = con.createStatement();
+         stm.execute(sql);
+         changed = true;
+         stm.close();
+         con.close();
+      } catch (SQLException e) {
+         throw new Exception("Error en create SQLException " + e.getMessage());
+      } catch (NullPointerException e) {
+         throw new Exception("Error en create NullPointerException " + e.getMessage());
+      } catch (Exception e) {
+         throw new Exception("Error en create Exception " + e.getMessage());
+      } finally {
+         try {
+            if (stm != null) {
+               stm.close();
+            }
+         } catch (Exception e) {
+         };
+         try {
+            if (con != null) {
+               con.close();
+            }
+         } catch (Exception e) {
+         };
+      }
+      return changed;
    }
 }

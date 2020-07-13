@@ -20,6 +20,8 @@ public class ProyectoVO {
    private String status;
    private int idOrganizacion;
    private int idEncargadoProyecto;
+   
+   private int cupo;
 
    public ProyectoVO() {
    }

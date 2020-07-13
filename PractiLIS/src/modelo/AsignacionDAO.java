@@ -11,4 +11,6 @@ package modelo;
  */
 public interface AsignacionDAO {
    public boolean create(AsignacionVO asignacion) throws Exception; 
+   
+   public int obtenerIdAsingacion(String matricula, String periodo) throws Exception;
 }

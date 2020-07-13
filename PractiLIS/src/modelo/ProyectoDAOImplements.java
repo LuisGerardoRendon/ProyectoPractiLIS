@@ -202,6 +202,44 @@ public class ProyectoDAOImplements implements ProyectoDAO {
          };
       }
       return proyectosSolicitados;
-      //.
+   }
+
+   @Override
+   public boolean cambiarEstudiantesAsignados(int idProyecto, int numEstudiantesAsignado, 
+           String status) throws Exception {
+      boolean changed = false;
+      Connection con = null;
+      Statement stm = null;
+      String sql = "UPDATE proyecto SET status='" + status + "', numEstudiantesAsignados="
+              +numEstudiantesAsignado+"  WHERE idProyecto='" + idProyecto + "'";
+
+      try {
+         con = new ConexionBD().conectarMySQL();
+         stm = con.createStatement();
+         stm.execute(sql);
+         changed = true;
+         stm.close();
+         con.close();
+      } catch (SQLException e) {
+         throw new Exception("Error en create SQLException " + e.getMessage());
+      } catch (NullPointerException e) {
+         throw new Exception("Error en create NullPointerException " + e.getMessage());
+      } catch (Exception e) {
+         throw new Exception("Error en create Exception " + e.getMessage());
+      } finally {
+         try {
+            if (stm != null) {
+               stm.close();
+            }
+         } catch (Exception e) {
+         };
+         try {
+            if (con != null) {
+               con.close();
+            }
+         } catch (Exception e) {
+         };
+      }
+      return changed;
    }
 }

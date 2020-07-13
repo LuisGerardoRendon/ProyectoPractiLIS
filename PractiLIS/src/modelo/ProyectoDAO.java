@@ -20,5 +20,6 @@ public interface ProyectoDAO {
    public String crearSQLRecuperarProyectoEstudiante(String periodo, String matricula);
 
    public ObservableList<ProyectoVO> recuperarProyectosSolicitados(String matricula) throws Exception;
-   //.
+   
+   public boolean cambiarEstudiantesAsignados(int idProyecto, int numEstudiantesAsignado, String status) throws Exception;
 }
