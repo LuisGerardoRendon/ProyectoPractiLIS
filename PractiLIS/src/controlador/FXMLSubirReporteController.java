@@ -13,6 +13,7 @@ package controlador;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -34,6 +36,7 @@ import modelo.ProyectoDAOImplements;
 import modelo.ProyectoVO;
 import modelo.ReporteDAOImplements;
 import modelo.ReporteVO;
+import vista.FXMLAlerta;
 
 /**
  * Clase que contiene los metodos que controlan a la ventana FXMLSubirReporte
@@ -68,6 +71,7 @@ public class FXMLSubirReporteController implements Initializable {
    ReporteDAOImplements reporteDAOImp;
    
    ProyectoDAOImplements proyectoDAOImp;
+   
 
    /**
     * Constructor de la clase que permite el paso de parametros desde la ventana
@@ -90,11 +94,15 @@ public class FXMLSubirReporteController implements Initializable {
 
       reporteDAOImp = new ReporteDAOImplements();
       proyectoDAOImp = new ProyectoDAOImplements();
-      recuperarReportes();
-      recuperarProyecto();
-      setNombreProyecto();
-      calcularHoras();
-      inicializarTabla();
+      
+      if(recuperarReportes()){
+         recuperarProyecto();
+         setNombreProyecto();
+         calcularHoras();
+         inicializarTabla();
+      }
+      
+      
 
    }
 
@@ -134,7 +142,7 @@ public class FXMLSubirReporteController implements Initializable {
       Stage stage = (Stage) source.getScene().getWindow();
       stage.close();
    }
-
+ 
    /**
     * Metodo para abrir la ventana FXMLSubirNuevoReporte
     */
@@ -144,7 +152,7 @@ public class FXMLSubirReporteController implements Initializable {
          FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/"
                  + "FXMLSubirNuevoReporte.fxml"));
          FXMLSubirNuevoReporteController controladorSubirNuevoReporte = new 
-        FXMLSubirNuevoReporteController(estudianteLogeado);
+         FXMLSubirNuevoReporteController(estudianteLogeado);
          loader.setController(controladorSubirNuevoReporte);
          Parent root = loader.load();
 
@@ -214,14 +222,32 @@ public class FXMLSubirReporteController implements Initializable {
    /**
     * Metodo para recuperar los reportes del estudiante
     */
-   public void recuperarReportes() {
+   public boolean recuperarReportes() {
+      boolean exitoRecuperarReportes=true;
+              
       try {
          reportesRecuperados = this.reporteDAOImp.recuperarReportesDeEstudiante("2020-2021",
                  estudianteLogeado.getMatricula());
-      } catch (Exception e) {
+      } catch (SQLException e) {
+         exitoRecuperarReportes=false;
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle("ERROR");
+         alert.setHeaderText("");
+         alert.setContentText("ERROR. No hay conexión con la base de datos, inténtelo más tarde");
+         alert.showAndWait();
          e.printStackTrace();
+         abrirMenuPrincipalEstudiante();
+      } catch (Exception e){
+         e.printStackTrace();
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle("ERROR. Algo malo ocurrió");
+         alert.setHeaderText("");
+         alert.setContentText(e.getMessage());
+         alert.showAndWait();
+         abrirMenuPrincipalEstudiante();
       }
-
+      
+      return exitoRecuperarReportes;
    }
 
    /**
