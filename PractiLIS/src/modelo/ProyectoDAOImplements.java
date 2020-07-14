@@ -1,9 +1,9 @@
 /**
- * Lista de contenido. 
+ * Lista de contenido.
  * > Paquete
  * > Clases o librerias ocupadas
  * > Métodos de recuperación
- * > Métodos de actualización 
+ * > Métodos de actualización
  * > Métodos de sentencias slq
  */
 package modelo;
@@ -101,7 +101,7 @@ public class ProyectoDAOImplements implements ProyectoDAO {
       Statement statement = null;
       ConexionBD conexion = new ConexionBD();
       ResultSet resultset = null;
-      
+
       ObservableList<ProyectoVO> proyectosRecuperadosList = FXCollections.observableArrayList();
       try {
          connection = conexion.conectarMySQL();
@@ -170,7 +170,7 @@ public class ProyectoDAOImplements implements ProyectoDAO {
               + "s.idProyecto=p.idProyecto WHERE matricula= ? AND s.periodo = '2020-2021'";
 
       ObservableList<ProyectoVO> proyectosSolicitadosList = FXCollections.observableArrayList();
-      
+
       try {
          connection = new ConexionBD().conectarMySQL();
          prepareStatement = connection.prepareStatement(sql);
@@ -187,10 +187,10 @@ public class ProyectoDAOImplements implements ProyectoDAO {
             int idEncargadoProyecto = resultset.getInt("idEncargadoProyecto");
             int cupo = (capacidadEstudiantes - numEstudiantesAsignados);
             if (cupo > 0) {
-               ProyectoVO c = new ProyectoVO(idProyecto, nombreProyecto, descripcion,
+               ProyectoVO proyectoRecuperado = new ProyectoVO(idProyecto, nombreProyecto, descripcion,
                        capacidadEstudiantes, numEstudiantesAsignados, status, idOrganizacion,
                        idEncargadoProyecto);
-               proyectosSolicitadosList.add(c);
+               proyectosSolicitadosList.add(proyectoRecuperado);
             }
          }
          prepareStatement.close();

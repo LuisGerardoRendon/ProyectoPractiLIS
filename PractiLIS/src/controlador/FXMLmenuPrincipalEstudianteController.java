@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelo.EstudianteVO;
+import vista.FXMLAlerta;
 
 /**
  * Clase Controlador de la ventana FXMLmenuPrincipalEstudiante.fxml
@@ -43,7 +44,7 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
     */
    @Override
    public void initialize(URL url, ResourceBundle rb) {
-      
+
    }
 
    /**
@@ -54,8 +55,15 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
     */
    @FXML
    private void subirReporte(ActionEvent event) {
-      cerrarMenuPrincipalEstudiante();
-      mostrarFXMLSubirReporte();
+      if (estudianteLoeagado.getStatus().equals("Asignado")) {
+         cerrarMenuPrincipalEstudiante();
+         mostrarFXMLSubirReporte();
+      } else {
+         FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonConsultarProgreso.getScene().getWindow());
+         alerta.alertaInformacion("No tienes ningun proyecto asignado",
+                 "No se ha encontrado ningun proyecto asignado", "Espera a que te asignen uno");
+      }
+
    }
 
    /**
@@ -66,8 +74,15 @@ public class FXMLmenuPrincipalEstudianteController implements Initializable {
     */
    @FXML
    private void consultarProgreso(ActionEvent event) {
-      cerrarMenuPrincipalEstudiante();
-      mostrarFXMLmenuconsultarAvance();
+      if (estudianteLoeagado.getStatus().equals("Asignado")) {
+         cerrarMenuPrincipalEstudiante();
+         mostrarFXMLmenuconsultarAvance();
+      } else {
+         FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonConsultarProgreso.getScene().getWindow());
+         alerta.alertaInformacion("No tienes ningun proyecto asignado",
+                 "No se ha encontrado ningun proyecto asignado", "Espera a que te asignen uno");
+      }
+
    }
 
    /**

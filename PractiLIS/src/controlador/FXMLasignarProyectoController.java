@@ -106,6 +106,7 @@ public class FXMLasignarProyectoController implements Initializable {
 
       if (estudianteSeleccionado != null) {
          this.obtenerProyectosSolicitados(estudianteSeleccionado.getMatricula());
+         this.calcularCupo(proyectosSolicitados);
          this.columnaNombreProyectoSolicitado.setCellValueFactory(new PropertyValueFactory("nombre"));
          this.columnaCupoProyectoSolicitado.setCellValueFactory(new PropertyValueFactory("capacidadEstudiantes"));
          this.tablaSolicitudes.setItems(proyectosSolicitados);
@@ -330,6 +331,8 @@ public class FXMLasignarProyectoController implements Initializable {
     */
    public void inicializarTablas() {
       this.obtenerProyectos();
+      this.calcularCupo(proyectos);
+
       this.columnaNombreProyecto.setCellValueFactory(new PropertyValueFactory("nombre"));
       this.columnaCupoProyecto.setCellValueFactory(new PropertyValueFactory("capacidadEstudiantes"));
       this.tablaProyectos.setItems(proyectos);
@@ -363,6 +366,19 @@ public class FXMLasignarProyectoController implements Initializable {
          alerta.alertaError("Error", "Ocurrio un error al realizar el método crear Expediente",
                  e.getMessage());
          e.printStackTrace();
+      }
+   }
+
+   /**
+    * Método encargado de calcular el cupo de los Proyectos de una ObservableList
+    *
+    * @param proyectosList ObservableList que se editará
+    */
+   private void calcularCupo(ObservableList<ProyectoVO> proyectosList) {
+      int cupo = 0;
+      for (ProyectoVO tab : proyectosList) {
+         cupo = tab.getCapacidadEstudiantes() - tab.getNumEstudiantesAsignados();
+         tab.setCapacidadEstudiantes(cupo);
       }
    }
 }

@@ -121,6 +121,11 @@ public class ReporteDAOImplements implements ReporteDAO {
             ReporteVO reporteRecuperado = new ReporteVO(numero, horasReportadas, fechaCarga);
             reportesRecuperados.add(reporteRecuperado);
          }
+         int contador = 1;
+         for (ReporteVO tab : reportesRecuperados) {
+            tab.setNumero(contador);
+            contador++;
+         }
 
          connection.close();
          statement.close();

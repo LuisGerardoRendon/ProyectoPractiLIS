@@ -85,14 +85,14 @@ public class FXMLiniciarSesionController implements Initializable {
                        + "campos requeridos");
             }
 
-         }  catch (SQLException e) {
+         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
             alert.setHeaderText("");
             alert.setContentText("ERROR. No hay conexión con la base de datos, inténtelo más tarde");
             alert.showAndWait();
 
-         }  catch (Exception e) {
+         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR.Algo Ocurrio");
             alert.setHeaderText("");
