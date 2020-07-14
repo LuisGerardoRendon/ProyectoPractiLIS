@@ -99,7 +99,6 @@ public class FXMLmenuConsultarAvanceController implements Initializable {
    public void initialize(URL url, ResourceBundle rb) {
       reporteDAOImp = new ReporteDAOImplements();
       proyectoDAOImp = new ProyectoDAOImplements();
-      reportesRecuperados = FXCollections.observableArrayList();
       if (inicializarDatos()) {
          setNombreProyecto();
          calcularAvance();
