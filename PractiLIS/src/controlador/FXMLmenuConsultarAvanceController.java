@@ -100,8 +100,6 @@ public class FXMLmenuConsultarAvanceController implements Initializable {
       reporteDAOImp = new ReporteDAOImplements();
       proyectoDAOImp = new ProyectoDAOImplements();
       reportesRecuperados = FXCollections.observableArrayList();
-      estudianteLogeado = new EstudianteVO();
-      proyectoRescatado = new ProyectoVO();
       if (inicializarDatos()) {
          setNombreProyecto();
          calcularAvance();
