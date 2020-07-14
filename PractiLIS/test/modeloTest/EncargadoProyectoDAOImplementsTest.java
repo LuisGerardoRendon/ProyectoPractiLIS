@@ -1,10 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * LISTA DE CONTENIDO:
+ * > Paquete de la clase  
+ * > Clases o librerias utilizadas
+ * > Atributos de la clase 
+ * > Método Before
+ * > Métodos Test
  */
 package modeloTest;
-
 
 import modelo.EncargadoProyectoDAOImplements;
 import modelo.EncargadoProyectoVO;
@@ -14,8 +16,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 
 /**
+ * Esta clase es la encargada de probar los métodos de la clase EncargadoProyectoDAOImplements
  *
- * @author Sammy Guergachi <sguergachi at gmail.com>
+ * @author Luis Gerardo Rendon Martinez
  */
 public class EncargadoProyectoDAOImplementsTest {
 
@@ -23,6 +26,10 @@ public class EncargadoProyectoDAOImplementsTest {
    ProyectoVO proyectoVO;
    EncargadoProyectoVO encargadoProyectoVO;
 
+   /**
+    * Este metodo inicializa todos los atributos necesarios para desarrollar las pruebas y siempre
+    * es el primero en ejecutarse.
+    */
    @Before
    public void before() {
       encargadoProyectoDAOImplements = new EncargadoProyectoDAOImplements();
@@ -32,6 +39,10 @@ public class EncargadoProyectoDAOImplementsTest {
               "Jefe de Recursos Humanos", "rendon.luisgerardo@gmail.com");
    }
 
+   /**
+    * Este Test prueba el método recuperarEncargaqdoProyecto de la clase
+    * EncargadoProyectoDAOImplements
+    */
    @Test
    public void recuperarEncargadoProyectoTest() {
       EncargadoProyectoVO encargadoRecuperado = new EncargadoProyectoVO();

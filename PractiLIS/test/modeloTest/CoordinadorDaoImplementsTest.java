@@ -1,10 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * LISTA DE CONTENIDO:
+ * > Paquete de la clase  
+ * > Clases o librerias utilizadas
+ * > Atributos de la clase 
+ * > Método Before
+ * > Métodos Test
  */
 package modeloTest;
-
 
 import modelo.CoordinadorDAOImplements;
 import org.junit.Test;
@@ -12,8 +14,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 
 /**
+ * Esta clase se encarga de probar los métodos de la clase CoordinadorDAOImplementsTest
  *
- * @author Sammy Guergachi <sguergachi at gmail.com>
+ * @author Luis Gerardo Rendon Martinez
  */
 public class CoordinadorDaoImplementsTest {
 
@@ -21,6 +24,10 @@ public class CoordinadorDaoImplementsTest {
    String matricula;
    String contrasenia;
 
+   /**
+    * Este metodo inicializa todos los atributos necesarios para desarrollar las pruebas y siempre
+    * es el primero en ejecutarse.
+    */
    @Before
    public void before() {
 
@@ -30,6 +37,9 @@ public class CoordinadorDaoImplementsTest {
 
    }
 
+   /**
+    * Este test prueba el método login de la clase CoordinadorDAOImplements
+    */
    @Test
    public void testLoginTrue() {
       boolean logeado = false;

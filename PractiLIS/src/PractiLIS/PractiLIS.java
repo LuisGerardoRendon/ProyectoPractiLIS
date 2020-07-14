@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * LISTA DE CONTENIDO:
+ * > Paquete de la clase  
+ * > Clases o librerias utilizadas
+ * > Método Main
+ * > Método Star
  */
 package PractiLIS;
 
@@ -13,19 +15,26 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
- * @author Sammy Guergachi <sguergachi at gmail.com>
+ * Clase encaragada de lanzar la primera pantalla del sistema (FXMLiniciarSesion.fxml)
+ * @author Luis Gerardo Rendon Martinez
  */
 public class PractiLIS extends Application {
 
    /**
-    * @param args the command line arguments
+    * Está función es la principal, 
+    * Invoca a la funcion launch que es la que indica la ejecución del sistema
+    * @param args Argumentos de la linea de comandos
     */
    public static void main(String[] args) {
         launch(args);
         
     }
-
+   /**
+    * El método start es el encargado de caragar  la ventana FXMLiniciarSesin y mostrarla.
+    * @param stage Este atributo es necesario para indicar el stage principal 
+    * @throws Exception Arroja cualquier excepcion que ocurra durante la ejecución, regularmente 
+    * lanza excepciones cuando la ruta está equivocada o cuando no existe el archivo de la vista.
+    */
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/vista/FXMLiniciarSesion.fxml"));

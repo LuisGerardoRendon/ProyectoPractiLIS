@@ -1,12 +1,13 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * LISTA DE CONTENIDO:
+ * > Paquete de la clase  
+ * > Clases o librerias utilizadas
+ * > Atributos de la clase 
+ * > Método Before
+ * > Métodos Test
  */
 package modeloTest;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import modelo.ProyectoDAOImplements;
@@ -16,8 +17,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 
 /**
+ * Esta clase es la encargada de probar los métodos de la clase ProyectoDAOImplements
  *
- * @author Sammy Guergachi <sguergachi at gmail.com>
+ * @author Luis Gerardo Rendon Martinez
  */
 public class ProyectoDAOImplementsTest {
 
@@ -28,6 +30,10 @@ public class ProyectoDAOImplementsTest {
    String periodo;
    String matricula;
 
+   /**
+    * Este metodo inicializa todos los atributos necesarios para desarrollar las pruebas y siempre
+    * es el primero en ejecutarse.
+    */
    @Before
    public void before() {
       proyectoDAOImplements = new ProyectoDAOImplements();
@@ -39,7 +45,11 @@ public class ProyectoDAOImplementsTest {
               + "distica del nuevo virus en Mexico", 3, 0, "Asignado", 3, 1);
    }
 
-   /*@Test
+   /**
+    * Este test se encarga de probar el método recuperarProyectosSinAsignar de la clase
+    * ProyectoDAOImplements
+    */
+   @Test
    public void recuperarProyectosSinAsignarTest() {
       boolean recuperados = false;
       try {
@@ -53,6 +63,10 @@ public class ProyectoDAOImplementsTest {
       assertTrue(recuperados);
    }
 
+   /**
+    * Este test se encarga de probar el método recuperarProyectoEstudiante de la clase
+    * ProyectoDAOImplements
+    */
    @Test
    public void recuperarProyectoEstudianteTest() {
       ProyectoVO proyectoRecuperado = new ProyectoVO();
@@ -64,6 +78,11 @@ public class ProyectoDAOImplementsTest {
       assertEquals(proyectoVO, proyectoRecuperado);
 
    }
+
+   /**
+    * Este test se encarga de probar el método recuperarProyectosSolicitados de la clase
+    * ProyectoDAOImplements
+    */
    @Test
    public void recuperarProyectosSolicitadosTest() {
       boolean recuperados = false;
@@ -76,7 +95,12 @@ public class ProyectoDAOImplementsTest {
          recuperados = true;
       }
       assertTrue(recuperados);
-   }*/
+   }
+
+   /**
+    * Este test se encarga de probar el método cambiarEstudiantesAsignados de la clase
+    * ProyectoDAOImplements
+    */
    @Test
    public void cambiarEstudiantesAsignadosTest() {
       boolean cambiado = false;

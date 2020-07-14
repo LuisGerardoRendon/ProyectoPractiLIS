@@ -1,10 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * LISTA DE CONTENIDO:
+ * > Paquete de la clase  
+ * > Clases o librerias utilizadas
+ * > Atributos de la clase 
+ * > Método Before
+ * > Métodos Test
  */
 package modeloTest;
-
 
 import modelo.AsignacionDAOImplements;
 import modelo.AsignacionVO;
@@ -13,8 +15,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 
 /**
+ * Esta clase se encarga de probar los métodos de la clase AsignacionDAOImplements
  *
- * @author Sammy Guergachi <sguergachi at gmail.com>
+ * @author Luis Gerardo Rendon Martinez
  */
 public class AsignacionDAOImplementsTest {
 
@@ -23,6 +26,10 @@ public class AsignacionDAOImplementsTest {
    String matriculaEstudiante;
    String periodo;
 
+   /**
+    * Este metodo inicializa todos los atributos necesarios para desarrollar las pruebas y siempre
+    * es el primero en ejecutarse.
+    */
    @Before
    public void before() {
       asignacionDAOImplements = new AsignacionDAOImplements();
@@ -32,6 +39,9 @@ public class AsignacionDAOImplementsTest {
       periodo = "2020-2021";
    }
 
+   /**
+    * Test que se encarga de probar el método Create de la clase AsignacionDAOImplements
+    */
    @Test
    public void testCreateTrue() {
       boolean resultado = false;
@@ -43,6 +53,10 @@ public class AsignacionDAOImplementsTest {
       assertTrue(resultado);
    }
 
+   /**
+    * Test que se encarga de probar el método obtenerIdAsignacion de la clase
+    * AsignacionDAOImplements
+    */
    @Test
    public void testobtenerIdAsingacion() {
       int idOrganizacion = 0;

@@ -1,7 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * LISTA DE CONTENIDO:
+ * > Paquete de la clase  
+ * > Clases o librerias utilizadas
+ * > Atributos de la clase 
+ * > Método Before
+ * > Métodos Test
  */
 package controladorTest;
 
@@ -11,26 +14,31 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 
 /**
+ * Esta clase se encarga de probar algunos métodos de la clase FXMLiniciarSesionController
  *
- * @author Sammy Guergachi <sguergachi at gmail.com>
+ * @author Luis Gerardo Rendon Martinez
  */
 public class FXMLiniciarSesionControllerTest {
+
    FXMLiniciarSesionController controlador;
    String matricula;
-   
+
+   /**
+    * Este metodo inicializa todos los atributos necesarios para desarrollar las pruebas.
+    */
    @Before
-   public void before(){
+   public void before() {
       controlador = new FXMLiniciarSesionController();
       matricula = "zs18012187";
    }
-   
+
+   /**
+    * Test que prueba el método formatearMatricula de la clase FXMLiniciarSesionController
+    */
    @Test
-   public void testFormatearMatricula(){
+   public void testFormatearMatricula() {
       String matriculaFormateada = controlador.formatearMatricula(matricula);
-      assertEquals("S18012187", matriculaFormateada);   
+      assertEquals("S18012187", matriculaFormateada);
    }
-   
-   
-   
-   
+
 }
