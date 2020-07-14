@@ -291,7 +291,6 @@ public class ProyectoDAOImplements implements ProyectoDAO {
               + "Proyecto.idProyecto";
       sql += " WHERE Asignacion.periodo = '" + periodo + "'";
       sql += " AND Asignacion.matriculaEstudiante = '" + matricula + "';";
-      System.out.println(sql);
       return sql;
    }
 }

@@ -13,6 +13,7 @@ package controlador;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,6 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
@@ -101,14 +103,15 @@ public class FXMLReporteCargadoController implements Initializable {
       // TODO
       reporteDAOImp = new ReporteDAOImplements();
       expedienteDAOImp = new ExpedienteDAOImplements();
-     
+
       cargarNombreArchivo();
-      
+
       crearExpediente(estudianteLogeado.getMatricula());
    }
-   
+
    /**
     * Metodo para cancelar el caso de uso
+    *
     * @param event Lanza el evento descrito
     */
    @FXML
@@ -119,6 +122,7 @@ public class FXMLReporteCargadoController implements Initializable {
 
    /**
     * Metodo para subir el reporte
+    *
     * @param event Lanza el evento descrito
     */
    @FXML
@@ -129,7 +133,7 @@ public class FXMLReporteCargadoController implements Initializable {
          abrirReporteSubidoExito();
          cerrarVentana(event);
       }
-      
+
    }
 
    /**
@@ -158,8 +162,7 @@ public class FXMLReporteCargadoController implements Initializable {
       try {
          FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/"
                  + "FXMLReporteSubido.fxml"));
-         FXMLReporteSubidoController controladorReporteCargado = new FXMLReporteSubidoController
-        (estudianteLogeado);
+         FXMLReporteSubidoController controladorReporteCargado = new FXMLReporteSubidoController(estudianteLogeado);
 
          loader.setController(controladorReporteCargado);
          Parent root = loader.load();
@@ -191,11 +194,14 @@ public class FXMLReporteCargadoController implements Initializable {
       try {
          creado = this.reporteDAOImp.create(reporte, expediente.getIdExpediente());
       } catch (Exception e) {
-         e.printStackTrace();
       }
       if (!creado) {
-         FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonSubirReporte.getScene().getWindow());
-         alerta.alertaError("ERROR", "No se pudo subir el reporte", "Intentelo mas tarde");
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle("ERROR");
+         alert.setHeaderText("");
+         alert.setContentText("SE PERDIÓ LA CONEXIÓN CON LA BASE DE DATOS");
+         alert.showAndWait();
+         abrirMenuPrincipalEstudiante();
       }
       return creado;
    }
@@ -208,8 +214,20 @@ public class FXMLReporteCargadoController implements Initializable {
    public void crearExpediente(String matricula) {
       try {
          expediente = this.expedienteDAOImp.obtenerExpedienteEstudiante(matricula);
+      } catch (SQLException e) {
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle("ERROR");
+         alert.setHeaderText("");
+         alert.setContentText("SE PERDIÓ LA CONEXIÓN CON LA BASE DE DATOS");
+         alert.showAndWait();
+         abrirMenuPrincipalEstudiante();
       } catch (Exception e) {
-         e.printStackTrace();
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle("ERROR. Algo malo ocurrió");
+         alert.setHeaderText("");
+         alert.setContentText(e.getMessage());
+         alert.showAndWait();
+         abrirMenuPrincipalEstudiante();
       }
    }
 

@@ -136,7 +136,6 @@ public class ExpedienteDAOImplements implements ExpedienteDAO {
               + "Asignacion ON Expediente.idAsignacion=Asignacion.idAsignacion "
               + "INNER JOIN Estudiante ON Asignacion.matriculaEstudiante=Estudiante.matricula "
               + "WHERE matricula= '" + matricula + "';";
-      System.out.println(sql);
       return sql;
    }
 

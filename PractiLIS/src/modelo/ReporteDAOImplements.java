@@ -181,7 +181,6 @@ public class ReporteDAOImplements implements ReporteDAO {
               + "Reporte.idExpediente ";
       sql += " WHERE Asignacion.periodo = " + "'" + periodo + "'";
       sql += " AND Asignacion.matriculaEstudiante =" + "'" + matricula + "';";
-      System.out.println(sql);
       return sql;
    }
 
