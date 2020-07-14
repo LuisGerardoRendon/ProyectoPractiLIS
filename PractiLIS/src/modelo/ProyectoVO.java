@@ -1,10 +1,10 @@
-/*
+/**
  * Lista de contenido. 
- * > Atributos de la clase line: 
- * > Constructores de la clase line: 
- * > Getters de la clase line: 
- * > Setters de la clase line: 
- * > Métodos de la clase line:
+ * > Atributos de la clase  
+ * > Constructores de la clase  
+ * > Getters de la clase  
+ * > Setters de la clase  
+ * > Métodos de la clase 
  */
 package modelo;
 
@@ -36,14 +36,15 @@ public class ProyectoVO {
    /**
     * Constructor parametrizado
     *
-    * @param idProyecto
-    * @param nombre
-    * @param descripcion
-    * @param capacidadEstudiantes
-    * @param numEstudiantesAsignados
-    * @param status
-    * @param idOrganizacion
-    * @param idEncargadoProyecto
+    * @param idProyecto Define el idProyecto de la Proyecto
+    * @param nombre Define el nombre de la Proyecto
+    * @param descripcion Define la descripcion de la Proyecto
+    * @param capacidadEstudiantes Define la capacidadEstudiantes de la Proyecto
+    * @param numEstudiantesAsignados Define el numEstudiantesAsignados de la Proyecto
+    * @param status Define el status de la Proyecto
+    * @param idOrganizacion Define el idOrganización de la Organizacion relacionada con Proyecto
+    * @param idEncargadoProyecto Define el idEncargadoProyecto del EncargadoProyecto relacionado con
+    * Proyecto
     */
    public ProyectoVO(int idProyecto, String nombre, String descripcion, int capacidadEstudiantes,
            int numEstudiantesAsignados, String status, int idOrganizacion, int idEncargadoProyecto) {
@@ -58,150 +59,144 @@ public class ProyectoVO {
    }
 
    /**
-    * Metodo getIdProyecto que regresa un int con el atributo de la id de Proyecto
+    * Metodo para obtener el idProyecto de Proyecto
     *
-    * @return idProyecto
+    * @return Regresa el id de Proyecto
     */
    public int getIdProyecto() {
       return idProyecto;
    }
 
    /**
-    * Metodo getNombre que regresa un String con el atributo del nombre de Proyecto
+    * Metodo para obtener el nombre de Proyecto
     *
-    * @return nombre
+    * @return Regresa el nombre de Proyecto
     */
    public String getNombre() {
       return nombre;
    }
 
    /**
-    * Metodo getDescripcion que regresa un String con el atributo de descripcion id de Proyecto
+    * Metodo para obtener la descripcion de Proyecto
     *
-    * @return descripcion
+    * @return Regresa la descripcion de Proyecto
     */
    public String getDescripcion() {
       return descripcion;
    }
 
    /**
-    * Metodo getCapacidadEstudiantes que regresa un int con el atributo de la capacidadEstudiantes
-    * de Proyecto
+    * Metodo para obtener la capacidadEstudiantes de Proyecto
     *
-    * @return capacidadEstudiantes
+    * @return Regresa la capacidadEstudiantes de Proyecto
     */
    public int getCapacidadEstudiantes() {
       return capacidadEstudiantes;
    }
 
    /**
-    * Metodo getNumEstudiantesAsignados que regresa un int con el atributo de los
-    * numEstudiantesAsignados de Proyecto
+    * Metodo para obtener el numEstudiantesAsignados de Proyecto
     *
-    * @return numEstudiantesAsignados
+    * @return Regresa el numEstudiantesAsignados de Proyecto
     */
    public int getNumEstudiantesAsignados() {
       return numEstudiantesAsignados;
    }
 
    /**
-    * Metodo getStatus que regresa un String con el atributo del status de Proyecto
+    * Metodo para obtener el status de Proyecto
     *
-    * @return status
+    * @return Regresa el status de Proyecto
     */
    public String getStatus() {
       return status;
    }
 
    /**
-    * Metodo getIdOrganizacion que regresa un int con el atributo de la id de la Organizacion
-    * vinculadad con Proyecto
+    * Metodo para obtener el idOrganizacion de la Organizacion relacionado con Proyecto
     *
-    * @return idOrganizacion
+    * @return Regresa el idOrganizacion de la Organizacion relacionado con Proyecto
     */
    public int getIdOrganizacion() {
       return idOrganizacion;
    }
 
    /**
-    * Metodo getIdEncargadoProyecto que regresa un int con el atributo de la id de EncargadoProyecto
-    * vinculado con Proyecto
+    * Metodo para obtener el idEncargadoProyecto del EncargadoProyecto relacionado con Proyecto
     *
-    * @return idProyecto
+    * @return Regresa el idEncargadoProyecto del EncargadoProyecto relacionado con Proyecto
     */
    public int getIdEncargadoProyecto() {
       return idEncargadoProyecto;
    }
 
    /**
-    * Metodo setIdProyecto que cambia el atributo del id de Proyecto
+    * Metodo para modificar el idProyecto al Proyecto
     *
-    * @param idProyecto
+    * @param idProyecto Define el idProyecto de Proyecto
     */
    public void setIdProyecto(int idProyecto) {
       this.idProyecto = idProyecto;
    }
 
    /**
-    * Metodo setNombre que cambia el atributo del nombre de Proyecto
+    * Metodo para modificar el nombre al Proyecto
     *
-    * @param nombre
+    * @param nombre Define el nombre de Proyecto
     */
    public void setNombre(String nombre) {
       this.nombre = nombre;
    }
 
    /**
-    * Metodo setDescripcion que cambia el atributo de la descripcion de Proyecto
+    * Metodo para modificar la descripcion al Proyecto
     *
-    * @param descripcion
+    * @param descripcion Define la descripcion de Proyecto
     */
    public void setDescripcion(String descripcion) {
       this.descripcion = descripcion;
    }
 
    /**
-    * Metodo setCapacidadEstudiantes que cambia el atributo de la capacidadEstudiantes de Proyecto
+    * Metodo para modificar la capacidadEstudiantes al Proyecto
     *
-    * @param capacidadEstudiantes
+    * @param capacidadEstudiantes Define la capacidadEstudiantes de Proyecto
     */
    public void setCapacidadEstudiantes(int capacidadEstudiantes) {
       this.capacidadEstudiantes = capacidadEstudiantes;
    }
 
    /**
-    * Metodo setNumEstudiantesAsignados que cambia el atributo del numEstudiantesAsignados de
-    * Proyecto
+    * Metodo para modificar el numEstudiantesAsignados a Proyecto
     *
-    * @param numEstudiantesAsignados
+    * @param numEstudiantesAsignados Define el numEstudiantesAsignados de Proyecto
     */
    public void setNumEstudiantesAsignados(int numEstudiantesAsignados) {
       this.numEstudiantesAsignados = numEstudiantesAsignados;
    }
 
    /**
-    * Metodo setStatus que cambia el atributo del status de Proyecto
+    * Metodo para modificar el status a Proyecto
     *
-    * @param status
+    * @param status Define el status de Proyecto
     */
    public void setStatus(String status) {
       this.status = status;
    }
 
    /**
-    * Metodo setIdOrganizacion que cambia el atributo del id de Organizacion vinculada al Proyecto
+    * Metodo para modificar el idOrganizacion de la Organizacion realcionada con Proyecto
     *
-    * @param idOrganizacion
+    * @param idOrganizacion Define el idOrganizacion de la Organizacion realcionada con Proyecto
     */
    public void setIdOrganizacion(int idOrganizacion) {
       this.idOrganizacion = idOrganizacion;
    }
 
    /**
-    * Metodo setIdEncargadoProyecto que cambia el atributo del id de EncargadoProyecto vinculado al
-    * Proyecto
+    * Metodo para modificar el idEncargadoProyecto del EncargadoProyecto relacionado con Proyecto
     *
-    * @param idEncargadoProyecto
+    * @param idEncargadoProyecto Define el idEncargadoProyecto relacionado con Proyecto
     */
    public void setIdEncargadoProyecto(int idEncargadoProyecto) {
       this.idEncargadoProyecto = idEncargadoProyecto;
@@ -227,9 +222,10 @@ public class ProyectoVO {
    }
 
    /**
+    * Metodo para evitar que un objeto se repita
     *
-    * @param obj
-    * @return
+    * @param obj Objeto que sera comparado
+    * @return Indica si el objeto ya existe o no
     */
    @Override
    public boolean equals(Object obj) {
@@ -247,11 +243,16 @@ public class ProyectoVO {
    }
 
    /**
+    * Metodo para obtener la información completa del objeto
     *
-    * @return
+    * @return Regresa la información compelta del objeto
     */
    @Override
    public String toString() {
-      return "ProyectoVO{" + "idProyecto=" + idProyecto + ", nombre=" + nombre + ", descripcion=" + descripcion + ", capacidadEstudiantes=" + capacidadEstudiantes + ", numEstudiantesAsignados=" + numEstudiantesAsignados + ", status=" + status + ", idOrganizacion=" + idOrganizacion + ", idEncargadoProyecto=" + idEncargadoProyecto + '}';
+      return "ProyectoVO{" + "idProyecto=" + idProyecto + ", nombre=" + nombre + ", descripcion="
+              + descripcion + ", capacidadEstudiantes=" + capacidadEstudiantes
+              + ", numEstudiantesAsignados=" + numEstudiantesAsignados + ", status="
+              + status + ", idOrganizacion=" + idOrganizacion + ", idEncargadoProyecto="
+              + idEncargadoProyecto + '}';
    }
 }

@@ -1,10 +1,10 @@
-/*
+/**
  * Lista de contenido. 
- * > Atributos de la clase line: 
- * > Constructores de la clase line: 
- * > Getters de la clase line: 
- * > Setters de la clase line: 
- * > Métodos de la clase line:
+ * > Atributos de la clase
+ * > Constructores de la clase
+ * > Getters de la clase
+ * > Setters de la clase
+ * > Métodos de la clase
  */
 package modelo;
 
@@ -36,14 +36,14 @@ public class OrganizacionVO {
    /**
     * Constructor parametrizado
     *
-    * @param idOrganizacion
-    * @param nombre
-    * @param direccion
-    * @param ciudad
-    * @param estado
-    * @param telefono
-    * @param correoElectronico
-    * @param sector
+    * @param idOrganizacion Define el idOrganización de la Organizacion
+    * @param nombre Define el nombre de la Organizacion
+    * @param direccion Define la direccion de la Organizacion
+    * @param ciudad Define la ciudad de la Organizacion
+    * @param estado Define el estado de la Organizacion
+    * @param telefono Define el telefono de la Organizacion
+    * @param correoElectronico Define el correoElectronico de la Organizacion
+    * @param sector Define el sector de la Organizacion
     */
    public OrganizacionVO(int idOrganizacion, String nombre, String direccion, String ciudad,
            String estado, String telefono, String correoElectronico, String sector) {
@@ -60,13 +60,13 @@ public class OrganizacionVO {
    /**
     * Constructor parametrizado sin idOrganizacion
     *
-    * @param nombre
-    * @param direccion
-    * @param ciudad
-    * @param estado
-    * @param telefono
-    * @param correoElectronico
-    * @param sector
+    * @param nombre Define el nombre de la Organizacion
+    * @param direccion Define la direccion de la Organizacion
+    * @param ciudad Define la ciudad de la Organizacion
+    * @param estado Define el estado de la Organizacion
+    * @param telefono Define el telefono de la Organizacion
+    * @param correoElectronico Define el correoElectronico de la Organizacion
+    * @param sector Define el sector de la Organizacion
     */
    public OrganizacionVO(String nombre, String direccion, String ciudad, String estado,
            String telefono, String correoElectronico, String sector) {
@@ -81,145 +81,144 @@ public class OrganizacionVO {
    }
 
    /**
-    * Metodo getIdOrganización que regresa un int con el atributo de la id de Organizacion
+    * Metodo para obtener el idOrganizacion de Organizacion
     *
-    * @return idOrganizacion
+    * @return Regresa el id de Organizacion
     */
    public int getIdOrganizacion() {
       return idOrganizacion;
    }
 
    /**
-    * Metodo getNombre que regresa un String con el atributo del nombre de Organizacion
+    * Metodo para obtener el nombre de Organizacion
     *
-    * @return nombre
+    * @return Regresa el nombre de Organizacion
     */
    public String getNombre() {
       return nombre;
    }
 
    /**
-    * Metodo getDireccion que regresa un String con el atributo de la direccion de Organizacion
+    * Metodo para obtener la direccion de Organizacion
     *
-    * @return direccion
+    * @return Regresa la direccion de Organizacion
     */
    public String getDireccion() {
       return direccion;
    }
 
    /**
-    * Metodo getCiudad que regresa un String con el atributo de la ciudad de Organizacion
+    * Metodo para obtener la ciudad de Organizacion
     *
-    * @return ciudad
+    * @return Regresa la ciudad de Organizacion
     */
    public String getCiudad() {
       return ciudad;
    }
 
    /**
-    * Metodo getEstado que regresa un String con el atributo del estado de Organizacion
+    * Metodo para obtener el estado de Organizacion
     *
-    * @return estado
+    * @return Regresa el estado de Organizacion
     */
    public String getEstado() {
       return estado;
    }
 
    /**
-    * Metodo getTelefono que regresa un String con el atributo del telefono de Organizacion
+    * Metodo para obtener el telefono de Organizacion
     *
-    * @return telefono
+    * @return Regresa el telefono de Organizacion
     */
    public String getTelefono() {
       return telefono;
    }
 
    /**
-    * Metodo getCorreoElectronico que regresa un String con el atributo del correo electronico de
-    * Organizacion
+    * Metodo para obtener el correoElectronico de Organizacion
     *
-    * @return correoElectronico
+    * @return Regresa el correoElectronico de Organizacion
     */
    public String getCorreoElectronico() {
       return correoElectronico;
    }
 
    /**
-    * Metodo getSector que regresa un String con el atributo del sector de Organizacion
+    * Metodo para obtener el sector de Organizacion
     *
-    * @return sector
+    * @return Regresa el sector de Organizacion
     */
    public String getSector() {
       return sector;
    }
 
    /**
-    * Metodo setIdOrganizacion que cambia el atributo del id de Organizacion
+    * Metodo para modificar el idOrganizacion a la Organizacion
     *
-    * @param idOrganizacion
+    * @param idOrganizacion Define el idOrganizacion de la Organizacion
     */
    public void setIdOrganizacion(int idOrganizacion) {
       this.idOrganizacion = idOrganizacion;
    }
 
    /**
-    * Metodo setIdOrganizacion que cambia el atributo del nombre de Organizacion
+    * Metodo para modificar el nombre a la Organizacion
     *
-    * @param nombre
+    * @param nombre Define el nombre de la Organizacion
     */
    public void setNombre(String nombre) {
       this.nombre = nombre;
    }
 
    /**
-    * Metodo setDireccion que cambia el atributo de la direccion de Organizacion
+    * Metodo para modificar la direccion a la Organizacion
     *
-    * @param direccion
+    * @param direccion Define la direccion de la Organizacion
     */
    public void setDireccion(String direccion) {
       this.direccion = direccion;
    }
 
    /**
-    * Metodo setCiudad que cambia el atributo de la ciudad de Organizacion
+    * Metodo para modificar la ciudad a la Organizacion
     *
-    * @param ciudad
+    * @param ciudad Define la ciudad de la Organizacion
     */
    public void setCiudad(String ciudad) {
       this.ciudad = ciudad;
    }
 
    /**
-    * Metodo setEstado que cambia el atributo del estado de Organizacion
+    * Metodo para modificar el estado a la Organizacion
     *
-    * @param estado
+    * @param estado Define el estado de la Organizacion
     */
    public void setEstado(String estado) {
       this.estado = estado;
    }
 
    /**
-    * Metodo setTelefono que cambia el atributo del telefono de Organizacion
+    * Metodo para modificar el telefono a la Organizacion
     *
-    * @param telefono
+    * @param telefono Define el telefono de la Organizacion
     */
    public void setTelefono(String telefono) {
       this.telefono = telefono;
    }
 
    /**
-    * Metodo setCorreoElectronico que cambia el atributo del correoElectronico de Organizacion
+    * Metodo para modificar el correoElectronico a la Organizacion
     *
-    * @param correoElectronico
+    * @param correoElectronico Define el correoElectronico de la Organizacion
     */
    public void setCorreoElectronico(String correoElectronico) {
       this.correoElectronico = correoElectronico;
    }
 
    /**
-    * Metodo setSector que cambia el atributo del sector de Organizacion
+    * Metodo para modificar el sector a la Organizacion
     *
-    * @param sector
+    * @param sector Define el sector de la Organizacion
     */
    public void setSector(String sector) {
       this.sector = sector;
@@ -245,9 +244,10 @@ public class OrganizacionVO {
    }
 
    /**
+    * Metodo para evitar que un objeto se repita
     *
-    * @param obj
-    * @return
+    * @param obj Objeto que sera comparado
+    * @return Indicasi el objeto ya existe o no
     */
    @Override
    public boolean equals(Object obj) {
@@ -289,8 +289,9 @@ public class OrganizacionVO {
    }
 
    /**
+    * Metodo para obtener la información completa del objeto
     *
-    * @return
+    * @return Regresa la información compelta del objeto
     */
    @Override
    public String toString() {

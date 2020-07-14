@@ -1,22 +1,23 @@
-/*
+/**
  * Lista de contenido. 
- * > Atributos de la clase line: 
- * > Constructores de la clase line: 
- * > Getters de la clase line: 
- * > Setters de la clase line: 
- * > Métodos de la clase line:
+ * > Atributos de la clase  
+ * > Constructores de la clase  
+ * > Getters de la clase  
+ * > Setters de la clase  
+ * > Métodos de la clase 
  */
 package modelo;
 
 import java.util.Objects;
 
 /**
- * Descripción de la clase: La clase SolicitudVO es la que almacena las caracteristicas
- * (atributos) y comportamientos (métodos) de las entidades de Solicitud.
- * 
+ * Descripción de la clase: La clase SolicitudVO es la que almacena las caracteristicas (atributos)
+ * y comportamientos (métodos) de las entidades de Solicitud.
+ *
  * @author Aldo Ulises Colorado Díaz
  */
 public class SolicitudVO {
+
    private String periodo;
    private String fecha;
    private int idProyecto;
@@ -30,10 +31,11 @@ public class SolicitudVO {
 
    /**
     * Constructor parametrizado
-    * @param periodo
-    * @param fecha
-    * @param idProyecto
-    * @param matricula 
+    *
+    * @param periodo Define el periodo de la Solicitud
+    * @param fecha Define la fecha de la Solicitud
+    * @param idProyecto Define el id de Proyecto relacionado con Solicitud
+    * @param matricula Define la matricula de Estudiante relacionada con Solicitud
     */
    public SolicitudVO(String periodo, String fecha, int idProyecto, String matricula) {
       this.periodo = periodo;
@@ -42,82 +44,79 @@ public class SolicitudVO {
       this.matricula = matricula;
    }
 
-    /**
-    * Metodo getPeriodo que regresa un String con el atributo del periodo de Solicitud
+   /**
+    * Metodo para obtener el periodo de Solicitud
     *
-    * @return periodo
+    * @return Regresa el periodo de Solicitud
     */
    public String getPeriodo() {
       return periodo;
    }
 
    /**
-    * Metodo getFecha que regresa un String con el atributo de la fecha de Solicitud
+    * Metodo para obtener la fecha de Solicitud
     *
-    * @return fecha
+    * @return Regresa la fecha de Solicitud
     */
    public String getFecha() {
       return fecha;
    }
 
    /**
-    * Metodo getIdProyecto que regresa un int con el atributo del id de Proyecto vinculado 
-    * con Solicitud
+    * Metodo para obtener el id de Proyecto relacionado con Solicitud
     *
-    * @return idProyecto
+    * @return Regresa el id de Proyecto relacionado con Solicitud
     */
    public int getIdProyecto() {
       return idProyecto;
    }
 
    /**
-    * Metodo getMatricula que regresa un String con el atributo de la matricula de estudiante
-    * vinculada con Solicitud
+    * Metodo para obtener la matricula de Estudiante relacionada con Solicitud
     *
-    * @return matricula
+    * @return Regresa la matricula de Estudiante relacionada con Solicitud
     */
    public String getMatricula() {
       return matricula;
    }
 
    /**
-    * Metodo setPeriodo que cambia el atributo del periodo de Solicitud
+    * Metodo para modificar el periodo de Solicitud
     *
-    * @param periodo
+    * @param periodo Define el periodo de Solicitud
     */
    public void setPeriodo(String periodo) {
       this.periodo = periodo;
    }
 
    /**
-    * Metodo setFecha que cambia el atributo de la fecha de Solicitud
+    * Metodo para modificar la fecha de Solicitud
     *
-    * @param fecha
+    * @param fecha Define la fecha de Solicitud
     */
    public void setFecha(String fecha) {
       this.fecha = fecha;
    }
 
    /**
-    * Metodo setIdProyecto que cambia el atributo del id de Proyecto vinculado con Solicitud
+    * Metodo para modificar el id de Proyecto relacionado con Solicitud
     *
-    * @param idProyecto
+    * @param idProyecto Define el id de Proyecto relacionado con Solicitud
     */
    public void setIdProyecto(int idProyecto) {
       this.idProyecto = idProyecto;
    }
 
    /**
-    * Metodo setMatricula que cambia el atributo de la matricula de Estudiante vinculado con
-    * Solicitud
+    * Metodo para modificar la matricula de Estudiante relacionada con Solicitud
     *
-    * @param matricula
+    * @param matricula Define la matricula de Estudiante relacionada con Solicitud
     */
    public void setMatricula(String matricula) {
       this.matricula = matricula;
    }
 
-    /**
+   /**
     * Método que cumple la función de comparar objetos utilizando estructuras hash
     *
     * @return Numero entero referente a la estructura del objeto
@@ -133,9 +132,10 @@ public class SolicitudVO {
    }
 
    /**
-    * 
-    * @param obj
-    * @return 
+    * Metodo para evitar que un objeto se repita
+    *
+    * @param obj Objeto que sera comparado
+    * @return Indica si el objeto ya existe o no
     */
    @Override
    public boolean equals(Object obj) {
@@ -153,14 +153,14 @@ public class SolicitudVO {
    }
 
    /**
-    * 
-    * @return 
+    * Metodo para obtener la información completa del objeto
+    *
+    * @return Regresa la información compelta del objeto
     */
    @Override
    public String toString() {
-      return "SolicitudVO{" + "periodo=" + periodo + ", fecha=" + fecha + ", idProyecto=" + idProyecto + ", matricula=" + matricula + '}';
+      return "SolicitudVO{" + "periodo=" + periodo + ", fecha=" + fecha + ", idProyecto="
+              + idProyecto + ", matricula=" + matricula + '}';
    }
-   
-   
-    
+
 }

@@ -1,7 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Lista de contenido. 
+ * > Paquete
+ * > Clases o librerias ocupadas
+ * > Métodos de recuperación
+ * > Métodos de actualización
+ * > Métodos de sentencias sql
  */
 package modelo;
 
@@ -20,6 +23,14 @@ import javafx.collections.ObservableList;
  */
 public class EstudianteDAOImplements implements EstudianteDAO {
 
+   /**
+    * Método que recupera un Estudiante de la base de datos
+    *
+    * @param matricula Define la matricula del Estudiante
+    * @param contrasenia Define la contrasenia del Estudiante
+    * @return Regresa al Estudiante
+    * @throws Exception Arroja las posibles excepciones durante el proceso
+    */
    @Override
    public EstudianteVO recuperarEstudiante(String matricula, String contrasenia) throws Exception {
       EstudianteVO estudianteRecuperado = null;
@@ -45,7 +56,7 @@ public class EstudianteDAOImplements implements EstudianteDAO {
          throw new SQLException("Error en recuperarEstudiante SQLException " + exception.getMessage());
       } catch (NullPointerException exception) {
          throw new NullPointerException("Error en recuperarEstudiante NullPointerException " + exception.getMessage());
-      }catch (ConnectException exception) {
+      } catch (ConnectException exception) {
          throw new ConnectException("Error en recuperarEstudiante ConnectException " + exception.getMessage());
       } catch (Exception exception) {
          throw new Exception("Error en recuperarEstudiante Exception " + exception.getMessage());
@@ -67,13 +78,12 @@ public class EstudianteDAOImplements implements EstudianteDAO {
       return estudianteRecuperado;
    }
 
-   @Override
-   public String crearSQLestaRegistrado(String matricula, String contrasenia) {
-      String sql = "SELECT * FROM Estudiante WHERE matricula = '" + matricula;
-      sql += "' AND contrasenia = '" + contrasenia + "';";
-      return sql;
-   }
-
+   /**
+    * Método que recupera todos los Estudiantes que tengan el status "Sin asignar"
+    *
+    * @return Regresa una lista con todos los Estudiantes con el status "Sin asignar"
+    * @throws Exception Arroja las posibles excepciones durante el proceso
+    */
    @Override
    public ObservableList<EstudianteVO> recuperarEstudiantesSinAsignar() throws Exception {
       Connection connection = null;
@@ -104,7 +114,7 @@ public class EstudianteDAOImplements implements EstudianteDAO {
          throw new SQLException("Error en recuperarEstudiantes SQLException " + exception.getMessage());
       } catch (NullPointerException exception) {
          throw new NullPointerException("Error en recuperarEstudiantes NullPointerException " + exception.getMessage());
-      }catch (ConnectException exception) {
+      } catch (ConnectException exception) {
          throw new ConnectException("Error en recuperarEstudiantes ConnectException " + exception.getMessage());
       } catch (Exception exception) {
          throw new Exception("Error en recuperarEstudiantes Exception " + exception.getMessage());
@@ -125,6 +135,14 @@ public class EstudianteDAOImplements implements EstudianteDAO {
       return estudiantesSinAsignarList;
    }
 
+   /**
+    * Método que cambia el status de un Estudiante
+    *
+    * @param matricula Define la matricula del Estudiante
+    * @return Regresa true si la ejecución del método fue éxitosamente, de lo contrario regresa
+    * false
+    * @throws Exception Arroja las posibles excepciones durante el proceso
+    */
    @Override
    public boolean cambiarStatusAsignado(String matricula) throws Exception {
       boolean changed = false;
@@ -143,7 +161,7 @@ public class EstudianteDAOImplements implements EstudianteDAO {
          throw new SQLException("Error en cambiarStatus SQLException " + exception.getMessage());
       } catch (NullPointerException exception) {
          throw new NullPointerException("Error en cambiarStatus NullPointerException " + exception.getMessage());
-      }catch (ConnectException exception) {
+      } catch (ConnectException exception) {
          throw new ConnectException("Error en cambiarStatus ConnectException " + exception.getMessage());
       } catch (Exception exception) {
          throw new Exception("Error en cambiarStatus Exception " + exception.getMessage());
@@ -162,5 +180,20 @@ public class EstudianteDAOImplements implements EstudianteDAO {
          };
       }
       return changed;
+   }
+
+   /**
+    * Metodo que crea una sentencia de sql para validar si un Estudiante está registrado en la base
+    * de datos
+    *
+    * @param matricula Define la matricula del Estudiante
+    * @param contrasenia Define la contrasenia del Estudiante
+    * @return Regresa un String con la sentencia de sql
+    */
+   @Override
+   public String crearSQLestaRegistrado(String matricula, String contrasenia) {
+      String sql = "SELECT * FROM Estudiante WHERE matricula = '" + matricula;
+      sql += "' AND contrasenia = '" + contrasenia + "';";
+      return sql;
    }
 }

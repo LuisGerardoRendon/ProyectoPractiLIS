@@ -1,10 +1,10 @@
-/*
+/**
  * Lista de contenido. 
- * > Atributos de la clase line: 
- * > Constructores de la clase line: 
- * > Getters de la clase line: 
- * > Setters de la clase line: 
- * > Métodos de la clase line:
+ * > Atributos de la clase  
+ * > Constructores de la clase  
+ * > Getters de la clase  
+ * > Setters de la clase  
+ * > Métodos de la clase 
  */
 package modelo;
 
@@ -23,7 +23,7 @@ public class ProfesorVO {
    private String usuario;
 
    /**
-    * Constructor vacío 
+    * Constructor vacío
     */
    public ProfesorVO() {
    }
@@ -31,9 +31,9 @@ public class ProfesorVO {
    /**
     * Constructor parametrizado
     *
-    * @param matricula
-    * @param constrasenia
-    * @param usuario
+    * @param matricula Define la matricula del Profesor
+    * @param constrasenia Define la constrasenia del Profesor
+    * @param usuario Define el usuario del Profesor
     */
    public ProfesorVO(String matricula, String constrasenia, String usuario) {
       this.matricula = matricula;
@@ -42,62 +42,62 @@ public class ProfesorVO {
    }
 
    /**
-    * Metodo getMatricula que regresa un String con el atributo de la matricula de Profesor
+    * Metodo para obtener la matricula del Profesor
     *
-    * @return matricula
+    * @return Regresa la matricula del Profesor
     */
    public String getMatricula() {
       return matricula;
    }
 
    /**
-    * Metodo getConstrasenia que regresa un String con el atributo de la constrasenia de Profesor
+    * Metodo para obtener la constrasenia del Profesor
     *
-    * @return constrasenia
+    * @return Regresa la constrasenia del Profesor
     */
    public String getConstrasenia() {
       return constrasenia;
    }
 
-    /**
-    * Metodo getUsuario que regresa un String con el atributo de la usuario de Profesor
+   /**
+    * Metodo para obtener el usuario del Profesor
     *
-    * @return usuario
+    * @return Regresa el usuario del Profesor
     */
    public String getUsuario() {
       return usuario;
    }
 
    /**
-    * Metodo setMatricula que cambia el atributo de la matricula de Profesor
+    * Metodo para actualizar la matricua del Profesor
     *
-    * @param matricula
+    * @param matricula Define la matricula del Profesor
     */
    public void setMatricula(String matricula) {
       this.matricula = matricula;
    }
 
    /**
-    * Metodo setConstrasenia que cambia el atributo de la constrasenia de Profesor
+    * Metodo para actualizar la constrasenia del Profesor
     *
-    * @param constrasenia
+    * @param constrasenia Define la constrasenia del Profesor
     */
    public void setConstrasenia(String constrasenia) {
       this.constrasenia = constrasenia;
    }
 
    /**
-    * Metodo setUsuario que cambia el atributo del usuario de Profesor
+    * Metodo para actualizar el usuario del Profesor
     *
-    * @param usuario
+    * @param usuario Define el usuario del Profesor
     */
    public void setUsuario(String usuario) {
       this.usuario = usuario;
    }
 
    /**
-    *Método que cumple la función de comparar objetos utilizando estructuras hash
-    * 
+    * Método que cumple la función de comparar objetos utilizando estructuras hash
+    *
     * @return Numero entero referente a la estructura del objeto
     */
    @Override
@@ -109,11 +109,12 @@ public class ProfesorVO {
       return hash;
    }
 
-  /**
-   * 
-   * @param obj
-   * @return 
-   */ 
+   /**
+    * Metodo para evitar que un objeto se repita
+    *
+    * @param obj Objeto que sera comparado
+    * @return Indica si el objeto ya existe o no
+    */
    @Override
    public boolean equals(Object obj) {
       if (this == obj) {
@@ -139,12 +140,14 @@ public class ProfesorVO {
    }
 
    /**
-    * 
-    * @return 
+    * Metodo para obtener la información completa del objeto
+    *
+    * @return Regresa la información compelta del objeto
     */
    @Override
    public String toString() {
-      return "ProfesorVO{" + "matricula=" + matricula + ", constrasenia=" + constrasenia + ", usuario=" + usuario + '}';
+      return "ProfesorVO{" + "matricula=" + matricula + ", constrasenia=" + constrasenia
+              + ", usuario=" + usuario + '}';
    }
 
 }

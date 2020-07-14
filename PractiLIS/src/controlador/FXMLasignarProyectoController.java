@@ -1,7 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * LISTA DE CONTENIDO:
+ * > Paquete de la clase  
+ * > Clases o librerias utilizadas
+ * > Atributos de la clase 
+ * > Método initialize 
+ * > Métodos con Action Event
+ * > Otros Métodos de la clase 
  */
 package controlador;
 
@@ -31,7 +35,7 @@ import modelo.ProyectoVO;
 import vista.FXMLAlerta;
 
 /**
- * FXML Controller class
+ * Clase que contiene los métodos que controlan la ventana FXMLasignarProyectoController
  *
  * @author Daniel Pale Parra
  */
@@ -70,7 +74,7 @@ public class FXMLasignarProyectoController implements Initializable {
    private ObservableList<EstudianteVO> estudiantes;
 
    /**
-    * Initializes the controller class.
+    * Método que inicializa los elementos de la ventana
     */
    @Override
    public void initialize(URL url, ResourceBundle rb) {
@@ -91,9 +95,15 @@ public class FXMLasignarProyectoController implements Initializable {
       }
    }
 
+   /**
+    * Método que muestra las solicitudes del Estudiante en la tablaSolicitudes
+    *
+    * @param event Lanza el evento descrito
+    */
    @FXML
    private void mostrarSolicitudes(ActionEvent event) {
-      EstudianteVO estudianteSeleccionado = this.tablaEstudiantes.getSelectionModel().getSelectedItem();
+      EstudianteVO estudianteSeleccionado = this.tablaEstudiantes.getSelectionModel()
+              .getSelectedItem();
 
       if (estudianteSeleccionado != null) {
          this.obtenerProyectosSolicitados(estudianteSeleccionado.getMatricula());
@@ -106,6 +116,12 @@ public class FXMLasignarProyectoController implements Initializable {
       }
    }
 
+   /**
+    * Método que asigna un Estudiante seleccionado de la tablaEstudiantes a un Proyecto de la
+    * tablaProyectos y crea el Expediente de Estudiante
+    *
+    * @param event Lanza el evento descrito
+    */
    @FXML
    private void asignar(ActionEvent event) {
       EstudianteVO estudiante = this.tablaEstudiantes.getSelectionModel().getSelectedItem();
@@ -145,23 +161,45 @@ public class FXMLasignarProyectoController implements Initializable {
       }
    }
 
+   /**
+    * Método que selecciona un Estudiante de la tablaEstudiantes
+    *
+    * @param event Lanza el evento descrito
+    */
    @FXML
    private void seleccionarEstudiante(MouseEvent event) {
       EstudianteVO estudianteSeleccionado = this.tablaEstudiantes.getSelectionModel().getSelectedItem();
    }
 
+   /**
+    * Método que selecciona un Proyecto de la tablaProyectos y deselecciona el Proyecto de la
+    * tablaSolicitudes si aplica
+    *
+    * @param event Lanza el evento descrito
+    */
    @FXML
    private void seleccionarProyecto(MouseEvent event) {
       ProyectoVO proyectoSeleccionado = this.tablaProyectos.getSelectionModel().getSelectedItem();
       this.tablaSolicitudes.getSelectionModel().select(null);
    }
 
+   /**
+    * Método que selecciona un Proyecto de la tablaSolicitudes y deselecciona el Proyecto de la
+    * tablaProyectos si aplica
+    *
+    * @param event
+    */
    @FXML
    private void seleccionarProyectoSolicitado(MouseEvent event) {
-      ProyectoVO proyectoSolicitadoSeleccionado = this.tablaSolicitudes.getSelectionModel().getSelectedItem();
+      ProyectoVO proyectoSolicitadoSeleccionado = this.tablaSolicitudes.getSelectionModel()
+              .getSelectedItem();
       this.tablaProyectos.getSelectionModel().select(null);
    }
 
+   /**
+    * Método que llama al método recuperarProyectoSinAsignar de ProyectoDAOImplements y verifica que
+    * la lista regresada no este vacia
+    */
    public void obtenerProyectos() {
       try {
          this.proyectos = proyectoDAOImp.recuperarProyectosSinAsignar();
@@ -172,6 +210,10 @@ public class FXMLasignarProyectoController implements Initializable {
       }
    }
 
+   /**
+    * Método que llama al método recuperarEstudiantesSinAsignar de EstudianteDAOImplements y
+    * verifica que la lista regresada no este vacia
+    */
    public void obtenerEstudiantes() {
       try {
          this.estudiantes = estudianteDAOImp.recuperarEstudiantesSinAsignar();
@@ -183,6 +225,12 @@ public class FXMLasignarProyectoController implements Initializable {
 
    }
 
+   /**
+    * Método que llama al método recuperarProyectosSolicitados de ProyectoDAOImplements y verifica
+    * que la lista regresada no este vacia
+    *
+    * @param matricula Define la matricula del Estudiante
+    */
    public void obtenerProyectosSolicitados(String matricula) {
       try {
          if (!proyectosSolicitados.isEmpty()) {
@@ -208,6 +256,11 @@ public class FXMLasignarProyectoController implements Initializable {
       }
    }
 
+   /**
+    * Método que verifica de que tabla se está seleccionando el Proyecto que se quiere asignar
+    *
+    * @return
+    */
    public ProyectoVO obtenerProyectoSeleccionado() {
       ProyectoVO proyectoTablaProyectos = this.tablaProyectos.getSelectionModel().getSelectedItem();
       ProyectoVO proyectoTablaSolicitudes = this.tablaSolicitudes.getSelectionModel().getSelectedItem();
@@ -221,6 +274,12 @@ public class FXMLasignarProyectoController implements Initializable {
       return proyectoSeleccionado;
    }
 
+   /**
+    * Método que llama al método cambiarStatusAsignado de EstudianteDAOImplements y verifica que el
+    * cambio se haya realizado con éxito
+    *
+    * @param matricula Define la matricula del Estudiante al cual se le cambia status
+    */
    public void cambiarStatus(String matricula) {
       try {
          boolean changed = this.estudianteDAOImp.cambiarStatusAsignado(matricula);
@@ -235,26 +294,39 @@ public class FXMLasignarProyectoController implements Initializable {
       }
    }
 
+   /**
+    * Método llama al método cambiarEstudiantesAsignados de ProyectoDAOImplements y verfica que el
+    * cambio se haya realizado con éxito
+    *
+    * @param proyecto Defiene el objeto Proyecto al cual se quiere realizar el cambio
+    */
    public void cambiarEstudiantesAsignados(ProyectoVO proyecto) {
       if ((proyecto.getCapacidadEstudiantes() - (proyecto.getNumEstudiantesAsignados() + 1)) != 0) {
          try {
-            boolean changed = this.proyectoDAOImp.cambiarEstudiantesAsignados(proyecto.getIdProyecto(), (proyecto.getNumEstudiantesAsignados() + 1), "Sin asignar");
+            boolean changed = this.proyectoDAOImp.cambiarEstudiantesAsignados(proyecto.getIdProyecto(),
+                    (proyecto.getNumEstudiantesAsignados() + 1), "Sin asignar");
          } catch (Exception e) {
             FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
-            alerta.alertaError("Error", "Ocurrio un error al realizar el método cambiarEstudianteAsignado",
+            alerta.alertaError("Error", "Ocurrio un error al realizar el método "
+                    + "cambiarEstudianteAsignado",
                     e.getMessage());
          }
       } else {
          try {
-            this.proyectoDAOImp.cambiarEstudiantesAsignados(proyecto.getIdProyecto(), (proyecto.getNumEstudiantesAsignados() + 1), "Asignado");
+            this.proyectoDAOImp.cambiarEstudiantesAsignados(proyecto.getIdProyecto(),
+                    (proyecto.getNumEstudiantesAsignados() + 1), "Asignado");
          } catch (Exception e) {
             FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
-            alerta.alertaError("Error", "Ocurrio un error al realizar el método cambiarEstudianteAsignado",
+            alerta.alertaError("Error", "Ocurrio un error al realizar el método "
+                    + "cambiarEstudianteAsignado",
                     e.getMessage());
          }
       }
    }
 
+   /**
+    * Método que inicializa tablaEstudiantes y tablaProyectos
+    */
    public void inicializarTablas() {
       this.obtenerProyectos();
       this.columnaNombreProyecto.setCellValueFactory(new PropertyValueFactory("nombre"));
@@ -267,6 +339,13 @@ public class FXMLasignarProyectoController implements Initializable {
       this.tablaEstudiantes.setItems(estudiantes);
    }
 
+   /**
+    * Método que llama al método Create de ExpedienteDAOImplements y revisa que la creación se haga
+    * correctamente.
+    *
+    * @param matricula Define la matricula del Estudiante al cual se creará Expediente
+    * @param periodo Define el periodo actual.
+    */
    public void crearExpediente(String matricula, String periodo) {
       expedienteDAOImp = new ExpedienteDAOImplements();
       try {

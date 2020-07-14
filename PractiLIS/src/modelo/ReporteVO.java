@@ -1,10 +1,10 @@
-/*
+/**
  * Lista de contenido. 
- * > Atributos de la clase line: 
- * > Constructores de la clase line: 
- * > Getters de la clase line: 
- * > Setters de la clase line: 
- * > Métodos de la clase line:
+ * > Atributos de la clase  
+ * > Constructores de la clase  
+ * > Getters de la clase 
+ * > Setters de la clase  
+ * > Métodos de la clase 
  */
 package modelo;
 
@@ -37,12 +37,12 @@ public class ReporteVO {
    /**
     * Constructor parametrizado
     *
-    * @param horasReportadas
-    * @param fechaCarga
-    * @param estado
-    * @param reporte
-    * @param fechaInicio
-    * @param fechaFin
+    * @param horasReportadas Define las horasReportadas de Reporte
+    * @param fechaCarga Define la fechaCarga de Reporte
+    * @param estado Define el estado de Reporte
+    * @param reporte Define el reporte de Reporte
+    * @param fechaInicio Define la fechaInicio de Reporte
+    * @param fechaFin Define la fechaFin de Reporte
     */
    public ReporteVO(int horasReportadas, String fechaCarga, String estado, File reporte,
            String fechaInicio, String fechaFin) {
@@ -55,10 +55,11 @@ public class ReporteVO {
    }
 
    /**
+    * Constructor con 3 parámetros con la intención de mostrar atributos relevantes en tablas.
     *
-    * @param numero
-    * @param horasReportadas
-    * @param fechaCarga
+    * @param numero Define el numero de Reporte
+    * @param horasReportadas Define las horasReportadas de Reporte
+    * @param fechaCarga Define la fechaCarga de Reporte
     */
    public ReporteVO(int numero, int horasReportadas, String fechaCarga) {
       this.numero = numero;
@@ -67,145 +68,144 @@ public class ReporteVO {
    }
 
    /**
-    * Metodo getNumero que regresa un int con el atributo de numero de Reporte
+    * Metodo para obtener el numero de Reporte
     *
-    * @return numero
+    * @return Regresa el numero de Reporte
     */
    public int getNumero() {
       return numero;
    }
 
    /**
-    * Metodo getHorasReportadas que regresa un int con el atributo de horasReportadas de Reporte
+    * Metodo para obtener las horasReportadas de Reporte
     *
-    * @return horasReportadas
+    * @return Regresa las horasReportadas de Reporte
     */
    public int getHorasReportadas() {
       return horasReportadas;
    }
 
    /**
-    * Metodo getFechaCarga que regresa un String con el atributo de la fechaCarga de Reporte
+    * Metodo para obtener la fechaCarga de Reporte
     *
-    * @return fechaCarga
+    * @return Regresa la fechaCarga de Reporte
     */
    public String getFechaCarga() {
       return fechaCarga;
    }
 
    /**
-    * Metodo getEstado que regresa un String con el atributo del estado de Reporte
+    * Metodo para obtener el estado de Reporte
     *
-    * @return estado
+    * @return Regresa el estado de Reporte
     */
    public String getEstado() {
       return estado;
    }
 
    /**
-    * Metodo getReporte que regresa un File con el atributo del reporte subido de Reporte
+    * Metodo para obtener el reporte (un documento) de Reporte
     *
-    * @return reporte
+    * @return Regresa el reporte (un documento) de Reporte
     */
    public File getReporte() {
       return reporte;
    }
 
    /**
-    * Metodo getFechaInicio que regresa un String con el atributo de fechaInicio de Reporte
+    * Metodo para obtener la fechaInicio de Reporte
     *
-    * @return fechaInicio
+    * @return Regresa la fechaInicio de Reporte
     */
    public String getFechaInicio() {
       return fechaInicio;
    }
 
    /**
-    * Metodo getFechaFin que regresa un String con el atributo de fechaFin de Reporte
+    * Metodo para obtener la fechaFin de Reporte
     *
-    * @return fechaFin
+    * @return Regresa la fechaFin de Reporte
     */
    public String getFechaFin() {
       return fechaFin;
    }
 
    /**
-    * Metodo getIdExpediente que regresa un int con el atributo del id de Expediente vinculado con
-    * Reporte
+    * Metodo para obtener el id de Expediente que está relacionado con Reporte
     *
-    * @return idExpediente
+    * @return Regresa el id de Expediente que está relacionado con Reporte
     */
    public int getIdExpediente() {
       return idExpediente;
    }
 
    /**
-    * Metodo setNumero que cambia el atributo del numero de Reporte
+    * Metodo para modificar el numero de Reporte
     *
-    * @param numero
+    * @param numero Define el numero de Reporte
     */
    public void setNumero(int numero) {
       this.numero = numero;
    }
 
    /**
-    * Metodo setHorasReportadas que cambia el atributo de horasReportadas de Reporte
+    * Metodo para modificar las horasReportadas de Reporte
     *
-    * @param horasReportadas
+    * @param horasReportadas Define las horasReportadas de Reporte
     */
    public void setHorasReportadas(int horasReportadas) {
       this.horasReportadas = horasReportadas;
    }
 
    /**
-    * Metodo setFechaCarga que cambia el atributo de la fechaCarga de Reporte
+    * Metodo para modificar la fechaCarga de Reporte
     *
-    * @param fechaCarga
+    * @param fechaCarga Define la fechaCarga de Reporte
     */
    public void setFechaCarga(String fechaCarga) {
       this.fechaCarga = fechaCarga;
    }
 
    /**
-    * Metodo setEstado que cambia el atributo del estado de Reporte
+    * Metodo para modificar el estado de Reporte
     *
-    * @param estado
+    * @param estado Define el estado de Reporte
     */
    public void setEstado(String estado) {
       this.estado = estado;
    }
 
    /**
-    * Metodo setReporte que cambia el atributo del reporte subido de Reporte
+    * Metodo para modificar el reporte de Reporte
     *
-    * @param reporte
+    * @param reporte Define el reporte de Reporte
     */
    public void setReporte(File reporte) {
       this.reporte = reporte;
    }
 
    /**
-    * Metodo setFechaInicio que cambia el atributo de la fechaInicio de Reporte
+    * Metodo para modificar la fechaInicio de Reporte
     *
-    * @param fechaInicio
+    * @param fechaInicio Define la fechaInicio de Reporte
     */
    public void setFechaInicio(String fechaInicio) {
       this.fechaInicio = fechaInicio;
    }
 
    /**
-    * Metodo setFechaFin que cambia el atributo de la fechaFin de Reporte
+    * Metodo para modificar la fechaFin de Reporte
     *
-    * @param fechaFin
+    * @param fechaFin Define la fechaFin de Reporte
     */
    public void setFechaFin(String fechaFin) {
       this.fechaFin = fechaFin;
    }
 
    /**
-    * Metodo setIdExpediente que cambia el atributo del id de Expediente vinculado con Reporte
+    * Metodo para modificar el id de Expediente relacionado con Reporte
     *
-    * @param idExpediente
+    * @param idExpediente Define el Expediente relacionado con Reporte
     */
    public void setIdExpediente(int idExpediente) {
       this.idExpediente = idExpediente;
@@ -223,9 +223,10 @@ public class ReporteVO {
    }
 
    /**
+    * Metodo para evitar que un objeto se repita
     *
-    * @param obj
-    * @return
+    * @param obj Objeto que sera comparado
+    * @return Indica si el objeto ya existe o no
     */
    @Override
    public boolean equals(Object obj) {
@@ -261,11 +262,15 @@ public class ReporteVO {
    }
 
    /**
+    * Metodo para obtener la información completa del objeto
     *
-    * @return
+    * @return Regresa la información compelta del objeto
     */
    @Override
    public String toString() {
-      return "ReporteVO{" + "numero=" + numero + ", horasReportadas=" + horasReportadas + ", fechaCarga=" + fechaCarga + ", estado=" + estado + ", reporte=" + reporte + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", idExpediente=" + idExpediente + '}';
+      return "ReporteVO{" + "numero=" + numero + ", horasReportadas=" + horasReportadas
+              + ", fechaCarga=" + fechaCarga + ", estado=" + estado + ", reporte=" + reporte
+              + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", idExpediente="
+              + idExpediente + '}';
    }
 }
