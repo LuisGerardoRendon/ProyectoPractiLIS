@@ -1,19 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * LISTA DE CONTENIDO:
+ *    > Paquete de la clase
+ *    > Clases y librerias importadas
+ *    > Definición de metodos sin implemetar del EncargadoProyectoDAO
  */
 package modelo;
 
 /**
+ * Esta Interface define los metodos correspondientes al EncargadoProyectoDAO
  *
- * @author Sammy Guergachi <sguergachi at gmail.com>
- * @version 1.1, 09/jul/2020
+ * @author Luis Gerardo Rendon
  */
 public interface EncargadoProyectoDAO {
 
    EncargadoProyectoVO recuperarEncargadoProyecto(ProyectoVO proyectoVO)throws Exception;
-
-   
 
 }

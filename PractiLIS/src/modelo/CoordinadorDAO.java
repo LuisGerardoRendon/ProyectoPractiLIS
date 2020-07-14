@@ -1,5 +1,6 @@
 /**
  * LISTA DE CONTENIDO:
+ *    > Paquete de la clase
  *    > Clases y librerias importadas
  *    > Definición de metodos sin implemetar del ReportaDAO
  */

@@ -1,5 +1,6 @@
 /**
  * LISTA DE CONTENIDO:
+ *    > Paquete de la clase
  *    > Clases y librerias importadas
  *    > Atributos de la clase
  *    > Constructores de la clase

@@ -1,5 +1,6 @@
 /**
  * LISTA DE CONTENIDO:
+ *    > Paquete de la clase
  *    > Clases y librerias importadas
  *    > Metodo create
  *    > Metodo recuperar
@@ -19,15 +20,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * Esta clase implementa los metodos CRUD de la clase ReporteDAO
- *
+ * Descripcion de la clase. La clase ReporteDAOImplements tiene el propósito de 
+ * comunicar la base de datos con el controlador donde se quiera 
+ * crear, modificar o eliminar entidades o atributos de Reporte
+ * 
  * @author Aldo Colorado
  */
 public class ReporteDAOImplements implements ReporteDAO {
 
    /**
-    * Metodo para la creación de un reporte a la base de datos
-    *
+    * Metodo para crear un reporte en la base de datos
+    * 
     * @param reporte Define el objeto reporte que se esta creando
     * @param idExpediente Define el idExpediente que se relacioará con el Reporte
     * @return Regresa un valor booleano para determinar el exito o fallo en la creación

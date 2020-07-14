@@ -1,7 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * LISTA DE CONTENIDO:
+ *    > Paquete de la clase
+ *    > Clases y librerias importadas
+ *    > Metodo recuperarEncargadoProyecto
  */
 package modelo;
 
@@ -12,12 +13,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- *
- * @author Sammy Guergachi <sguergachi at gmail.com>
- * @version 1.1, 09/jul/2020
+ * Descripcion de la clase. La clase EncargadoProyectoDAOImplements tiene el propósito de 
+ * comunicar la base de datos con el controlador donde se quiera 
+ * crear, modificar o elimnar entidades o atributos de EncargadoProyecto
+ * 
+ * @author Luis Gerardo Rendon
  */
 public class EncargadoProyectoDAOImplements implements EncargadoProyectoDAO {
 
+   /**
+    * Metodo para recuperar el encargado de un proyecto
+    *
+    * @param proyectoVO Objeto que define el proyecto del que se recupera el encargado
+    * @return Regresa un objeto de tipo EncargadoProyecto
+    * @throws Exception arroja las posibles excepciones durante el proceso
+    */
    @Override
    public EncargadoProyectoVO recuperarEncargadoProyecto(ProyectoVO proyectoVO) throws Exception {
       int idProyecto = proyectoVO.getIdProyecto();
@@ -45,10 +55,10 @@ public class EncargadoProyectoDAOImplements implements EncargadoProyectoDAO {
       } catch (SQLException exception) {
          throw new SQLException("Error en recuperarEncargadoProyecto SQLException " + exception.getMessage());
       } catch (NullPointerException exception) {
-         throw new NullPointerException("Error en recuperarEncargadoProyecto NullPointerException " 
+         throw new NullPointerException("Error en recuperarEncargadoProyecto NullPointerException "
                  + exception.getMessage());
       } catch (ConnectException exception) {
-         throw new ConnectException("Error en recuperarEncargadoProyecto ConnectException " 
+         throw new ConnectException("Error en recuperarEncargadoProyecto ConnectException "
                  + exception.getMessage());
       } catch (Exception exception) {
          throw new Exception("Error en recuperarEncargadoProyecto Exception " + exception.getMessage());

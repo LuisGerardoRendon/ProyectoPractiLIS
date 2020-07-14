@@ -1,5 +1,6 @@
 /**
  * LISTA DE CONTENIDO:
+ *    > Paquete de la clase
  *    > Clases y librerias importadas
  *    > Metodo login
  *    > Metodos creación de sql's
@@ -15,7 +16,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Esta clase implementa los metodos de la clase CoordinadorDAO
+ * Descripcion de la clase. La clase CoordinadorDAOImplements tiene el propósito de comunicar la
+ * base de datos con el controlador donde se quiera crear, modificar o elimnar entidades o atributos
+ * de Coordinador
  *
  * @author Luis Gerardo Rendon
  */
