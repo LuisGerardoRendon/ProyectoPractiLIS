@@ -1,7 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * LISTA DE CONTENIDOS:
+ *    > Paquete de la clase
+ *    > Clases o librerias utilizadas
+ *    > Declaración de atributos
+ *    > Metodo conectarMySql
  */
 package modelo;
 
@@ -12,43 +14,50 @@ import java.sql.SQLException;
 
 public class ConexionBD {
 
-    // Librería de MySQL
-    public String driver = "com.mysql.jdbc.Driver";
+   // Librería de MySQL
+   public String driver = "com.mysql.jdbc.Driver";
 
-    // Nombre de la base de datos
-    public String database = "practilisv1pruebas";
-    
-    // Host
-    public String hostname = "localhost";
+   // Nombre de la base de datos
+   public String database = "practilisv1";
 
-    // Puerto
-    public String port = "3306";
+   // Host
+   public String hostname = "localhost";
 
-    // Ruta de nuestra base de datos (desactivamos el uso de SSL con "?useSSL=false")
-    public String url = "jdbc:mysql://" + hostname + ":" + port + "/" + database + "?useSSL=false";
+   // Puerto
+   public String port = "3306";
 
-    // Nombre de usuario
-    public String username = "root";
+   // Ruta de nuestra base de datos (desactivamos el uso de SSL con "?useSSL=false")
+   public String url = "jdbc:mysql://" + hostname + ":" + port + "/" + database + "?useSSL=false";
 
-    // Clave de usuario
-    public String password = "123456";
+   // Nombre de usuario
+   public String username = "root";
 
-    public Connection conectarMySQL() throws Exception{
-        Connection conn = null;
+   // Clave de usuario
+   public String password = " ";
 
-        try {
-            Class.forName(driver);
-            conn = DriverManager.getConnection(url, username, password);
-            
-        } catch (SQLException e) {
+   /**
+    * Metodo que hace la conexión entre java y el controlador de base de datos MySQL
+    *
+    * @return Regresa un objeto Connection en caso de exito
+    * @throws Exception Lanza las posibles excepciones dadas en el proceso
+    */
+   public Connection conectarMySQL() throws Exception {
+      Connection conn = null;
+
+      try {
+         Class.forName(driver);
+         conn = DriverManager.getConnection(url, username, password);
+
+      } catch (SQLException e) {
          throw new SQLException("Error en recuperarReportes SQLException " + e.getMessage());
       } catch (NullPointerException e) {
-         throw new NullPointerException("Error en recuperarReportes NullPointerException " + e.getMessage());
+         throw new NullPointerException("Error en recuperarReportes NullPointerException " + 
+                 e.getMessage());
       } catch (Exception e) {
          throw new Exception("Error en recuperarReportes Exception " + e.getMessage());
       }
 
-        return conn;
-    }
+      return conn;
+   }
 
 }

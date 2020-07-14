@@ -20,17 +20,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * Descripcion de la clase. La clase ReporteDAOImplements tiene el propósito de 
- * comunicar la base de datos con el controlador donde se quiera 
- * crear, modificar o eliminar entidades o atributos de Reporte
- * 
+ * Descripcion de la clase. La clase ReporteDAOImplements tiene el propósito de comunicar la base de
+ * datos con el controlador donde se quiera crear, modificar o eliminar entidades o atributos de
+ * Reporte
+ *
  * @author Aldo Colorado
  */
 public class ReporteDAOImplements implements ReporteDAO {
 
    /**
     * Metodo para crear un reporte en la base de datos
-    * 
+    *
     * @param reporte Define el objeto reporte que se esta creando
     * @param idExpediente Define el idExpediente que se relacioará con el Reporte
     * @return Regresa un valor booleano para determinar el exito o fallo en la creación
@@ -126,13 +126,17 @@ public class ReporteDAOImplements implements ReporteDAO {
          statement.close();
          resultset.close();
       } catch (SQLException exception) {
-         throw new SQLException("Error en recuperarReportes SQLException " + exception.getMessage());
+         throw new SQLException("Error en recuperarReportes SQLException "
+                 + exception.getMessage());
       } catch (NullPointerException exception) {
-         throw new NullPointerException("Error en recuperarReportes NullPointerException " + exception.getMessage());
+         throw new NullPointerException("Error en recuperarReportes NullPointerException "
+                 + exception.getMessage());
       } catch (ConnectException exception) {
-         throw new ConnectException("Error en recuperarReportes ConnectException " + exception.getMessage());
+         throw new ConnectException("Error en recuperarReportes ConnectException "
+                 + exception.getMessage());
       } catch (Exception exception) {
-         throw new Exception("Error en recuperarReportes Exception " + exception.getMessage());
+         throw new Exception("Error en recuperarReportes Exception "
+                 + exception.getMessage());
       } finally {
          try {
             if (statement != null) {
@@ -159,7 +163,8 @@ public class ReporteDAOImplements implements ReporteDAO {
     * @throws Exception Arroja las posibles excepciones durante el proceso
     */
    @Override
-   public String crearSQLRecuperarReportesDeEstudiante(String periodo, String matricula) throws Exception {
+   public String crearSQLRecuperarReportesDeEstudiante(String periodo, String matricula)
+           throws Exception {
       String sql = "SELECT Reporte.numero,Reporte.horasReportadas,"
               + "Reporte.fechaCarga, Reporte.Estado,Reporte.reporte,"
               + " Reporte.fechaInicio, Reporte.fechaFin";

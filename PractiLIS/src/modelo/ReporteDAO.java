@@ -17,7 +17,8 @@ public interface ReporteDAO {
 
    boolean create(ReporteVO reporte, int idExpediente) throws Exception;
 
-   public String crearSQLRecuperarReportesDeEstudiante(String periodo, String matricula) throws Exception;
+   public String crearSQLRecuperarReportesDeEstudiante(String periodo, String matricula) 
+           throws Exception;
 
    public ObservableList<ReporteVO> recuperarReportesDeEstudiante(String periodo,
            String matricula) throws Exception;

@@ -1,7 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * LISTA DE CONTENIDO.
+ *    > Paquete de la clase 
+ *    > Clases o librerias utilizadas
+ *    > Atributos de la clase
+ *    > Constructor
+ *    > Método initialize
+ *    > Métodos Action Event
+ *    > Otros Métodos de la clase
  */
 package controlador;
 
@@ -31,9 +36,9 @@ import modelo.ReporteVO;
 import vista.FXMLAlerta;
 
 /**
- * FXML Controller class
+ * Clase que contiene los metodos que controlan a la ventana FXMLReporteCargadoController
  *
- * @author ALDO
+ * @author Aldo Colorado
  */
 public class FXMLReporteCargadoController implements Initializable {
 
@@ -64,24 +69,19 @@ public class FXMLReporteCargadoController implements Initializable {
 
    ExpedienteVO expediente;
 
-   ReporteDAOImplements reporteDAO;
+   ReporteDAOImplements reporteDAOImp;
 
-   ExpedienteDAOImplements expedienteDAO;
+   ExpedienteDAOImplements expedienteDAOImp;
 
    /**
-    * Initializes the controller class.
+    * Constructor que permite el paso de parametros entre las ventanas
+    *
+    * @param horasReportadas Define las horas del reporte
+    * @param fechaInicio Define la fecha de inicio del reporte
+    * @param fechaFin Define le fecha de fin del reporte
+    * @param archivo Define el archivo del reporte
+    * @param estudianteLogeado Define el estudiante logeado en el sistema
     */
-   @Override
-   public void initialize(URL url, ResourceBundle rb) {
-      // TODO
-      reporteDAO = new ReporteDAOImplements();
-      expedienteDAO = new ExpedienteDAOImplements();
-      inicializarFechaDeCarga();
-      cargarReporte();
-      crearReporte();
-      crearExpediente(estudianteLogeado.getMatricula());
-   }
-
    public FXMLReporteCargadoController(int horasReportadas, String fechaInicio,
            String fechaFin, File archivo, EstudianteVO estudianteLogeado) {
 
@@ -93,15 +93,51 @@ public class FXMLReporteCargadoController implements Initializable {
 
    }
 
-   public void setEstudianteLogeado(EstudianteVO estudianteLogeado) {
-      this.estudianteLogeado = estudianteLogeado;
+   /**
+    * Metodo para inizializar los elementos de la ventana
+    */
+   @Override
+   public void initialize(URL url, ResourceBundle rb) {
+      // TODO
+      reporteDAOImp = new ReporteDAOImplements();
+      expedienteDAOImp = new ExpedienteDAOImplements();
+     
+      cargarNombreArchivo();
+      crearReporte();
+      crearExpediente(estudianteLogeado.getMatricula());
    }
-//
+   
+   /**
+    * Metodo para cancelar el caso de uso
+    * @param event Lanza el evento descrito
+    */
    @FXML
    private void cancelar(ActionEvent event) {
       cerrarVentana(event);
+      abrirMenuPrincipalEstudiante();
+   }
+
+   /**
+    * Metodo para subir el reporte
+    * @param event Lanza el evento descrito
+    */
+   @FXML
+   private void subirReporte(ActionEvent event) {
+      inicializarFechaDeCarga();
+      if (subirReporte()) {
+         abrirReporteSubidoExito();
+         cerrarVentana(event);
+      }
+
+   }
+
+   /**
+    * Metodo para abrir la ventana FXMLMenuPrincipalEstudiante
+    */
+   public void abrirMenuPrincipalEstudiante() {
       try {
-         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/FXMLmenuPrincipalEstudiante.fxml"));
+         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/"
+                 + "FXMLmenuPrincipalEstudiante.fxml"));
          Parent ventanaPrincipal = (Parent) fXMLLoader.load();
          FXMLmenuPrincipalEstudianteController controlador = fXMLLoader.getController();
          controlador.setEstudianteLogeado(estudianteLogeado);
@@ -114,43 +150,45 @@ public class FXMLReporteCargadoController implements Initializable {
       }
    }
 
-   @FXML
-   private void subirReporte(ActionEvent event) {
-
+   /**
+    * Metodo para abrir la ventana FXMLReporteSubidoExito
+    */
+   public void abrirReporteSubidoExito() {
       try {
-         if (subirReporte()) {
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/"
+                 + "FXMLReporteSubido.fxml"));
+         FXMLReporteSubidoController controladorReporteCargado = new FXMLReporteSubidoController
+        (estudianteLogeado);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/FXMLReporteSubido.fxml"));
-            FXMLReporteSubidoController controladorReporteCargado = new FXMLReporteSubidoController(estudianteLogeado);
+         loader.setController(controladorReporteCargado);
+         Parent root = loader.load();
 
-            loader.setController(controladorReporteCargado);
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(scene);
-            stage.show();
-            cerrarVentana(event);
-         }
-
-         
-
+         Scene scene = new Scene(root);
+         Stage stage = new Stage();
+         stage.initModality(Modality.APPLICATION_MODAL);
+         stage.setScene(scene);
+         stage.show();
       } catch (IOException e) {
-         e.printStackTrace();
-      } catch (Exception e) {
          e.printStackTrace();
       }
    }
 
+   /**
+    * Metodo para crear la instancia de reporte
+    */
    public void crearReporte() {
       reporte = new ReporteVO(horasReportadas, fechaCarga, estado, archivo, fechaInicio, fechaFin);
    }
 
+   /**
+    * Metodo para subir el reporte a la base de datos
+    *
+    * @return Regresa true en caso de exito y false en caso de falla
+    */
    public boolean subirReporte() {
       boolean creado = false;
       try {
-         creado = this.reporteDAO.create(reporte, expediente.getIdExpediente());
+         creado = this.reporteDAOImp.create(reporte, expediente.getIdExpediente());
       } catch (Exception e) {
          e.printStackTrace();
       }
@@ -161,18 +199,29 @@ public class FXMLReporteCargadoController implements Initializable {
       return creado;
    }
 
+   /**
+    * Metodo para crear el expediente del estudiante
+    *
+    * @param matricula Define la matricula del estudiante
+    */
    public void crearExpediente(String matricula) {
       try {
-         expediente = this.expedienteDAO.obtenerExpedienteEstudiante(matricula);
+         expediente = this.expedienteDAOImp.obtenerExpedienteEstudiante(matricula);
       } catch (Exception e) {
          e.printStackTrace();
       }
    }
 
-   public void cargarReporte() {
+   /**
+    * Metodo para inizializar el nombre del archivo
+    */
+   public void cargarNombreArchivo() {
       this.labelNombreArchivo.setText(archivo.getName());
    }
 
+   /**
+    * Metodo para inizializar la fecha de carga del reporte
+    */
    public void inicializarFechaDeCarga() {
 
       DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -181,6 +230,11 @@ public class FXMLReporteCargadoController implements Initializable {
       fechaCarga = fecha;
    }
 
+   /**
+    * Metodo para cerrar la ventana
+    *
+    * @param event Lanza el evento descrito
+    */
    public void cerrarVentana(ActionEvent event) {
       Node source = (Node) event.getSource();
       Stage stage = (Stage) source.getScene().getWindow();

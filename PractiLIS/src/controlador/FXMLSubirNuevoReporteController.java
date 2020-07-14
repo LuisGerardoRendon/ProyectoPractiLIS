@@ -1,7 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * LISTA DE CONTENIDO.
+ *    > Paquete de la clase 
+ *    > Clases o librerias utilizadas
+ *    > Atributos de la clase
+ *    > Constructor
+ *    > Método initialize
+ *    > Métodos Action Event
+ *    > Otros Métodos de la clase
  */
 package controlador;
 
@@ -33,7 +38,7 @@ import vista.Alerta;
 import vista.FXMLAlerta;
 
 /**
- * FXML Controller class
+ * Clase que contiene los metodos que controlan a la ventana FXMLSubirNuevoReporte
  *
  * @author ALDO
  */
@@ -52,6 +57,8 @@ public class FXMLSubirNuevoReporteController implements Initializable {
    private Label labelNombreArchivo;
    @FXML
    private DatePicker datePickerFechaFin;
+   @FXML
+   private TextField campoHorasReportadas;
 
    private EstudianteVO estudianteLogeado;
 
@@ -68,28 +75,81 @@ public class FXMLSubirNuevoReporteController implements Initializable {
    public File archivo;
 
    Alerta alerta;
-   @FXML
-   private TextField campoHorasReportadas;
 
    /**
-    * Initializes the controller class.
+    * Metodo constructor que permite el paso de parametros desde la ventan FXMLSubirReporte
+    *
+    * @param estudianteLogeado
     */
-   @Override
-   public void initialize(URL url, ResourceBundle rb) {
-      // TODO
-
-      reporteDAO = new ReporteDAOImplements();
-   }
-
    FXMLSubirNuevoReporteController(EstudianteVO estudianteLogeado) {
       this.estudianteLogeado = estudianteLogeado;
    }
 
+   /**
+    * Metodo que inicializa la ventana y sus componentes
+    *
+    * @param url Representa la ubicación del archivo de la ventana
+    * @param rb Prove de mecanismos para la inicialización de recursos
+    */
+   @Override
+   public void initialize(URL url, ResourceBundle rb) {
+
+      reporteDAO = new ReporteDAOImplements();
+   }
+
+   /**
+    * Metodo que permite lanzar el elemento de selección de fecha de la ventana
+    *
+    * @param event Lanza el evento de la ventana
+    */
+   @FXML
+   private void seleccionarFechaInicio(ActionEvent event) {
+   }
+
+   /**
+    * Metodo que permite lanzar el elemento de la sección de fecha de la ventana
+    *
+    * @param event Lanza el evento de fecha de la ventana
+    */
+   @FXML
+   private void seleccionarFechaFin(ActionEvent event) {
+   }
+
+   /**
+    * Metodo para terminar el caso de uso y regresar a la ventana FXMLMenuPrincipal
+    *
+    * @param event Lanza el evento descrito
+    */
    @FXML
    private void cancelar(ActionEvent event) {
       cerrarVentana(event);
+      abrirMenuPrincipalEstudiante();
+   }
+
+   /**
+    * Metodo que permite cargar el reporte de los campos que se llenaron
+    *
+    * @param event Lanza el evento descrito
+    */
+   @FXML
+   private void cargarReporte(ActionEvent event) {
+
+      if (validarFormulario() && validarSeleccionDeArchivo()) {
+         
+         abrirReporteCargado();
+         cerrarVentana(event);
+         
+      }
+
+   }
+   
+   /**
+    * Metodo para abrir la ventana FXMLMenuPrincipalEstudiante
+    */
+   public void abrirMenuPrincipalEstudiante() {
       try {
-         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/FXMLmenuPrincipalEstudiante.fxml"));
+         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/"
+                 + "FXMLmenuPrincipalEstudiante.fxml"));
          Parent ventanaPrincipal = (Parent) fXMLLoader.load();
          FXMLmenuPrincipalEstudianteController controlador = fXMLLoader.getController();
          controlador.setEstudianteLogeado(estudianteLogeado);
@@ -101,41 +161,42 @@ public class FXMLSubirNuevoReporteController implements Initializable {
          e.printStackTrace();
       }
    }
-
-   @FXML
-   private void cargarReporte(ActionEvent event) {
+   
+   /**
+    * Metodo para abrir la ventana FXMLReporteCargado
+    */
+   public void abrirReporteCargado() {
 
       try {
-         if (validarFormulario() && validarArchivo()) {
+         horasReportadas = Integer.parseInt(campoHorasReportadas.getText());
+         fechaInicio = datePickerFechaInicio.getValue().toString();
+         fechaFin = datePickerFechaFin.getValue().toString();
 
-            horasReportadas = Integer.parseInt(campoHorasReportadas.getText());
-            fechaInicio = datePickerFechaInicio.getValue().toString();
-            fechaFin = datePickerFechaFin.getValue().toString();
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/"
+                 + "FXMLReporteCargado.fxml"));
+         FXMLReporteCargadoController controladorReporteCargado = new FXMLReporteCargadoController
+         (horasReportadas, fechaInicio, fechaFin, archivo, estudianteLogeado);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/FXMLReporteCargado.fxml"));
-            FXMLReporteCargadoController controladorReporteCargado = new FXMLReporteCargadoController(horasReportadas,
-                    fechaInicio, fechaFin, archivo, estudianteLogeado);
+         loader.setController(controladorReporteCargado);
+         Parent root = loader.load();
 
-            loader.setController(controladorReporteCargado);
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(scene);
-            stage.show();
-
-            cerrarVentana(event);
-         }
+         Scene scene = new Scene(root);
+         Stage stage = new Stage();
+         stage.initModality(Modality.APPLICATION_MODAL);
+         stage.setScene(scene);
+         stage.show();
 
       } catch (IOException e) {
 
-         System.out.println(e.getMessage());
-         e.printStackTrace();
-
       }
+
    }
 
+   /**
+    * Metodo que permite abrir el explorador local de archivos para seleccionar el Reporte
+    *
+    * @param event Permite lanzar el evento antes descrito
+    */
    @FXML
    private void importarArchivo(ActionEvent event) {
       Stage stage = (Stage) this.botonImportarArchivo.getScene().getWindow();
@@ -144,14 +205,22 @@ public class FXMLSubirNuevoReporteController implements Initializable {
       archivo = fileChooser.showOpenDialog(stage);
       cargarReporte();
    }
-   
+
+   /**
+    * Metodo que permite inizializar el nombre del archivo una vez que ha sido cargado
+    */
    public void cargarReporte() {
       this.labelNombreArchivo.setText(archivo.getName());
    }
 
+   /**
+    * Metodo que permite validar el tamanio del archivo seleccionado
+    *
+    * @return Regresa true si el archivo es valido y false en caso de que no lo sea
+    */
    public boolean validarTamanioArchivo() {
       boolean archivoValido = true;
-      
+
       long tamanioArchivoEnBytes = archivo.length();
       long tamanioArchivoEnKiloBytes = tamanioArchivoEnBytes / 1024;
       long tamanioArchivoEnMegas = tamanioArchivoEnKiloBytes / 1024;
@@ -160,14 +229,19 @@ public class FXMLSubirNuevoReporteController implements Initializable {
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonImportarArchivo.getScene()
                  .getWindow());
          alerta.alertaError("ERROR EN ARCHIVO", "El archivo sobrepasa el tamanio maximo",
-                  "Elige un archivo de tamanio menor 12MB");
-         archivoValido=false;
+                 "Elige un archivo de tamanio menor 12MB");
+         archivoValido = false;
       }
-      
+
       return archivoValido;
    }
 
-   public boolean validarArchivo() {
+   /**
+    * Metodo que permite validar que haya un archivo seleccionado
+    *
+    * @return Regresa true si el archivo fue seleccionado y false en caso de que no
+    */
+   public boolean validarSeleccionDeArchivo() {
       boolean archivoValido = true;
 
       if (archivo == null) {
@@ -179,7 +253,7 @@ public class FXMLSubirNuevoReporteController implements Initializable {
       } else {
          if (!validarExtencionArchivo()) {
             archivoValido = false;
-         }else if(!validarTamanioArchivo()){
+         } else if (!validarTamanioArchivo()) {
             archivoValido = false;
          }
       }
@@ -187,10 +261,11 @@ public class FXMLSubirNuevoReporteController implements Initializable {
       return archivoValido;
    }
 
-   public void setEstudianteLogeado(EstudianteVO estudianteLogeado) {
-      this.estudianteLogeado = estudianteLogeado;
-   }
-
+   /**
+    * Metodo que permite validar la extención del archivo
+    *
+    * @return Regresa true si es valido y false en caso de que no sea valido
+    */
    public boolean validarExtencionArchivo() {
       boolean extencionValida = true;
 
@@ -208,13 +283,18 @@ public class FXMLSubirNuevoReporteController implements Initializable {
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonImportarArchivo.getScene()
                  .getWindow());
          alerta.alertaError("ERROR EN EL ARCHIVO", "No se permita archivos con extencion" + extencion,
-                  "Solo se permiten archivos doxc. y pdf.");
+                 "Solo se permiten archivos doxc. y pdf.");
       }
 
       return extencionValida;
 
    }
 
+   /**
+    * Metodo para validar el formulario
+    *
+    * @return Regresa true si el formulario es valido y false si no es valido
+    */
    public boolean validarFormulario() {
       boolean formularioValido = true;
       boolean camposLlenos = validarCamposLlenos();
@@ -231,12 +311,16 @@ public class FXMLSubirNuevoReporteController implements Initializable {
       return formularioValido;
    }
 
+   /**
+    * Metodo que valida que el usuario haya llenado todos los campos de texto requeridos
+    *
+    * @return Regresa tue si los todos los campos estan llenos y false si no lo estan
+    */
    public boolean validarCamposLlenos() {
       boolean camposLlenos = true;
 
       if (campoHorasReportadas.getText().trim().equals("") || datePickerFechaFin.getValue() == null
-              || datePickerFechaFin.getValue()
-              == null) {
+              || datePickerFechaFin.getValue() == null) {
          camposLlenos = false;
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonCargarReporte.getScene().getWindow());
          alerta.alertaError("CAMPOS INCORRECTOS", "Tienes campos incompletos o incorrectos",
@@ -245,6 +329,11 @@ public class FXMLSubirNuevoReporteController implements Initializable {
       return camposLlenos;
    }
 
+   /**
+    * Metodo que valida que el formato de los datos ingresados sea correcto
+    *
+    * @return Regresa true si el formato de los datos es correcto
+    */
    public boolean validarFormatoDatos() {
       boolean formatoCorrecto = true;
 
@@ -254,6 +343,11 @@ public class FXMLSubirNuevoReporteController implements Initializable {
       return formatoCorrecto;
    }
 
+   /**
+    * Metodo que valida que el formato de horas sea correcto
+    *
+    * @return Regresa true si el formato es valido y false si no lo es
+    */
    public boolean validarHoras() {
       boolean horasValidas = true;
       String horasReportadas = campoHorasReportadas.getText();
@@ -266,6 +360,11 @@ public class FXMLSubirNuevoReporteController implements Initializable {
       return horasValidas;
    }
 
+   /**
+    * Metodo que valida el formato de la fecha de inicio
+    *
+    * @return Regresa true si el formato es correcto y false si no lo es
+    */
    public boolean validarFechaInicio() {
       boolean fechaInicioValida = true;
       if (!datePickerFechaInicio.getValue().toString().matches("^\\d{4}\\-(0[1-9]|1[012])\\"
@@ -280,6 +379,11 @@ public class FXMLSubirNuevoReporteController implements Initializable {
       return fechaInicioValida;
    }
 
+   /**
+    * Metodo que valida el formato de la fecha fin
+    *
+    * @return Regresa true si el formato es correcto y false si no lo es
+    */
    public boolean validarFechaFin() {
       boolean fechaFinValida = true;
       if (!datePickerFechaFin.getValue().toString().matches("^\\d{4}\\-(0[1-9]|1[012])\\-"
@@ -292,7 +396,12 @@ public class FXMLSubirNuevoReporteController implements Initializable {
 
       return fechaFinValida;
    }
-  
+
+   /**
+    * Metodo que valida que la fecha final no sea menor a la fecha de inicio
+    *
+    * @return Regresa true si las fechas son correctas
+    */
    public boolean validarFechas() {
       boolean fechasValidas = true;
 
@@ -301,12 +410,12 @@ public class FXMLSubirNuevoReporteController implements Initializable {
          Date fechaInicio = date.parse(datePickerFechaInicio.getValue().toString());
          Date fechaFin = date.parse(datePickerFechaFin.getValue().toString());
 
-         if (!(fechaFin.compareTo(fechaInicio) >=0)) {
+         if (!(fechaFin.compareTo(fechaInicio) >= 0)) {
             FXMLAlerta alerta = new FXMLAlerta((Stage) this.datePickerFechaFin.getScene().getWindow());
             alerta.alertaError("ERROR: FECHA INICIO ES MAYOR A LA FECHA FIN", "La fecha inicio"
                     + " debe ser menor a la fecha fin",
                     "Por favor ingresa las fechas correctas");
-            fechasValidas=false;
+            fechasValidas = false;
             System.out.println("Entro");
          }
       } catch (Exception e) {
@@ -316,20 +425,16 @@ public class FXMLSubirNuevoReporteController implements Initializable {
 
       return fechasValidas;
    }
-   
-   
+
+   /**
+    * Metodo que cierra la ventana
+    *
+    * @param event Lanza el evento antes descrito
+    */
    public void cerrarVentana(ActionEvent event) {
       Node source = (Node) event.getSource();
       Stage stage = (Stage) source.getScene().getWindow();
       stage.close();
    }
-
-   @FXML
-   private void seleccionarFechaInicio(ActionEvent event) {
-   }
-
-   @FXML
-   private void seleccionarFechaFin(ActionEvent event) {
-   }
-
+   
 }

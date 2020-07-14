@@ -1,7 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * LISTA DE CONTENIDO.
+ *    > Paquete de la clase 
+ *    > Clases o librerias utilizadas
+ *    > Atributos de la clase
+ *    > Constructor
+ *    > Método initialize
+ *    > Métodos Action Event
+ *    > Otros Métodos de la clase
  */
 package controlador;
 
@@ -19,34 +24,51 @@ import javafx.stage.Stage;
 import modelo.EstudianteVO;
 
 /**
- * FXML Controller class
+ * Clase para controlar la ventana FXMLReporteSubidoExito
  *
- * @author ALDO
+ * @author Aldo Colorado
  */
 public class FXMLReporteSubidoController implements Initializable {
 
    @FXML
    private Button botonAceptar;
-   
+
    private EstudianteVO estudianteLogeado;
 
    /**
-    * Initializes the controller class.
+    * Constructor de la clase que permite pasar el estudiante logeado en el sistema
+    *
+    * @param estudianteLogeado Estudiante logeado en el sistema
+    */
+   FXMLReporteSubidoController(EstudianteVO estudianteLogeado) {
+      this.estudianteLogeado = estudianteLogeado;
+   }
+
+   /**
+    * Inizializa el controlador de la clase
     */
    @Override
    public void initialize(URL url, ResourceBundle rb) {
-      // TODO
    }
 
-   FXMLReporteSubidoController(EstudianteVO estudianteLogeado) {
-      this.estudianteLogeado=estudianteLogeado;
-   }
-
+   /**
+    * Metodo que termina el caso de uso
+    *
+    * @param event Lanza el evento de aceptar
+    */
    @FXML
    private void aceptar(ActionEvent event) {
       cerrarVentana(event);
+      abrirMenuPrincipalEstudiante();
+   }
+
+   /**
+    * Metodo para abrir la ventana FXMLMenuPrincipalEstudiante
+    */
+   public void abrirMenuPrincipalEstudiante() {
       try {
-         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/FXMLmenuPrincipalEstudiante.fxml"));
+         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/"
+                 + "FXMLmenuPrincipalEstudiante.fxml"));
          Parent ventanaPrincipal = (Parent) fXMLLoader.load();
          FXMLmenuPrincipalEstudianteController controlador = fXMLLoader.getController();
          controlador.setEstudianteLogeado(estudianteLogeado);
@@ -56,14 +78,18 @@ public class FXMLReporteSubidoController implements Initializable {
       } catch (Exception e) {
          e.getMessage();
          e.printStackTrace();
-      }  
+      }
    }
-   
+
+   /**
+    * Metodo para cerrar la ventana
+    *
+    * @param event Lanza el evento de cerrar ventana
+    */
    public void cerrarVentana(ActionEvent event) {
       Node source = (Node) event.getSource();
       Stage stage = (Stage) source.getScene().getWindow();
       stage.close();
    }
-   
 
 }

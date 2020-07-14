@@ -1,7 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * LISTA DE CONTENIDO.
+ *    > Paquete de la clase 
+ *    > Clases o librerias utilizadas
+ *    > Atributos de la clase
+ *    > Constructor
+ *    > Método initialize
+ *    > Métodos Action Event
+ *    > Otros Métodos de la clase
  */
 package controlador;
 
@@ -31,9 +36,9 @@ import modelo.ReporteDAOImplements;
 import modelo.ReporteVO;
 
 /**
- * FXML Controller class
+ * Clase que contiene los metodos que controlan a la ventana FXMLSubirReporte
  *
- * @author ALDO
+ * @author Aldo Colorado 
  */
 public class FXMLSubirReporteController implements Initializable {
 
@@ -53,25 +58,38 @@ public class FXMLSubirReporteController implements Initializable {
    private Label labelNombreProyecto;
    @FXML
    private Label labelHorasAcumuladas;
-
+   
    private EstudianteVO estudianteLogeado;
-
+   
    private ProyectoVO proyectoRecuperado;
-
+   
    private ObservableList<ReporteVO> reportesRecuperados;
-
-   ReporteDAOImplements reporteDAO;
-
-   ProyectoDAOImplements proyectoDAO;
+   
+   ReporteDAOImplements reporteDAOImp;
+   
+   ProyectoDAOImplements proyectoDAOImp;
 
    /**
-    * Initializes the controller class.
+    * Constructor de la clase que permite el paso de parametros desde la ventana
+    * FXMLMenuPrincipalEstudiante
+    *
+    * @param estudianteLogeado Define el estudiante que se recibe en esta ventana
+    */
+   public FXMLSubirReporteController(EstudianteVO estudianteLogeado) {
+      this.estudianteLogeado = estudianteLogeado;
+   }
+
+   /**
+    * Metodo que inicializa la ventana y sus componentes
+    *
+    * @param url Representa la ubicación del archivo de la ventana
+    * @param rb Prove de mecanismos para la inicialización de recursos
     */
    @Override
    public void initialize(URL url, ResourceBundle rb) {
 
-      reporteDAO = new ReporteDAOImplements();
-      proyectoDAO = new ProyectoDAOImplements();
+      reporteDAOImp = new ReporteDAOImplements();
+      proyectoDAOImp = new ProyectoDAOImplements();
       recuperarReportes();
       recuperarProyecto();
       setNombreProyecto();
@@ -80,31 +98,53 @@ public class FXMLSubirReporteController implements Initializable {
 
    }
 
-   public void setEstudianteLogeado(EstudianteVO estudianteLogeado) {
-      this.estudianteLogeado = estudianteLogeado;
-
-   }
-   
-   public void inicializarTabla() {
-
-      this.columnaNumeroReporte.setCellValueFactory(new PropertyValueFactory("numero"));
-      this.columnaFechaCarga.setCellValueFactory(new PropertyValueFactory("fechaCarga"));
-      this.columnaHorasCubiertas.setCellValueFactory(new PropertyValueFactory("horasReportadas"));
-      this.tablaReportes.setItems(reportesRecuperados);
-
-   }
-
-   public FXMLSubirReporteController(EstudianteVO estudianteLogeado) {
-      this.estudianteLogeado = estudianteLogeado;
-   }
-
+   /**
+    * Metodo para cargar la ventana FXMLSubirNuevoReporte
+    *
+    * @param event Lanza el vento de la ventana
+    */
    @FXML
    private void subirNuevoReporte(ActionEvent event) {
+
+      abrirVentanaSubirNuevoReporte();
+
+      cerrarVentana(event);
+   }
+
+   /**
+    * Metodo para regresar al Menu principal del estudiante
+    *
+    * @param event
+    */
+   @FXML
+   private void regresar(ActionEvent event) {
+
+      cerrarVentana(event);
+
+      abrirMenuPrincipalEstudiante();
+   }
+   
+   /**
+    * Metodo para cerrar la ventana FXMLSubirReporte
+    *
+    * @param event Atributo que lanza el evento de cerrar la ventana
+    */
+   public void cerrarVentana(ActionEvent event) {
+      Node source = (Node) event.getSource();
+      Stage stage = (Stage) source.getScene().getWindow();
+      stage.close();
+   }
+
+   /**
+    * Metodo para abrir la ventana FXMLSubirNuevoReporte
+    */
+   public void abrirVentanaSubirNuevoReporte() {
 
       try {
          FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/"
                  + "FXMLSubirNuevoReporte.fxml"));
-         FXMLSubirNuevoReporteController controladorSubirNuevoReporte = new FXMLSubirNuevoReporteController(estudianteLogeado);
+         FXMLSubirNuevoReporteController controladorSubirNuevoReporte = new 
+        FXMLSubirNuevoReporteController(estudianteLogeado);
          loader.setController(controladorSubirNuevoReporte);
          Parent root = loader.load();
 
@@ -114,53 +154,69 @@ public class FXMLSubirReporteController implements Initializable {
          stage.setScene(scene);
          stage.show();
 
-         cerrarVentana(event);
       } catch (IOException e) {
          System.out.println(e.getMessage());
          e.printStackTrace();
       }
-
-      Node source = (Node) event.getSource();
-      Stage stagee = (Stage) source.getScene().getWindow();
-      stagee.close();
    }
 
-   @FXML
-   private void regresar(ActionEvent event) {
-      cerrarVentana(event);
+   /**
+    * Metodo para abrir la ventana FXMLMenuPrincipalEstudiante
+    */
+   public void abrirMenuPrincipalEstudiante() {
       try {
-         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/FXMLmenuPrincipalEstudiante.fxml"));
+         FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/"
+                 + "FXMLmenuPrincipalEstudiante.fxml"));
          Parent ventanaPrincipal = (Parent) fXMLLoader.load();
          FXMLmenuPrincipalEstudianteController controlador = fXMLLoader.getController();
          controlador.setEstudianteLogeado(estudianteLogeado);
          Stage stage = new Stage();
          stage.setScene(new Scene(ventanaPrincipal));
          stage.show();
-      } catch (Exception e){
-        e.getMessage();
-        e.printStackTrace();
-      } 
+      } catch (Exception e) {
+         e.getMessage();
+         e.printStackTrace();
+      }
    }
 
-   
+   /**
+    * Metodo para inicializar la tabla de los reportes del estudiante
+    */
+   public void inicializarTabla() {
 
+      this.columnaNumeroReporte.setCellValueFactory(new PropertyValueFactory("numero"));
+      this.columnaFechaCarga.setCellValueFactory(new PropertyValueFactory("fechaCarga"));
+      this.columnaHorasCubiertas.setCellValueFactory(new PropertyValueFactory("horasReportadas"));
+      this.tablaReportes.setItems(reportesRecuperados);
+
+   }
+
+   /**
+    * Metodo para inicializar el nombre del proyecto del estudiante
+    */
    public void setNombreProyecto() {
       String nombreProyectoRecuperado = proyectoRecuperado.getNombre();
       this.labelNombreProyecto.setText(nombreProyectoRecuperado);
    }
 
+   /**
+    * Metodo para recuperar el proyecto a que el estudiante esta asignado
+    */
    public void recuperarProyecto() {
       try {
-         proyectoRecuperado = this.proyectoDAO.recuperarProyectoEstudiante("2020-2021",
+         proyectoRecuperado = this.proyectoDAOImp.recuperarProyectoEstudiante("2020-2021",
                  estudianteLogeado.getMatricula());
       } catch (Exception e) {
          e.printStackTrace();
       }
    }
 
+   /**
+    * Metodo para recuperar los reportes del estudiante
+    */
    public void recuperarReportes() {
       try {
-         reportesRecuperados = this.reporteDAO.recuperarReportesDeEstudiante("2020-2021",
+         reportesRecuperados = this.reporteDAOImp.recuperarReportesDeEstudiante("2020-2021",
                  estudianteLogeado.getMatricula());
       } catch (Exception e) {
          e.printStackTrace();
@@ -168,18 +224,15 @@ public class FXMLSubirReporteController implements Initializable {
 
    }
 
+   /**
+    * Metodo para calcular las horas reportadas por el estudiante
+    */
    public void calcularHoras() {
       int sumaHoras = 0;
       for (ReporteVO tab : reportesRecuperados) {
          sumaHoras += tab.getHorasReportadas();
       }
       this.labelHorasAcumuladas.setText(sumaHoras + "");
-   }
-
-   public void cerrarVentana(ActionEvent event) {
-      Node source = (Node) event.getSource();
-      Stage stage = (Stage) source.getScene().getWindow();
-      stage.close();
    }
 
 }
