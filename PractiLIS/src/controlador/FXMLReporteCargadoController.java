@@ -103,7 +103,7 @@ public class FXMLReporteCargadoController implements Initializable {
       expedienteDAOImp = new ExpedienteDAOImplements();
      
       cargarNombreArchivo();
-      crearReporte();
+      
       crearExpediente(estudianteLogeado.getMatricula());
    }
    
@@ -124,11 +124,12 @@ public class FXMLReporteCargadoController implements Initializable {
    @FXML
    private void subirReporte(ActionEvent event) {
       inicializarFechaDeCarga();
+      crearReporte();
       if (subirReporte()) {
          abrirReporteSubidoExito();
          cerrarVentana(event);
       }
-
+      
    }
 
    /**
