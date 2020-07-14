@@ -127,7 +127,7 @@ public class FXMLasignarProyectoController implements Initializable {
       EstudianteVO estudiante = this.tablaEstudiantes.getSelectionModel().getSelectedItem();
       ProyectoVO proyecto = this.obtenerProyectoSeleccionado();
       //Datos de la asignacion
-      String periodo = "Ene 2020-Ago 2020";
+      String periodo = "2020-2021";
       float progreso = 0;
 
       if (estudiante != null && proyecto != null) {

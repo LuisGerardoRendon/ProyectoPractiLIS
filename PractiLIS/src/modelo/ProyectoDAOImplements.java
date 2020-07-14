@@ -167,7 +167,7 @@ public class ProyectoDAOImplements implements ProyectoDAO {
       String sql = "SELECT p.nombre, p.descripcion, p.capacidadEstudiantes, "
               + "p.numEstudiantesAsignados, p.idProyecto, p.status, p.idOrganizacion,"
               + " p.idEncargadoProyecto FROM proyecto p INNER JOIN solicitud s ON "
-              + "s.idProyecto=p.idProyecto WHERE matricula= ? AND s.periodo = 'Ene 2020-Ago 2020'";
+              + "s.idProyecto=p.idProyecto WHERE matricula= ? AND s.periodo = '2020-2021'";
 
       ObservableList<ProyectoVO> proyectosSolicitadosList = FXCollections.observableArrayList();
 
