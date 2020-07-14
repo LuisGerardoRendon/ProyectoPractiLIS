@@ -17,9 +17,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- *
- * @author Sammy Guergachi <sguergachi at gmail.com>
- * @version 1.1, 09/jul/2020
+ * Descripcion de la clase. La clase EstudianteDAOImplements tiene el propósito de comunicar la base
+ * de datos con el controlador donde se quiera crear, modificar o elimnar entidades o atributos de
+ * Estudiante
+ * 
+ * @author Luis Gerardo Rendon Martínez
  */
 public class EstudianteDAOImplements implements EstudianteDAO {
 

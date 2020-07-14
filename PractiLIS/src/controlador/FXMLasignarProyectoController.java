@@ -261,7 +261,8 @@ public class FXMLasignarProyectoController implements Initializable {
    /**
     * Método que verifica de que tabla se está seleccionando el Proyecto que se quiere asignar
     *
-    * @return
+    * @return Regresa el proyecto seleccionado de alguna de tablas de tablasProyectos o 
+    * tablaSoliciutes
     */
    public ProyectoVO obtenerProyectoSeleccionado() {
       ProyectoVO proyectoTablaProyectos = this.tablaProyectos.getSelectionModel().getSelectedItem();
