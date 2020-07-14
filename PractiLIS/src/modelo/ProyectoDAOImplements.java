@@ -101,7 +101,7 @@ public class ProyectoDAOImplements implements ProyectoDAO {
       Statement statement = null;
       ConexionBD conexion = new ConexionBD();
       ResultSet resultset = null;
-
+      
       ObservableList<ProyectoVO> proyectosRecuperadosList = FXCollections.observableArrayList();
       try {
          connection = conexion.conectarMySQL();
@@ -170,7 +170,7 @@ public class ProyectoDAOImplements implements ProyectoDAO {
               + "s.idProyecto=p.idProyecto WHERE matricula= ? AND s.periodo = '2020-2021'";
 
       ObservableList<ProyectoVO> proyectosSolicitadosList = FXCollections.observableArrayList();
-
+      
       try {
          connection = new ConexionBD().conectarMySQL();
          prepareStatement = connection.prepareStatement(sql);

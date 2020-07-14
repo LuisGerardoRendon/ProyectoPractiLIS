@@ -1,11 +1,11 @@
 /**
  * LISTA DE CONTENIDO:
- * > Paquete de la clase  
+ * > Paquete de la clase
  * > Clases o librerias utilizadas
- * > Atributos de la clase 
- * > Método initialize 
+ * > Atributos de la clase
+ * > Método initialize
  * > Métodos con Action Event
- * > Otros Métodos de la clase 
+ * > Otros Métodos de la clase
  */
 package controlador;
 
@@ -102,8 +102,7 @@ public class FXMLasignarProyectoController implements Initializable {
     */
    @FXML
    private void mostrarSolicitudes(ActionEvent event) {
-      EstudianteVO estudianteSeleccionado = this.tablaEstudiantes.getSelectionModel()
-              .getSelectedItem();
+      EstudianteVO estudianteSeleccionado = this.tablaEstudiantes.getSelectionModel().getSelectedItem();
 
       if (estudianteSeleccionado != null) {
          this.obtenerProyectosSolicitados(estudianteSeleccionado.getMatricula());
@@ -233,9 +232,9 @@ public class FXMLasignarProyectoController implements Initializable {
     */
    public void obtenerProyectosSolicitados(String matricula) {
       try {
-         if (!proyectosSolicitados.isEmpty()) {
-            this.proyectosSolicitados = proyectoDAOImp.recuperarProyectosSolicitados(matricula);
-         } else {
+
+         this.proyectosSolicitados = proyectoDAOImp.recuperarProyectosSolicitados(matricula);
+         if (proyectosSolicitados.isEmpty()) {
             FXMLAlerta alerta = new FXMLAlerta((Stage) this.tablaEstudiantes.getScene().getWindow());
             alerta.alertaError("Error", "",
                     "Los PROYECTOS solicitados por este estudiante no tienen cupo");
@@ -248,10 +247,12 @@ public class FXMLasignarProyectoController implements Initializable {
          alert.showAndWait();
 
       } catch (Exception e) {
+         System.out.println("ENTRO AL CATCH OBTENER");
          Alert alert = new Alert(Alert.AlertType.ERROR);
          alert.setTitle("ERROR.Algo Orurrio");
          alert.setHeaderText("");
          alert.setContentText(e.getMessage());
+         e.printStackTrace();
          alert.showAndWait();
       }
    }
