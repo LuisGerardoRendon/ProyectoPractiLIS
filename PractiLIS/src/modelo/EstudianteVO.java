@@ -11,8 +11,7 @@
 package modelo;
 
 import java.util.Objects;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 
 /**
  * Esta clase contiene la definición de la clase estudiante, aqui se implementan sus

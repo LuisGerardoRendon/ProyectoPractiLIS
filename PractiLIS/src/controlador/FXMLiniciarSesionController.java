@@ -1,7 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * LISTA DE CONTENIDO:
+ * > Paquete de la clase
+ * > Clases o librerias utilizadas
+ * > Atributos de la clase
+ * > Método initialize
+ * > Métodos con Action Event
+ * > Otros Métodos de la clase
  */
 package controlador;
 
@@ -28,9 +32,11 @@ import modelo.EstudianteVO;
 import vista.FXMLAlerta;
 
 /**
- * FXML Controller class
+ * FXML Controller de la vista FXMLiniciarSesion.fxml, esta clase se encarga de comunicar a la
+ * vista con la base de datos, tratar las excepciones y realizar procedimientos necesarios como:
+ * validaciones y cálculos.
  *
- * @author Sammy Guergachi <sguergachi at gmail.com>
+ * @author Luis Gerardo Rendon Martínez
  */
 public class FXMLiniciarSesionController implements Initializable {
 
@@ -46,7 +52,7 @@ public class FXMLiniciarSesionController implements Initializable {
    private TextField campoMatricula;
 
    /**
-    * Initializes the controller class.
+    * Inicializa el controlador de la vista FXMLiniciarSesion.fxml
     */
    @Override
    public void initialize(URL url, ResourceBundle rb) {
@@ -54,7 +60,12 @@ public class FXMLiniciarSesionController implements Initializable {
       coordinadorDAOImplements = new CoordinadorDAOImplements();
       // TODO
    }
-
+/**
+ * Método encargado de identificar el tipo de usuario que quiere ingresar y recuperarlo de la base
+ * de datos y si es un usuario válido permite la entrada a la funcionalidad restante. Este método
+ * está ligado al clic en el botón iniciar sesión.
+ * @param event clic en botón iniciar sesión
+ */
    @FXML
    private void iniciarSesion(ActionEvent event) {
 
@@ -103,7 +114,14 @@ public class FXMLiniciarSesionController implements Initializable {
       }
 
    }
-
+/**
+ * Este método valida que la matricula introducida sea válida esto quiere decir que:
+ * Si contiene 9 caracteres debe iniciar con la letra S o s
+ * Si contiene 10 caracateres debe iniciar con la letra z o Z seguida de la S o s.
+ * @param matricula matricula recuperada del campoMatricula de la ventana
+ * @return  Una cadena indicando la invalidez, si la cadena es "", significa que la matricula es
+ * valida
+ */
    private String validarMatricula(String matricula) {
       String mensaje = "";
 
@@ -137,7 +155,11 @@ public class FXMLiniciarSesionController implements Initializable {
 
       return mensaje;
    }
-
+/**
+ * Este método valida que los campos de la ventana no estén vacíos
+ * @return En caso de que los campos estén vacíos, regresa un string indicando que campo está vacío.
+ * En el caso de que los campos no estén vacíos, regresa un string ""
+ */
    private String hayCamposVacios() {
 
       String mensajeCamposVacios = "";
@@ -149,7 +171,13 @@ public class FXMLiniciarSesionController implements Initializable {
       }
       return mensajeCamposVacios;
    }
-
+/**
+ * Esté método se encarga de formatear la matricula que es pasada como parámetro
+ * Primero, valida el tamaño en caracteres de la cadena, despues valida la letra con la que inicia
+ * para poder determinar las modificaciones necesarias en la cadena.
+ * @param matricula sin formatear
+ * @return Matricula con formato S00000000
+ */
    public String formatearMatricula(String matricula) {
       String matriculaFormateada = "S";
       if (matricula.length() == 9) {
@@ -167,7 +195,12 @@ public class FXMLiniciarSesionController implements Initializable {
       }
       return matriculaFormateada;
    }
-
+   
+/**
+ * Este método se encarga de mostrar la ventana FXMLmenuPrincupalEstudiante.fxml, también es
+ * responsable de pasar el estudiante logeado a la siguiente ventana.
+ * @param estudianteLogeado Estudiante actualmente logeado
+ */
    private void mostrarFXMLmenuPrincipalEstudiante(EstudianteVO estudianteLogeado) {
       try {
          FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/FXMLmenuPrincipalEstudiante.fxml"));
@@ -183,6 +216,9 @@ public class FXMLiniciarSesionController implements Initializable {
       }
    }
 
+   /**
+    * Este método se encarga de cargar y mostrar la ventana FXMLasignarProyecto.fxml
+    */
    private void mostrarFXMLasignarProyecto() {
       try {
          FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("/vista/FXMLasignarProyecto.fxml"));
@@ -195,7 +231,9 @@ public class FXMLiniciarSesionController implements Initializable {
          e.printStackTrace();
       }
    }
-
+/**
+ * Este método se encarga de cerrar la ventana FXMLInicarSesion.fxnl
+ */
    public void cerrarVentanaInicio() {
       Stage stage = (Stage) this.botonIniciarSesion.getScene().getWindow();
       stage.close();
