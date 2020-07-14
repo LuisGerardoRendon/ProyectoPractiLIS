@@ -82,7 +82,7 @@ public class DocumentoVO {
    /**
     * Metodo para obtener el nombre del documento
     *
-    * @return
+    * @return Regresa el nombre del documento
     */
    public String getNombreDocumento() {
       return nombreDocumento;
@@ -109,7 +109,7 @@ public class DocumentoVO {
    /**
     * Define el archivo del Documento
     *
-    * @param documento
+    * @param documento Define el documento de la clase
     */
    public void setDocumento(String documento) {
       this.documento = documento;
@@ -118,7 +118,7 @@ public class DocumentoVO {
    /**
     * Define el nombre del Documento
     *
-    * @param nombreDocumento
+    * @param nombreDocumento Define el nombre del documento
     */
    public void setNombreDocumento(String nombreDocumento) {
       this.nombreDocumento = nombreDocumento;
@@ -127,7 +127,7 @@ public class DocumentoVO {
    /**
     * Define el idExpediente relacionado al Documento
     *
-    * @param idExpediente
+    * @param idExpediente Define el nombre del expediente
     */
    public void setIdExpediente(int idExpediente) {
       this.idExpediente = idExpediente;

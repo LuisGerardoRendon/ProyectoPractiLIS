@@ -233,7 +233,7 @@ public class FXMLSubirReporteController implements Initializable {
          Alert alert = new Alert(Alert.AlertType.ERROR);
          alert.setTitle("ERROR");
          alert.setHeaderText("");
-         alert.setContentText("ERROR. No hay conexión con la base de datos, inténtelo más tarde");
+         alert.setContentText("ERROR. Se perdio conexión con la base de datos");
          alert.showAndWait();
          e.printStackTrace();
          abrirMenuPrincipalEstudiante();

@@ -225,11 +225,11 @@ public class FXMLSubirNuevoReporteController implements Initializable {
       long tamanioArchivoEnKiloBytes = tamanioArchivoEnBytes / 1024;
       long tamanioArchivoEnMegas = tamanioArchivoEnKiloBytes / 1024;
 
-      if (tamanioArchivoEnMegas > 12) {
+      if (tamanioArchivoEnMegas > 2.5) {
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonImportarArchivo.getScene()
                  .getWindow());
          alerta.alertaError("ERROR EN ARCHIVO", "El archivo sobrepasa el tamanio maximo",
-                 "Elige un archivo de tamanio menor 12MB");
+                 "Elige un archivo de tamanio menor");
          archivoValido = false;
       }
 
@@ -278,12 +278,12 @@ public class FXMLSubirNuevoReporteController implements Initializable {
       }
       extencion = nombre.substring(lastIndexOf);
 
-      if (!extencion.equals(".docx") && !extencion.equals(".pdf")) {
+      if (!extencion.equals(".docx")) {
          extencionValida = false;
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonImportarArchivo.getScene()
                  .getWindow());
          alerta.alertaError("ERROR EN EL ARCHIVO", "No se permita archivos con extencion" + extencion,
-                 "Solo se permiten archivos doxc. y pdf.");
+                 "Solo se permiten archivos doxc.");
       }
 
       return extencionValida;
@@ -323,8 +323,8 @@ public class FXMLSubirNuevoReporteController implements Initializable {
               || datePickerFechaFin.getValue() == null) {
          camposLlenos = false;
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonCargarReporte.getScene().getWindow());
-         alerta.alertaError("CAMPOS INCORRECTOS", "Tienes campos incompletos o incorrectos",
-                 "Por favor llena todos los campos");
+         alerta.alertaError("CAMPOS INCORRECTOS", "Tienes campos vacios",
+                 "Por favor completa la informacion requerida");
       }
       return camposLlenos;
    }
@@ -354,8 +354,8 @@ public class FXMLSubirNuevoReporteController implements Initializable {
       if (!horasReportadas.matches("^-?[0-9]+$")) {
          horasValidas = false;
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonCargarReporte.getScene().getWindow());
-         alerta.alertaError("ERROR DE FORMATO", "Formato de horas invalido",
-                 "Por favor ingresa un numero en el campo de horas");
+         alerta.alertaError("ERROR:","El campo de texto horas contiene informacion invalida",
+                 "Por favor revisa y corrige");
       }
       return horasValidas;
    }
