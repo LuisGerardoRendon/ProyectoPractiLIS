@@ -220,7 +220,9 @@ public class FXMLSubirReporteController implements Initializable {
    }
 
    /**
-    * Metodo para recuperar los reportes del estudiante
+    * Metodo para recuperar los reportes del estudiante logeado
+    * 
+    * @return Regresa true si pudo subir los reportes y false si no pudo 
     */
    public boolean recuperarReportes() {
       boolean exitoRecuperarReportes=true;
