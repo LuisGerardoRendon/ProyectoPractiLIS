@@ -160,8 +160,18 @@ public class FXMLSubirReporteController implements Initializable {
                  "2020-2021", estudianteLogeado.getMatricula());
          
          this.labelFecha.setText(fecha);
+      }catch(SQLException e){
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle("ERROR");
+         alert.setHeaderText("");
+         alert.setContentText("SE PERDIÓ LA CONEXIÓN CON LA BASE DE DATOS");
+         alert.showAndWait();
       }catch(Exception e){
-         e.printStackTrace();
+         Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle("ERROR. Algo malo ocurrió");
+         alert.setHeaderText("");
+         alert.setContentText(e.getMessage());
+         alert.showAndWait();
       }
        
    }
