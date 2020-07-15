@@ -151,11 +151,14 @@ public class FXMLSubirReporteController implements Initializable {
       stage.close();
    }
    
+   /**
+    * Metodo para inicializar la fecha de inicio  de la asignacion
+    */
    public void inicializarFechaAsignacion(){
       try{
          String fecha = asignacionDAOImp.obtenerFechaAsignacion(
                  "2020-2021", estudianteLogeado.getMatricula());
-         System.out.println(fecha+"BB");
+         
          this.labelFecha.setText(fecha);
       }catch(Exception e){
          e.printStackTrace();

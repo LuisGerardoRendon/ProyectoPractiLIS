@@ -130,6 +130,14 @@ public class AsignacionDAOImplements implements AsignacionDAO {
       return idAsignacion;
    }
 
+   /**
+    * Metodo para obtener la fecha de la asignacion
+    * 
+    * @param periodo periodo del curso
+    * @param matricula matricula del alumno
+    * @return cadena con la fecha
+    * @throws Exception manda excepcion a lo largo del proceso 
+    */
    @Override
    public String obtenerFechaAsignacion(String periodo, String matricula) throws Exception {
       String fechaInicio = "";
