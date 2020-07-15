@@ -142,9 +142,9 @@ public class FXMLasignarProyectoController implements Initializable {
             cambiarStatus(estudiante.getMatricula());
             cambiarEstudiantesAsignados(proyecto);
             this.crearExpediente(estudiante.getMatricula(), periodo);
+            
             FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonAsignar.getScene().getWindow());
             alerta.alertaInformacion("EXITO", "", "La asignación se realizó con éxito");
-            this.inicializarTablas();
          } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
@@ -162,6 +162,9 @@ public class FXMLasignarProyectoController implements Initializable {
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonAsignar.getScene().getWindow());
          alerta.alertaError("ERROR", "", "No se ha seleccionado un estudiante o proyecto.");
       }
+      this.tablaEstudiantes.refresh();
+      this.tablaProyectos.refresh();
+      this.inicializarTablas();
    }
 
    /**
@@ -307,8 +310,7 @@ public class FXMLasignarProyectoController implements Initializable {
     * @param proyecto Defiene el objeto Proyecto al cual se quiere realizar el cambio
     */
    public void cambiarEstudiantesAsignados(ProyectoVO proyecto) {
-      
-      if (proyecto.getCapacidadEstudiantes()>0){
+      if (proyecto.getCapacidadEstudiantes()>1){
          try {
             boolean changed = this.proyectoDAOImp.cambiarEstudiantesAsignados(proyecto.getIdProyecto(),
                     (proyecto.getNumEstudiantesAsignados() + 1), "Sin asignar");
@@ -382,7 +384,9 @@ public class FXMLasignarProyectoController implements Initializable {
    private void calcularCupo(ObservableList<ProyectoVO> proyectosList) {
       int cupo = 0;
       for (ProyectoVO tab : proyectosList) {
+         System.out.println(tab.getIdProyecto()+" "+tab.getCapacidadEstudiantes());
          cupo = tab.getCapacidadEstudiantes() - tab.getNumEstudiantesAsignados();
+         System.out.println(tab.getIdProyecto()+" "+cupo);
          tab.setCapacidadEstudiantes(cupo);
       }
    }
