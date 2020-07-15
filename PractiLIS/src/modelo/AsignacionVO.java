@@ -10,13 +10,14 @@
  */
 package modelo;
 
+
+import java.util.Objects;
+
 /**
  * Esta clase contiene la definición de la clase AsignacionVO, en ella
  * se declaran sus constructores ,metodos getters, setters, asi como el toString de la clase.
- * @author Luis Gerardo Rendon 
+ * @author Luis Gerardo Rendon
  */
-import java.util.Objects;
-
 public class AsignacionVO {
 
    private int idAsignacion;

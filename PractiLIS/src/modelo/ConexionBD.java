@@ -11,6 +11,12 @@ import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+/**
+ * Esta clase es la encargada de definir el todos los elementos que se necesitan para hacer la
+ * conexion a la base de datos como : El controlador jdbc, el nombre de la base de datos, el host,
+ * el puerto, el nombre de usuario y su contraseña, para despues poder realizar una conexión exitosa.
+ * @author Luis Gerardo Rendon Martinez
+ */
 
 public class ConexionBD {
 
@@ -18,7 +24,7 @@ public class ConexionBD {
    public String driver = "com.mysql.jdbc.Driver";
 
    // Nombre de la base de datos
-   public String database = "practilisv1";
+   public String database = "practilis2";
 
    // Host
    public String hostname = "localhost";
@@ -33,7 +39,7 @@ public class ConexionBD {
    public String username = "root";
 
    // Clave de usuario
-   public String password = " ";
+   public String password = "123456";
 
    /**
     * Metodo que hace la conexión entre java y el controlador de base de datos MySQL
