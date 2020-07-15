@@ -150,8 +150,7 @@ public class FXMLReporteCargadoController implements Initializable {
          stage.setScene(new Scene(ventanaPrincipal));
          stage.show();
       } catch (Exception e) {
-         e.getMessage();
-         e.printStackTrace();
+         
       }
    }
 
@@ -173,7 +172,7 @@ public class FXMLReporteCargadoController implements Initializable {
          stage.setScene(scene);
          stage.show();
       } catch (IOException e) {
-         e.printStackTrace();
+         
       }
    }
 

@@ -419,8 +419,7 @@ public class FXMLSubirNuevoReporteController implements Initializable {
             System.out.println("Entro");
          }
       } catch (Exception e) {
-         e.getMessage();
-         e.printStackTrace();
+         
       }
 
       return fechasValidas;

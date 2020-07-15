@@ -45,12 +45,17 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="475.0" layoutY="118.0" prefHeight="26.0" prefWidth="143.0" text="Periodo de Practicas:">
+            <Label layoutX="475.0" layoutY="118.0" prefHeight="26.0" prefWidth="143.0" text="Fecha inicio:">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="676.0" layoutY="121.0" text="2020-2021">
+            <Label layoutX="676.0" layoutY="121.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelFecha" layoutX="684.0" layoutY="123.0" prefHeight="21.0" prefWidth="238.0" text="labelFecha">
                <font>
                   <Font size="15.0" />
                </font>

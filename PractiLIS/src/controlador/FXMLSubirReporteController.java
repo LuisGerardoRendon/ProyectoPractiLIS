@@ -31,6 +31,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import modelo.AsignacionDAOImplements;
 import modelo.EstudianteVO;
 import modelo.ProyectoDAOImplements;
 import modelo.ProyectoVO;
@@ -61,6 +62,11 @@ public class FXMLSubirReporteController implements Initializable {
    private Label labelNombreProyecto;
    @FXML
    private Label labelHorasAcumuladas;
+   @FXML
+   private Label labelFecha;
+   
+   
+   
    
    private EstudianteVO estudianteLogeado;
    
@@ -72,7 +78,7 @@ public class FXMLSubirReporteController implements Initializable {
    
    ProyectoDAOImplements proyectoDAOImp;
    
-
+   AsignacionDAOImplements asignacionDAOImp;
    /**
     * Constructor de la clase que permite el paso de parametros desde la ventana
     * FXMLMenuPrincipalEstudiante
@@ -94,10 +100,12 @@ public class FXMLSubirReporteController implements Initializable {
 
       reporteDAOImp = new ReporteDAOImplements();
       proyectoDAOImp = new ProyectoDAOImplements();
+      asignacionDAOImp= new AsignacionDAOImplements();
       
       if(recuperarReportes()){
          recuperarProyecto();
          setNombreProyecto();
+         inicializarFechaAsignacion();
          calcularHoras();
          inicializarTabla();
       }
@@ -141,6 +149,18 @@ public class FXMLSubirReporteController implements Initializable {
       Node source = (Node) event.getSource();
       Stage stage = (Stage) source.getScene().getWindow();
       stage.close();
+   }
+   
+   public void inicializarFechaAsignacion(){
+      try{
+         String fecha = asignacionDAOImp.obtenerFechaAsignacion(
+                 "2020-2021", estudianteLogeado.getMatricula());
+         System.out.println(fecha+"BB");
+         this.labelFecha.setText(fecha);
+      }catch(Exception e){
+         e.printStackTrace();
+      }
+       
    }
  
    /**
