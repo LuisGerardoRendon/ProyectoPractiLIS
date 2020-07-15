@@ -307,7 +307,8 @@ public class FXMLasignarProyectoController implements Initializable {
     * @param proyecto Defiene el objeto Proyecto al cual se quiere realizar el cambio
     */
    public void cambiarEstudiantesAsignados(ProyectoVO proyecto) {
-      if ((proyecto.getCapacidadEstudiantes() - (proyecto.getNumEstudiantesAsignados() + 1)) < 0) {
+      
+      if (proyecto.getCapacidadEstudiantes()>0){
          try {
             boolean changed = this.proyectoDAOImp.cambiarEstudiantesAsignados(proyecto.getIdProyecto(),
                     (proyecto.getNumEstudiantesAsignados() + 1), "Sin asignar");
