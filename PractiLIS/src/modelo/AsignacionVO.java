@@ -27,6 +27,7 @@ public class AsignacionVO {
    private int idProyecto;
    private String matriculaProfesor;
    private String matriculaEstudiante;
+   private String fechaInicio;
 
    /**
     * Constructor vacio de la clase
@@ -44,9 +45,10 @@ public class AsignacionVO {
     * @param idProyecto Define el id del proyecto relacionado
     * @param matriculaProfesor Define la matricula del profesor relacionado
     * @param matriculaEstudiante Define la matricula de el estudiante de la Asignación
+    * @param fechaInicio Define la fechaInicio del día que se realizó la Asignacion
     */
    public AsignacionVO(int idAsignacion, String periodo, String nrcCurso, float progreso,
-           int idProyecto, String matriculaProfesor, String matriculaEstudiante) {
+           int idProyecto, String matriculaProfesor, String matriculaEstudiante, String fechaInicio) {
       this.idAsignacion = idAsignacion;
       this.periodo = periodo;
       this.nrcCurso = nrcCurso;
@@ -54,6 +56,7 @@ public class AsignacionVO {
       this.idProyecto = idProyecto;
       this.matriculaProfesor = matriculaProfesor;
       this.matriculaEstudiante = matriculaEstudiante;
+      this.fechaInicio=fechaInicio;
    }
 
    /**
@@ -65,8 +68,10 @@ public class AsignacionVO {
     * @param idProyecto Define el id del proyecto relacionado
     * @param matriculaProfesor Define la matricula del profesor relacionado
     * @param matriculaEstudiante Define la matricula de el estudiante de la Asignación
+    * @param fechaInicio Define la fechaInicio del día que se realizó la Asignacion
     */
-   public AsignacionVO(String periodo, String nrcCurso, float progreso, int idProyecto, String matriculaProfesor, String matriculaEstudiante) {
+   public AsignacionVO(String periodo, String nrcCurso, float progreso, int idProyecto, 
+           String matriculaProfesor, String matriculaEstudiante, String fechaInicio) {
       this.periodo = periodo;
       this.nrcCurso = nrcCurso;
       this.progreso = progreso;
@@ -74,21 +79,25 @@ public class AsignacionVO {
       this.matriculaProfesor = matriculaProfesor;
       this.matriculaEstudiante = matriculaEstudiante;
       this.idAsignacion = 0;
+      this.fechaInicio=fechaInicio;
    }
 
    /**
-    * Metodo constructor de la clase con 4 parametros
+    * Metodo constructor de la clase con 5 parametros
     *
     * @param periodo Define el idAsignacion de la Asignación
     * @param progreso Define el progreso de la Asignación
     * @param idProyecto Define el id del proyecto relacionado
     * @param matriculaEstudiante Define la matricula de el estudiante de la Asignación
+    * @param fechaInicio Define la fechaInicio del día que se realizó la Asignacion
     */
-   public AsignacionVO(String periodo, float progreso, int idProyecto, String matriculaEstudiante) {
+   public AsignacionVO(String periodo, float progreso, int idProyecto, String matriculaEstudiante, 
+           String fechaInicio) {
       this.periodo = periodo;
       this.progreso = progreso;
       this.idProyecto = idProyecto;
       this.matriculaEstudiante = matriculaEstudiante;
+      this.fechaInicio=fechaInicio;
    }
 
    /**
@@ -155,6 +164,15 @@ public class AsignacionVO {
    }
 
    /**
+    * Metodo para obtener la fechaInicio del día que se realizó la asignación
+    *  
+    * @return fechaInicio Define la fechaInicio del día que se realizó la Asignacion
+    */
+   public String getFechaInicio() {
+      return fechaInicio;
+   }
+
+   /**
     * Metodo para agregar el idAsignación a la Asignación
     *
     * @param idAsignacion Define el idAsignacion de la Asignación
@@ -215,6 +233,15 @@ public class AsignacionVO {
     */
    public void setMatriculaEstudiante(String matriculaEstudiante) {
       this.matriculaEstudiante = matriculaEstudiante;
+   }
+
+     /**
+      * Metodo para agregar la fechaInicio relacionada con la Asignación
+      * 
+      * @param fechaInicio 
+      */
+   public void setFechaInicio(String fechaInicio) {
+      this.fechaInicio = fechaInicio;
    }
 
    /**

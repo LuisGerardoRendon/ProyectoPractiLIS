@@ -33,7 +33,7 @@ public class AsignacionDAOImplementsTest {
    @Before
    public void before() {
       asignacionDAOImplements = new AsignacionDAOImplements();
-      asignacion = new AsignacionVO("2020-2021", "NRC2", 0, 2, "S20012199", "S18012230");
+      asignacion = new AsignacionVO("2020-2021", "NRC2", 0, 2, "S20012199", "S18012230", "METER FECHA");
       asignacionDAOImplements = new AsignacionDAOImplements();
       matriculaEstudiante = "S18012187";
       periodo = "2020-2021";

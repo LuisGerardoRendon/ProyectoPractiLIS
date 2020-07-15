@@ -11,6 +11,9 @@ package controlador;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -129,11 +132,11 @@ public class FXMLasignarProyectoController implements Initializable {
       //Datos de la asignacion
       String periodo = "2020-2021";
       float progreso = 0;
-
+      String fecha=this.obtenerFechaActual();
       if (estudiante != null && proyecto != null) {
          try {
             AsignacionVO asignacion = new AsignacionVO(periodo, progreso, proyecto.getIdProyecto(),
-                    estudiante.getMatricula());
+                    estudiante.getMatricula(), fecha);
             asignacionDAOImp = new AsignacionDAOImplements();
             asignacionDAOImp.create(asignacion);
             cambiarStatus(estudiante.getMatricula());
@@ -304,7 +307,7 @@ public class FXMLasignarProyectoController implements Initializable {
     * @param proyecto Defiene el objeto Proyecto al cual se quiere realizar el cambio
     */
    public void cambiarEstudiantesAsignados(ProyectoVO proyecto) {
-      if ((proyecto.getCapacidadEstudiantes() - (proyecto.getNumEstudiantesAsignados() + 1)) != 0) {
+      if ((proyecto.getCapacidadEstudiantes() - (proyecto.getNumEstudiantesAsignados() + 1)) < 0) {
          try {
             boolean changed = this.proyectoDAOImp.cambiarEstudiantesAsignados(proyecto.getIdProyecto(),
                     (proyecto.getNumEstudiantesAsignados() + 1), "Sin asignar");
@@ -381,5 +384,18 @@ public class FXMLasignarProyectoController implements Initializable {
          cupo = tab.getCapacidadEstudiantes() - tab.getNumEstudiantesAsignados();
          tab.setCapacidadEstudiantes(cupo);
       }
+   }
+   
+   /**
+    * Metodo para inizializar la fecha en la que se realiza la asignacion
+    * 
+    * @return fecha Define la fecha que se regresa
+    */
+   public String obtenerFechaActual() {
+
+      DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+      Date date = new Date();
+      String fecha = dateFormat.format(date);
+      return fecha;
    }
 }
