@@ -1,9 +1,9 @@
 /**
- * Lista de contenido. 
+ * Lista de contenido.
  * > Paquete
  * > Clases o librerias ocupadas
  * > Métodos de creación
- * > Métodos de recuperación 
+ * > Métodos de recuperación
  */
 package modelo;
 
@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * Descripcion de la clase. La clase AsignacionDAOImplements tiene el propósito de comunicar la base
@@ -37,7 +39,7 @@ public class AsignacionDAOImplements implements AsignacionDAO {
       ResultSet resultSet = null;
       String sql = "INSERT INTO asignacion VALUES (null,'" + asignacion.getPeriodo() + "',null,"
               + asignacion.getProgreso() + "," + asignacion.getIdProyecto() + ",null,'"
-              + asignacion.getMatriculaEstudiante() + "')";
+              + asignacion.getMatriculaEstudiante() + "','" + asignacion.getFechaInicio()+"')";
       try {
          connection = new ConexionBD().conectarMySQL();
          statement = connection.createStatement();
@@ -127,4 +129,57 @@ public class AsignacionDAOImplements implements AsignacionDAO {
       }
       return idAsignacion;
    }
+
+   @Override
+   public String obtenerFechaAsignacion(String periodo, String matricula) throws Exception {
+      String fechaInicio = "";
+      Connection connection = null;
+      Statement statement = null;
+      ResultSet resultset = null;
+      String sql = "SELECT fechaInicio FROM asignacion WHERE matriculaEstudiante = '"
+              + matricula + "' AND periodo = '" + periodo + "'";
+      System.out.println(sql);
+      try {
+         connection = new ConexionBD().conectarMySQL();
+         statement = connection.createStatement();
+         resultset = statement.executeQuery(sql);
+         if (resultset.next()) {
+            fechaInicio = resultset.getString("fechaInicio");
+         }
+         statement.close();
+         resultset.close();
+         connection.close();
+      } catch (SQLException exception) {
+         throw new SQLException("Error en obtenerFechaAsignacion SQLException " + exception.getMessage());
+      } catch (NullPointerException exception) {
+         throw new NullPointerException("Error en obtenerFechaAsignacion NullPointerException " + exception.getMessage());
+      } catch (ConnectException exception) {
+         throw new ConnectException("Error en obtenerFechaAsignacion ConnectException " + exception.getMessage());
+      } catch (Exception exception) {
+         throw new Exception("Error en obtenerFechaAsignacion Exception " + exception.getMessage());
+      } finally {
+         try {
+            if (statement != null) {
+               statement.close();
+            }
+         } catch (Exception exception) {
+         };
+         try {
+            if (resultset != null) {
+               resultset.close();
+            }
+         } catch (Exception exception) {
+         };
+         try {
+            if (connection != null) {
+               connection.close();
+            }
+         } catch (Exception exception) {
+         };
+      }
+      return fechaInicio;
+   }
+   
+   
+
 }

@@ -6,6 +6,8 @@
  */
 package modelo;
 
+import javafx.collections.ObservableList;
+
 /**
  * Esta Interface define los metodos correspondientes a la AsignacionDAO
  *
@@ -16,4 +18,8 @@ public interface AsignacionDAO {
    public boolean create(AsignacionVO asignacion) throws Exception;
 
    public int obtenerIdAsingacion(String matricula, String periodo) throws Exception;
+   
+   public String obtenerFechaAsignacion(String periodo, String matricula)throws 
+           Exception;
+   
 }

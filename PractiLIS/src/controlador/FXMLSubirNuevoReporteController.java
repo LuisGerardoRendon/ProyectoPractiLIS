@@ -278,7 +278,7 @@ public class FXMLSubirNuevoReporteController implements Initializable {
       }
       extencion = nombre.substring(lastIndexOf);
 
-      if (!extencion.equals(".docx")) {
+      if (!extencion.equals(".docx") || !extencion.equals(".pdf")) {
          extencionValida = false;
          FXMLAlerta alerta = new FXMLAlerta((Stage) this.botonImportarArchivo.getScene()
                  .getWindow());
